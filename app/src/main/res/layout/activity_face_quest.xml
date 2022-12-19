@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/erase_background">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/erase_imageview">
+
+    </ImageView>
+
+    <com.example.coursework.visuals.EraseView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/erase"
+        tools:layout_editor_absoluteY="-138dp"
+        tools:layout_editor_absoluteX="-166dp">
+
+    </com.example.coursework.visuals.EraseView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

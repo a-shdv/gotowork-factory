@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "203331042152",
+    "firebase_url": "https://budtebolny-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "budtebolny",
+    "storage_bucket": "budtebolny.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:203331042152:android:b93b505bbd53ad2f5434dd",
+        "android_client_info": {
+          "package_name": "com.example.coursework"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "203331042152-uoaua1g8c6i5tfb2jio0d0ktpoj486o0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4VQDe_vhlC8PrrI8HY859oZ2YvSM0gko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "203331042152-uoaua1g8c6i5tfb2jio0d0ktpoj486o0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
