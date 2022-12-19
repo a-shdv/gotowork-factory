@@ -20,7 +20,7 @@ public class MachineWorkersLogic {
     final String COLUMN_ID = "id";
     final String COLUMN_MACHINE_ID = "machine_id";
     final String COLUMN_WORKER_ID = "worker_id";
-    final String COLUMN_COUNT = "count";
+    final String COLUMN_HOURS = "hours";
 
     public MachineWorkersLogic(Context context) {
         this.context = context;
@@ -49,7 +49,7 @@ public class MachineWorkersLogic {
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
             obj.setMachineId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_MACHINE_ID)));
             obj.setWorkerId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_WORKER_ID)));
-            obj.setCount(cursor.getInt((int) cursor.getColumnIndex(COLUMN_COUNT)));
+            obj.setHours(cursor.getInt((int) cursor.getColumnIndex(COLUMN_HOURS)));
 
             list.add(obj);
             cursor.moveToNext();
@@ -70,7 +70,7 @@ public class MachineWorkersLogic {
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
             obj.setMachineId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_MACHINE_ID)));
             obj.setWorkerId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_WORKER_ID)));
-            obj.setCount(cursor.getInt((int) cursor.getColumnIndex(COLUMN_COUNT)));
+            obj.setHours(cursor.getInt((int) cursor.getColumnIndex(COLUMN_HOURS)));
 
             list.add(obj);
             cursor.moveToNext();
@@ -91,7 +91,7 @@ public class MachineWorkersLogic {
         obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
         obj.setMachineId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_MACHINE_ID)));
         obj.setWorkerId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_WORKER_ID)));
-        obj.setCount(cursor.getInt((int) cursor.getColumnIndex(COLUMN_COUNT)));
+        obj.setHours(cursor.getInt((int) cursor.getColumnIndex(COLUMN_HOURS)));
 
         return obj;
     }
@@ -106,7 +106,7 @@ public class MachineWorkersLogic {
             content.put(COLUMN_MACHINE_ID, model.getMachineId());
         }
         content.put(COLUMN_WORKER_ID, model.getWorkerId());
-        content.put(COLUMN_COUNT, model.getCount());
+        content.put(COLUMN_HOURS, model.getHours());
         db.insert(TABLE, null, content);
     }
 
@@ -114,7 +114,7 @@ public class MachineWorkersLogic {
         ContentValues content = new ContentValues();
         content.put(COLUMN_MACHINE_ID, model.getMachineId());
         content.put(COLUMN_WORKER_ID, model.getWorkerId());
-        content.put(COLUMN_COUNT, model.getCount());
+        content.put(COLUMN_HOURS, model.getHours());
         String where = COLUMN_ID + " = " + model.getId();
         db.update(TABLE, content, where, null);
     }

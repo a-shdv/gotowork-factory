@@ -18,8 +18,8 @@ public class MachineLogic {
     SQLiteDatabase db;
     final String TABLE = "machine";
     final String COLUMN_ID = "id";
-    final String COLUMN_RECEIVING_DATE = "receiving_date";
-    final String COLUMN_DISCHARGE_DATE = "discharge_date";
+    final String COLUMN_SHIFT_BEGIN_DATE = "shift_begin_date";
+    final String COLUMN_SHIFT_END_DATE = "shift_end_date";
     final String COLUMN_SHIFT_ID = "shift_id";
     final String COLUMN_SHIFT_NAME = "shift_name";
 
@@ -48,8 +48,8 @@ public class MachineLogic {
             MachineModel obj = new MachineModel();
             int id = cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID));
             obj.setId(id);
-            obj.setReceiving_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_RECEIVING_DATE)));
-            obj.setDischarge_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_DISCHARGE_DATE)));
+            obj.setShift_end_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_END_DATE)));
+            obj.setShift_begin_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_DATE)));
             obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
             obj.setShiftName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_NAME)));
 
@@ -65,7 +65,7 @@ public class MachineLogic {
 
     public List<MachineModel> getFilteredList(long dateFrom, long dateTo) {
         Cursor cursor = db.rawQuery("select * from " + TABLE + " where "
-                + COLUMN_RECEIVING_DATE + " > " + dateFrom + " and " + COLUMN_RECEIVING_DATE + " < " + dateTo, null);
+                + COLUMN_SHIFT_END_DATE + " > " + dateFrom + " and " + COLUMN_SHIFT_END_DATE + " < " + dateTo, null);
         List<MachineModel> list = new ArrayList<>();
         if (!cursor.moveToFirst()) {
             return list;
@@ -74,8 +74,8 @@ public class MachineLogic {
             MachineModel obj = new MachineModel();
             int id = cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID));
             obj.setId(id);
-            obj.setReceiving_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_RECEIVING_DATE)));
-            obj.setDischarge_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_DISCHARGE_DATE)));
+            obj.setShift_end_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_END_DATE)));
+            obj.setShift_begin_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_DATE)));
             obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
             obj.setShiftName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_NAME)));
 
@@ -98,8 +98,8 @@ public class MachineLogic {
         }
 
         obj.setId(id);
-        obj.setReceiving_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_RECEIVING_DATE)));
-        obj.setDischarge_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_DISCHARGE_DATE)));
+        obj.setShift_end_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_END_DATE)));
+        obj.setShift_begin_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_DATE)));
         obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
         obj.setShiftName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_NAME)));
 
@@ -113,8 +113,8 @@ public class MachineLogic {
 
     public void insert(MachineModel model) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_RECEIVING_DATE, model.getReceiving_date());
-        content.put(COLUMN_DISCHARGE_DATE, model.getDischarge_date());
+        content.put(COLUMN_SHIFT_END_DATE, model.getShift_end_date());
+        content.put(COLUMN_SHIFT_BEGIN_DATE, model.getShift_begin_date());
         content.put(COLUMN_SHIFT_ID, model.getShiftId());
         content.put(COLUMN_SHIFT_NAME, model.getShiftName());
 
@@ -130,8 +130,8 @@ public class MachineLogic {
 
     public void update(MachineModel model) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_RECEIVING_DATE, model.getReceiving_date());
-        content.put(COLUMN_DISCHARGE_DATE, model.getDischarge_date());
+        content.put(COLUMN_SHIFT_END_DATE, model.getShift_end_date());
+        content.put(COLUMN_SHIFT_BEGIN_DATE, model.getShift_begin_date());
         content.put(COLUMN_SHIFT_ID, model.getShiftId());
         content.put(COLUMN_SHIFT_NAME, model.getShiftName());
         String where = COLUMN_ID + " = " + model.getId();

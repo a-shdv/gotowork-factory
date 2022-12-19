@@ -6,27 +6,40 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activities.MachineActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="10dp"
-        android:layout_weight="1" >
-    <Button
-        android:id="@+id/button_discharge_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_weight="1"
-        android:text="@string/button_discharge_date"/>
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button_receiving_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:text="@string/button_receiving_date"/>
+        <TextView
+            android:id="@+id/text_view_worker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_view_worker" />
+
+        <Spinner
+            android:id="@+id/spinner_workers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:id="@+id/text_view_hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_view_hours" />
+
+        <EditText
+            android:id="@+id/edit_text_hours"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ems="10" />
     </LinearLayout>
 
     <TextView
@@ -43,6 +56,30 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button_shift_begin_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="@string/button_shift_begin_date" />
+
+        <Button
+            android:id="@+id/button_shift_end_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="@string/button_shift_end_date" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,40 +110,6 @@
         </ScrollView>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="10dp"
-        android:layout_weight="1" >
-
-    <TextView
-        android:id="@+id/text_view_worker"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_view_worker" />
-
-    <Spinner
-        android:id="@+id/spinner_workers"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"/>
-
-    <TextView
-        android:id="@+id/text_view_count"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_view_hours" />
-
-    <EditText
-        android:id="@+id/edit_text_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="10dp"/>
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

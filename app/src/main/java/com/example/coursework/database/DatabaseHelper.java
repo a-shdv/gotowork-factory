@@ -31,8 +31,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE machine (" +
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +
-                "    receiving_date long NOT NULL,\n" +
-                "    discharge_date long NOT NULL,\n" +
+                "    shift_end_date long NOT NULL,\n" +
+                "    shift_begin_date long NOT NULL,\n" +
                 "    shift_id integer NOT NULL,\n" +
                 "    shift_name character(100) NOT NULL,\n" +
                 "    CONSTRAINT shift_fk FOREIGN KEY (shift_id)\n" +

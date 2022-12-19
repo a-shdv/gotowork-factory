@@ -37,7 +37,7 @@ public class MachinesActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         logic.open();
-        fillTable(Arrays.asList("Дата назначения", "Дата получения", "Имя поставщика"), logic.getFullList());
+        fillTable(Arrays.asList("Начало смены", "Конец смены", "Имя работника"), logic.getFullList());
         logic.close();
     }
 
@@ -79,7 +79,7 @@ public class MachinesActivity extends AppCompatActivity {
                         logic.open();
                         TextView textView = (TextView) selectedRow.getChildAt(3);
                         logic.delete(Integer.valueOf(textView.getText().toString()));
-                        fillTable(Arrays.asList("Дата назначения", "Дата получения", "Имя поставщика"), logic.getFullList());
+                        fillTable(Arrays.asList("Начало смены", "Конец смены", "Имя работника"), logic.getFullList());
                         logic.close();
                         selectedRow = null;
                     }
@@ -92,7 +92,7 @@ public class MachinesActivity extends AppCompatActivity {
 
 
         logic.open();
-        fillTable(Arrays.asList("Дата назначения", "Дата получения", "Имя поставщика"), logic.getFullList());
+        fillTable(Arrays.asList("Начало смены", "Конец смены", "Имя работника"), logic.getFullList());
         logic.close();
 
     }
@@ -123,19 +123,19 @@ public class MachinesActivity extends AppCompatActivity {
         for (MachineModel machine : machines) {
             TableRow tableRow = new TableRow(this);
 
-            TextView textViewDischargeDate = new TextView(this);
-            textViewDischargeDate.setHeight(100);
-            textViewDischargeDate.setTextSize(16);
-            textViewDischargeDate.setText(String.valueOf(new Date(machine.getDischarge_date())));
-            textViewDischargeDate.setTextColor(Color.WHITE);
-            textViewDischargeDate.setGravity(Gravity.CENTER);
+            TextView textViewShiftBegin = new TextView(this);
+            textViewShiftBegin.setHeight(100);
+            textViewShiftBegin.setTextSize(16);
+            textViewShiftBegin.setText(String.valueOf(new Date(machine.getShift_begin_date())));
+            textViewShiftBegin.setTextColor(Color.WHITE);
+            textViewShiftBegin.setGravity(Gravity.CENTER);
 
-            TextView textViewReceivingDate = new TextView(this);
-            textViewReceivingDate.setHeight(100);
-            textViewReceivingDate.setTextSize(16);
-            textViewReceivingDate.setText(String.valueOf(new Date(machine.getReceiving_date())));
-            textViewReceivingDate.setTextColor(Color.WHITE);
-            textViewReceivingDate.setGravity(Gravity.CENTER);
+            TextView textViewShiftEnd = new TextView(this);
+            textViewShiftEnd.setHeight(100);
+            textViewShiftEnd.setTextSize(16);
+            textViewShiftEnd.setText(String.valueOf(new Date(machine.getShift_end_date())));
+            textViewShiftEnd.setTextColor(Color.WHITE);
+            textViewShiftEnd.setGravity(Gravity.CENTER);
 
             ShiftLogic shiftLogic = new ShiftLogic(this);
             shiftLogic.open();
@@ -152,8 +152,8 @@ public class MachinesActivity extends AppCompatActivity {
             textViewId.setVisibility(View.INVISIBLE);
             textViewId.setText(String.valueOf(machine.getId()));
 
-            tableRow.addView(textViewDischargeDate);
-            tableRow.addView(textViewReceivingDate);
+            tableRow.addView(textViewShiftBegin);
+            tableRow.addView(textViewShiftEnd);
             tableRow.addView(textViewShift);
             tableRow.addView(textViewId);
 

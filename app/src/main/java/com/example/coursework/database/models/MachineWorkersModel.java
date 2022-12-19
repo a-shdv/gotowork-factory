@@ -4,16 +4,16 @@ public class MachineWorkersModel {
     private int id;
     private int machineId;
     private int workerId;
-    private int count;
+    private int hours;
 
     public MachineWorkersModel(){
 
     }
 
-    public MachineWorkersModel(int machineId, int workerId, int count){
+    public MachineWorkersModel(int machineId, int workerId, int hours){
         this.machineId = machineId;
         this.workerId = workerId;
-        this.count = count;
+        this.hours = hours;
     }
 
     public int getId() {
@@ -40,11 +40,11 @@ public class MachineWorkersModel {
         this.workerId = workerId;
     }
 
-    public int getCount() {
-        return count;
+    public int getHours() {
+        return hours;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setHours(int hours) {
+        this.hours = hours;
     }
 }

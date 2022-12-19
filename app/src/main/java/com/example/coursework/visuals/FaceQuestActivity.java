@@ -41,7 +41,7 @@ public class FaceQuestActivity extends AppCompatActivity {
                 startActivity(new Intent(FaceQuestActivity.this, EnterActivity.class));
                 finish();
             }
-        }, 1 * 1000);
+        }, 15 * 1000);
     }
 
     void updateThePicture() {
@@ -54,7 +54,7 @@ public class FaceQuestActivity extends AppCompatActivity {
                 startActivity(new Intent(FaceQuestActivity.this, EnterActivity.class));
                 finish();
             }
-        }, 1000);
+        }, 15000);
     }
 
     private void setBitmapAsBackground(Mood mood) {

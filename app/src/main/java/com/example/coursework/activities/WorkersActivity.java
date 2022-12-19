@@ -106,7 +106,7 @@ public class WorkersActivity extends AppCompatActivity {
             textView.setText(title);
             textView.setTextColor(Color.WHITE);
             textView.setGravity(Gravity.CENTER);
-            textView.setWidth( (int)(getWindowManager().getDefaultDisplay().getWidth() / 3.2));
+            textView.setWidth( (int)(getWindowManager().getDefaultDisplay().getWidth() / 2.2));
             tableRowTitles.addView(textView);
         }
 
@@ -124,13 +124,6 @@ public class WorkersActivity extends AppCompatActivity {
             textViewName.setTextColor(Color.WHITE);
             textViewName.setGravity(Gravity.CENTER);
 
-            TextView textViewType = new TextView(this);
-            textViewName.setHeight(100);
-            textViewType.setTextSize(16);
-            textViewType.setText(worker.getType());
-            textViewType.setTextColor(Color.WHITE);
-            textViewType.setGravity(Gravity.CENTER);
-
             TextView textViewSalary = new TextView(this);
             textViewName.setHeight(100);
             textViewSalary.setTextSize(16);
@@ -143,7 +136,6 @@ public class WorkersActivity extends AppCompatActivity {
             textViewId.setText(String.valueOf(worker.getId()));
 
             tableRow.addView(textViewName);
-            tableRow.addView(textViewType);
             tableRow.addView(textViewSalary);
             tableRow.addView(textViewId);
 

@@ -39,17 +39,17 @@ public class MachineActivity extends AppCompatActivity {
 
     MachineLogic logic;
 
-    Button button_discharge_date;
-    Button button_receiving_date;
+    Button button_shift_begin_date;
+    Button button_shift_end_date;
     Button button_create;
     Button button_cancel;
     Button button_add_worker;
     Button button_delete_worker;
 
-    Calendar discharge_date;
-    Calendar receiving_date;
+    Calendar shift_begin_date;
+    Calendar shift_end_date;
 
-    EditText edit_text_count;
+    EditText edit_text_hours;
 
     List<MachineWorkersModel> machineWorkers = new ArrayList<>();
 
@@ -68,17 +68,17 @@ public class MachineActivity extends AppCompatActivity {
             machineWorkers = machineWorkersLogic.getFilteredList(id);
         }
 
-        button_discharge_date = findViewById(R.id.button_discharge_date);
-        button_receiving_date = findViewById(R.id.button_receiving_date);
+        button_shift_begin_date = findViewById(R.id.button_shift_begin_date);
+        button_shift_end_date = findViewById(R.id.button_shift_end_date);
         button_create = findViewById(R.id.button_create);
         button_cancel = findViewById(R.id.button_cancel);
         button_add_worker = findViewById(R.id.button_add_worker);
         button_delete_worker = findViewById(R.id.button_delete_worker);
 
-        discharge_date = new GregorianCalendar();
-        receiving_date = new GregorianCalendar();
+        shift_begin_date = new GregorianCalendar();
+        shift_end_date = new GregorianCalendar();
 
-        edit_text_count = findViewById(R.id.edit_text_count);
+        edit_text_hours = findViewById(R.id.edit_text_hours);
 
         //комбо бокс покупателей
         ShiftLogic shiftLogic = new ShiftLogic(this);
@@ -112,13 +112,13 @@ public class MachineActivity extends AppCompatActivity {
         adapterWorkers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerWorkers.setAdapter(adapterWorkers);
 
-        button_discharge_date.setOnClickListener(
+        button_shift_begin_date.setOnClickListener(
                 v -> {
                     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
 
                         @Override
                         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            discharge_date.set(year, monthOfYear + 1, dayOfMonth);
+                            shift_begin_date.set(year, monthOfYear + 1, dayOfMonth);
                         }
                     };
 
@@ -130,13 +130,13 @@ public class MachineActivity extends AppCompatActivity {
                 }
         );
 
-        button_receiving_date.setOnClickListener(
+        button_shift_end_date.setOnClickListener(
                 v -> {
                     DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
 
                         @Override
                         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            receiving_date.set(year, monthOfYear + 1, dayOfMonth);
+                            shift_end_date.set(year, monthOfYear + 1, dayOfMonth);
                         }
                     };
                     DatePickerDialog datePickerDialog;
@@ -152,7 +152,7 @@ public class MachineActivity extends AppCompatActivity {
                 v -> {
                     int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
                     String shiftName =  shifts.get(spinnerShifts.getSelectedItemPosition()).getName();
-                    MachineModel model = new MachineModel(receiving_date.getTime().getTime(), discharge_date.getTime().getTime(), shiftId,
+                    MachineModel model = new MachineModel(shift_end_date.getTime().getTime(), shift_begin_date.getTime().getTime(), shiftId,
                            shiftName, machineWorkers);
                     logic.open();
 
@@ -184,8 +184,8 @@ public class MachineActivity extends AppCompatActivity {
                             return;
                         }
                     }
-                    machineWorkers.add(new MachineWorkersModel(id, workerId, Integer.valueOf(edit_text_count.getText().toString())));
-                    edit_text_count.setText("");
+                    machineWorkers.add(new MachineWorkersModel(id, workerId, Integer.valueOf(edit_text_hours.getText().toString())));
+                    edit_text_hours.setText("");
                     spinnerWorkers.setSelection(0);
                     fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
                 }
@@ -196,11 +196,11 @@ public class MachineActivity extends AppCompatActivity {
                     TextView textView = (TextView) selectedRow.getChildAt(2);
                     int index = Integer.valueOf(textView.getText().toString());
                     machineWorkers.remove(index);
-                    fillTable(Arrays.asList("Название лекарства", "Количество"), machineWorkers);
+                    fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
                 }
         );
 
-        fillTable(Arrays.asList("Название лекарства", "Количество"), machineWorkers);
+        fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
     }
 
 
@@ -239,19 +239,19 @@ public class MachineActivity extends AppCompatActivity {
             textViewName.setTextColor(Color.WHITE);
             textViewName.setGravity(Gravity.CENTER);
 
-            TextView textViewCount = new TextView(this);
-            textViewCount.setHeight(100);
-            textViewCount.setTextSize(16);
-            textViewCount.setText(String.valueOf(machineWorker.getCount()));
-            textViewCount.setTextColor(Color.WHITE);
-            textViewCount.setGravity(Gravity.CENTER);
+            TextView textViewHours = new TextView(this);
+            textViewHours.setHeight(100);
+            textViewHours.setTextSize(16);
+            textViewHours.setText(String.valueOf(machineWorker.getHours()));
+            textViewHours.setTextColor(Color.WHITE);
+            textViewHours.setGravity(Gravity.CENTER);
 
             TextView textViewIndex = new TextView(this);
             textViewIndex.setVisibility(View.INVISIBLE);
             textViewIndex.setText(String.valueOf(index));
 
             tableRow.addView(textViewName);
-            tableRow.addView(textViewCount);
+            tableRow.addView(textViewHours);
             tableRow.addView(textViewIndex);
 
             tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
