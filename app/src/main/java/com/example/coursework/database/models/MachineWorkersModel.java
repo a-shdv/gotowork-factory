@@ -2,17 +2,17 @@ package com.example.coursework.database.models;
 
 public class MachineWorkersModel {
     private int id;
-    private int receiptId;
-    private int medicineId;
+    private int machineId;
+    private int workerId;
     private int count;
 
     public MachineWorkersModel(){
 
     }
 
-    public MachineWorkersModel(int receiptId, int medicineId, int count){
-        this.receiptId = receiptId;
-        this.medicineId = medicineId;
+    public MachineWorkersModel(int machineId, int workerId, int count){
+        this.machineId = machineId;
+        this.workerId = workerId;
         this.count = count;
     }
 
@@ -24,20 +24,20 @@ public class MachineWorkersModel {
         this.id = id;
     }
 
-    public int getReceiptId() {
-        return receiptId;
+    public int getMachineId() {
+        return machineId;
     }
 
-    public void setReceiptId(int receiptId) {
-        this.receiptId = receiptId;
+    public void setMachineId(int machineId) {
+        this.machineId = machineId;
     }
 
-    public int getMedicineId() {
-        return medicineId;
+    public int getWorkerId() {
+        return workerId;
     }
 
-    public void setMedicineId(int medicineId) {
-        this.medicineId = medicineId;
+    public void setWorkerId(int workerId) {
+        this.workerId = workerId;
     }
 
     public int getCount() {

@@ -10,7 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class MachineWorkersFirebaseLogic {
-    private final String TABLE = "receiptMedicines";
+    private final String TABLE = "machineWorkers";
 
     private DatabaseReference database;
 
@@ -18,7 +18,7 @@ public class MachineWorkersFirebaseLogic {
         database = FirebaseDatabase.getInstance().getReference(TABLE);
     }
 
-    public void syncReceiptMedicines(Context context) {
+    public void syncMachineWorkers(Context context) {
         MachineWorkersLogic logic = new MachineWorkersLogic(context);
 
         logic.open();

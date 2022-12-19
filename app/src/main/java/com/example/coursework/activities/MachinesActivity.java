@@ -97,11 +97,11 @@ public class MachinesActivity extends AppCompatActivity {
 
     }
 
-    void fillTable(List<String> titles, List<MachineModel> receipts) {
+    void fillTable(List<String> titles, List<MachineModel> machines) {
 
-        TableLayout tableLayoutReceipts = findViewById(R.id.tableLayoutMachines);
+        TableLayout tableLayoutMachines = findViewById(R.id.tableLayoutMachines);
 
-        tableLayoutReceipts.removeAllViews();
+        tableLayoutMachines.removeAllViews();
 
         TableRow tableRowTitles = new TableRow(this);
 
@@ -117,44 +117,44 @@ public class MachinesActivity extends AppCompatActivity {
         }
 
         tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
-        tableLayoutReceipts.addView(tableRowTitles);
+        tableLayoutMachines.addView(tableRowTitles);
 
 
-        for (MachineModel receipt : receipts) {
+        for (MachineModel machine : machines) {
             TableRow tableRow = new TableRow(this);
 
             TextView textViewDischargeDate = new TextView(this);
             textViewDischargeDate.setHeight(100);
             textViewDischargeDate.setTextSize(16);
-            textViewDischargeDate.setText(String.valueOf(new Date(receipt.getDischarge_date())));
+            textViewDischargeDate.setText(String.valueOf(new Date(machine.getDischarge_date())));
             textViewDischargeDate.setTextColor(Color.WHITE);
             textViewDischargeDate.setGravity(Gravity.CENTER);
 
             TextView textViewReceivingDate = new TextView(this);
             textViewReceivingDate.setHeight(100);
             textViewReceivingDate.setTextSize(16);
-            textViewReceivingDate.setText(String.valueOf(new Date(receipt.getReceiving_date())));
+            textViewReceivingDate.setText(String.valueOf(new Date(machine.getReceiving_date())));
             textViewReceivingDate.setTextColor(Color.WHITE);
             textViewReceivingDate.setGravity(Gravity.CENTER);
 
             ShiftLogic shiftLogic = new ShiftLogic(this);
             shiftLogic.open();
-            ShiftModel supplier = shiftLogic.getElement(receipt.getSupplierId());
+            ShiftModel shift = shiftLogic.getElement(machine.getShiftId());
             shiftLogic.close();
-            TextView textViewSupplier = new TextView(this);
-            textViewSupplier.setHeight(100);
-            textViewSupplier.setTextSize(16);
-            textViewSupplier.setText(supplier.getName());
-            textViewSupplier.setTextColor(Color.WHITE);
-            textViewSupplier.setGravity(Gravity.CENTER);
+            TextView textViewShift = new TextView(this);
+            textViewShift.setHeight(100);
+            textViewShift.setTextSize(16);
+            textViewShift.setText(shift.getName());
+            textViewShift.setTextColor(Color.WHITE);
+            textViewShift.setGravity(Gravity.CENTER);
 
             TextView textViewId = new TextView(this);
             textViewId.setVisibility(View.INVISIBLE);
-            textViewId.setText(String.valueOf(receipt.getId()));
+            textViewId.setText(String.valueOf(machine.getId()));
 
             tableRow.addView(textViewDischargeDate);
             tableRow.addView(textViewReceivingDate);
-            tableRow.addView(textViewSupplier);
+            tableRow.addView(textViewShift);
             tableRow.addView(textViewId);
 
             tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
@@ -163,8 +163,8 @@ public class MachinesActivity extends AppCompatActivity {
 
                 selectedRow = tableRow;
 
-                for(int i = 0; i < tableLayoutReceipts.getChildCount(); i++){
-                    View view = tableLayoutReceipts.getChildAt(i);
+                for(int i = 0; i < tableLayoutMachines.getChildCount(); i++){
+                    View view = tableLayoutMachines.getChildAt(i);
                     if (view instanceof TableRow){
                         view.setBackgroundColor(Color.parseColor("#FF6200EE"));
                     }
@@ -173,7 +173,7 @@ public class MachinesActivity extends AppCompatActivity {
                 tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
             });
 
-            tableLayoutReceipts.addView(tableRow);
+            tableLayoutMachines.addView(tableRow);
         }
     }
 }

@@ -15,10 +15,10 @@ public class ShiftLogic {
     Context context;
     DatabaseHelper sqlHelper;
     SQLiteDatabase db;
-    final String TABLE = "supplier";
+    final String TABLE = "shift";
     final String COLUMN_ID = "id";
     final String COLUMN_NAME = "name";
-    final String COLUMN_CONTRACT_EXECUTION = "contract_execution";
+    final String COLUMN_SHIFT_DATE = "shift_date";
     final String COLUMN_USERID = "user_id";
 
     public ShiftLogic(Context context) {
@@ -47,7 +47,7 @@ public class ShiftLogic {
 
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
             obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-            obj.setContractExecution(cursor.getLong((int) cursor.getColumnIndex(COLUMN_CONTRACT_EXECUTION)));
+            obj.setContractExecution(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
             obj.setUserid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_USERID)));
 
             list.add(obj);
@@ -68,7 +68,7 @@ public class ShiftLogic {
 
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
             obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-            obj.setContractExecution(cursor.getLong((int) cursor.getColumnIndex(COLUMN_CONTRACT_EXECUTION)));
+            obj.setContractExecution(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
             obj.setUserid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_USERID)));
 
             list.add(obj);
@@ -86,7 +86,7 @@ public class ShiftLogic {
         }
         obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
         obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-        obj.setContractExecution(cursor.getLong((int) cursor.getColumnIndex(COLUMN_CONTRACT_EXECUTION)));
+        obj.setContractExecution(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
         obj.setUserid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_USERID)));
         return obj;
     }
@@ -94,7 +94,7 @@ public class ShiftLogic {
     public void insert(ShiftModel model) {
         ContentValues content = new ContentValues();
         content.put(COLUMN_NAME,model.getName());
-        content.put(COLUMN_CONTRACT_EXECUTION,model.getContractExecution());
+        content.put(COLUMN_SHIFT_DATE,model.getContractExecution());
         content.put(COLUMN_USERID,model.getUserid());
         db.insert(TABLE,null,content);
     }
@@ -102,7 +102,7 @@ public class ShiftLogic {
     public void update(ShiftModel model) {
         ContentValues content=new ContentValues();
         content.put(COLUMN_NAME,model.getName());
-        content.put(COLUMN_CONTRACT_EXECUTION,model.getContractExecution());
+        content.put(COLUMN_SHIFT_DATE,model.getContractExecution());
         content.put(COLUMN_USERID,model.getUserid());
         String where = COLUMN_ID + " = " + model.getId();
         db.update(TABLE,content,where,null);
@@ -112,7 +112,7 @@ public class ShiftLogic {
         String where = COLUMN_ID+" = "+id;
         db.delete(TABLE,where,null);
         MachineLogic machineLogic = new MachineLogic(context);
-        machineLogic.deleteBySupplierId(id);
+        machineLogic.deleteByShiftId(id);
     }
     public void deleteByUserId(int userId) {
         String where = COLUMN_USERID+" = "+userId;

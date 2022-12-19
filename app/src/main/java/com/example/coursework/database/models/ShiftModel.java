@@ -20,12 +20,6 @@ public class ShiftModel {
         return id;
     }
 
-/*    public int getById(int id) {
-        if (id == this.id) {
-            return SupplierModel.class;
-        }
-    }*/
-
     public void setId(int id) {
         this.id = id;
     }

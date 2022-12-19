@@ -21,38 +21,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    login character(100) NOT NULL,\n" +
                 "    password character(100) NOT NULL);\n");
 
-        db.execSQL("CREATE TABLE supplier (\n" +
+        db.execSQL("CREATE TABLE shift (\n" +
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name character(100) NOT NULL,\n" +
-                "    contract_execution long NOT NULL,\n" +
+                "    shift_date long NOT NULL,\n" +
                 "    user_id integer NOT NULL,\n" +
                 "    CONSTRAINT user_fk FOREIGN KEY (user_id)\n" +
                 "    REFERENCES user(id) ON DELETE CASCADE);");
 
-        db.execSQL("CREATE TABLE receipt (" +
+        db.execSQL("CREATE TABLE machine (" +
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +
                 "    receiving_date long NOT NULL,\n" +
                 "    discharge_date long NOT NULL,\n" +
-                "    supplier_id integer NOT NULL,\n" +
-                "    supplier_name character(100) NOT NULL,\n" +
-                "    CONSTRAINT supplier_fk FOREIGN KEY (supplier_id)\n" +
-                "    REFERENCES supplier(id) ON DELETE CASCADE);");
+                "    shift_id integer NOT NULL,\n" +
+                "    shift_name character(100) NOT NULL,\n" +
+                "    CONSTRAINT shift_fk FOREIGN KEY (shift_id)\n" +
+                "    REFERENCES shift(id) ON DELETE CASCADE);");
 
-        db.execSQL("CREATE TABLE medicine (" +
+        db.execSQL("CREATE TABLE worker (" +
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name character(100) NOT NULL,\n" +
-                "    type character(100) NOT NULL,\n" +
-                "    price_per_package real NOT NULL);");
+                "    hours real NOT NULL);");
 
-        db.execSQL("CREATE TABLE receipt_medicines (" +
+        db.execSQL("CREATE TABLE machine_workers (" +
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +
-                "    receipt_id integer NOT NULL,\n" +
-                "    medicine_id integer NOT NULL,\n" +
-                "    count integer NOT NULL,\n" +
-                "    CONSTRAINT receipt_fk FOREIGN KEY (receipt_id)\n" +
-                "    REFERENCES receipt(id) ON DELETE CASCADE,\n"  +
-                "    CONSTRAINT medicine_fk FOREIGN KEY (medicine_id)\n" +
-                "    REFERENCES medicine(id) ON DELETE CASCADE);");
+                "    machine_id integer NOT NULL,\n" +
+                "    worker_id integer NOT NULL,\n" +
+                "    CONSTRAINT machine_fk FOREIGN KEY (machine_id)\n" +
+                "    REFERENCES machine(id) ON DELETE CASCADE,\n"  +
+                "    CONSTRAINT worker_fk FOREIGN KEY (worker_id)\n" +
+                "    REFERENCES worker(id) ON DELETE CASCADE);");
     }
 
     @Override

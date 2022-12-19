@@ -10,7 +10,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 public class ShiftFirebaseLogic {
-    private final String TABLE = "supplier";
+    private final String TABLE = "shift";
 
     private DatabaseReference database;
 
@@ -18,7 +18,7 @@ public class ShiftFirebaseLogic {
         database = FirebaseDatabase.getInstance().getReference(TABLE);
     }
 
-    public void syncSuppliers(Context context) {
+    public void syncShifts(Context context) {
         ShiftLogic logic = new ShiftLogic(context);
 
         logic.open();

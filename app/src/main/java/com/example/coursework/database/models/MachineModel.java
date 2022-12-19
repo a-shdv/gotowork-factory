@@ -7,20 +7,20 @@ public class MachineModel {
     private int id;
     private long receiving_date;
     private long discharge_date;
-    private int supplierId;
-    private String supplierName;
-    private List<MachineWorkersModel> receiptMedicines = new LinkedList<>();
+    private int shiftId;
+    private String shiftName;
+    private List<MachineWorkersModel> machineWorkers = new LinkedList<>();
 
     public MachineModel(){
 
     }
 
-    public MachineModel(long receiving_date, long discharge_date, int supplierId, String supplierName, List<MachineWorkersModel> receiptMedicines){
+    public MachineModel(long receiving_date, long discharge_date, int shiftId, String shiftName, List<MachineWorkersModel> machineWorkers){
         this.receiving_date = receiving_date;
         this.discharge_date = discharge_date;
-        this.supplierId = supplierId;
-        this.supplierName = supplierName;
-        this.receiptMedicines = receiptMedicines;
+        this.shiftId = shiftId;
+        this.shiftName = shiftName;
+        this.machineWorkers = machineWorkers;
     }
 
     public int getId() {
@@ -47,27 +47,27 @@ public class MachineModel {
         this.discharge_date = discharge_date;
     }
 
-    public int getSupplierId() {
-        return supplierId;
+    public int getShiftId() {
+        return shiftId;
     }
 
-    public void setSupplierId(int supplierId) {
-        this.supplierId = supplierId;
+    public void setShiftId(int shiftId) {
+        this.shiftId = shiftId;
     }
 
-    public String getSupplierName() {
-        return supplierName;
+    public String getShiftName() {
+        return shiftName;
     }
 
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
+    public void setShiftName(String shiftName) {
+        this.shiftName = shiftName;
     }
 
-    public List<MachineWorkersModel> getReceiptMedicines() {
-        return receiptMedicines;
+    public List<MachineWorkersModel> getMachineWorkers() {
+        return machineWorkers;
     }
 
-    public void setReceiptMedicines(List<MachineWorkersModel> receiptMedicines) {
-        this.receiptMedicines = receiptMedicines;
+    public void setMachineWorkers(List<MachineWorkersModel> machineWorkers) {
+        this.machineWorkers = machineWorkers;
     }
 }

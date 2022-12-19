@@ -16,10 +16,10 @@ public class MachineWorkersLogic {
     Context context;
     DatabaseHelper sqlHelper;
     SQLiteDatabase db;
-    final String TABLE = "receipt_medicines";
+    final String TABLE = "machine_workers";
     final String COLUMN_ID = "id";
-    final String COLUMN_RECEIPT_ID = "receipt_id";
-    final String COLUMN_MEDICINE_ID = "medicine_id";
+    final String COLUMN_MACHINE_ID = "machine_id";
+    final String COLUMN_WORKER_ID = "worker_id";
     final String COLUMN_COUNT = "count";
 
     public MachineWorkersLogic(Context context) {
@@ -47,8 +47,8 @@ public class MachineWorkersLogic {
             MachineWorkersModel obj = new MachineWorkersModel();
 
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
-            obj.setReceiptId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_RECEIPT_ID)));
-            obj.setMedicineId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_MEDICINE_ID)));
+            obj.setMachineId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_MACHINE_ID)));
+            obj.setWorkerId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_WORKER_ID)));
             obj.setCount(cursor.getInt((int) cursor.getColumnIndex(COLUMN_COUNT)));
 
             list.add(obj);
@@ -57,9 +57,9 @@ public class MachineWorkersLogic {
         return list;
     }
 
-    public List<MachineWorkersModel> getFilteredList(int receiptId) {
+    public List<MachineWorkersModel> getFilteredList(int machineId) {
         Cursor cursor = db.rawQuery("select * from " + TABLE + " where "
-                + COLUMN_RECEIPT_ID + " = " + receiptId, null);
+                + COLUMN_MACHINE_ID + " = " + machineId, null);
         List<MachineWorkersModel> list = new ArrayList<>();
         if (!cursor.moveToFirst()) {
             return list;
@@ -68,8 +68,8 @@ public class MachineWorkersLogic {
             MachineWorkersModel obj = new MachineWorkersModel();
 
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
-            obj.setReceiptId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_RECEIPT_ID)));
-            obj.setMedicineId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_MEDICINE_ID)));
+            obj.setMachineId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_MACHINE_ID)));
+            obj.setWorkerId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_WORKER_ID)));
             obj.setCount(cursor.getInt((int) cursor.getColumnIndex(COLUMN_COUNT)));
 
             list.add(obj);
@@ -89,8 +89,8 @@ public class MachineWorkersLogic {
         }
 
         obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
-        obj.setReceiptId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_RECEIPT_ID)));
-        obj.setMedicineId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_MEDICINE_ID)));
+        obj.setMachineId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_MACHINE_ID)));
+        obj.setWorkerId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_WORKER_ID)));
         obj.setCount(cursor.getInt((int) cursor.getColumnIndex(COLUMN_COUNT)));
 
         return obj;
@@ -98,34 +98,34 @@ public class MachineWorkersLogic {
 
     public void insert(MachineWorkersModel model) {
         MachineLogic machineLogic = new MachineLogic(context);
-        List<MachineModel> receipts = machineLogic.getFullList();
+        List<MachineModel> machines = machineLogic.getFullList();
         ContentValues content = new ContentValues();
-        if (model.getReceiptId() == 0) {
-            content.put(COLUMN_RECEIPT_ID,receipts.get(receipts.size()-1).getId());
+        if (model.getMachineId() == 0) {
+            content.put(COLUMN_MACHINE_ID, machines.get(machines.size() - 1).getId());
         } else {
-            content.put(COLUMN_RECEIPT_ID,model.getReceiptId());
+            content.put(COLUMN_MACHINE_ID, model.getMachineId());
         }
-        content.put(COLUMN_MEDICINE_ID,model.getMedicineId());
-        content.put(COLUMN_COUNT,model.getCount());
-        db.insert(TABLE,null,content);
+        content.put(COLUMN_WORKER_ID, model.getWorkerId());
+        content.put(COLUMN_COUNT, model.getCount());
+        db.insert(TABLE, null, content);
     }
 
     public void update(MachineWorkersModel model) {
-        ContentValues content=new ContentValues();
-        content.put(COLUMN_RECEIPT_ID,model.getReceiptId());
-        content.put(COLUMN_MEDICINE_ID,model.getMedicineId());
-        content.put(COLUMN_COUNT,model.getCount());
+        ContentValues content = new ContentValues();
+        content.put(COLUMN_MACHINE_ID, model.getMachineId());
+        content.put(COLUMN_WORKER_ID, model.getWorkerId());
+        content.put(COLUMN_COUNT, model.getCount());
         String where = COLUMN_ID + " = " + model.getId();
-        db.update(TABLE,content,where,null);
+        db.update(TABLE, content, where, null);
     }
 
     public void delete(int id) {
-        String where = COLUMN_ID+" = "+id;
-        db.delete(TABLE,where,null);
+        String where = COLUMN_ID + " = " + id;
+        db.delete(TABLE, where, null);
     }
 
-    public void deleteByReceiptId(int receiptId) {
-        String where = COLUMN_RECEIPT_ID+" = "+receiptId;
-        db.delete(TABLE,where,null);
+    public void deleteByMachineId(int machineId) {
+        String where = COLUMN_MACHINE_ID + " = " + machineId;
+        db.delete(TABLE, where, null);
     }
 }

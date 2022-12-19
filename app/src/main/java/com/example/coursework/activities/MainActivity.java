@@ -93,16 +93,16 @@ public class MainActivity extends AppCompatActivity {
         userFirebaseLogic.syncUsers(this);
 
         ShiftFirebaseLogic shiftFirebaseLogic = new ShiftFirebaseLogic();
-        shiftFirebaseLogic.syncSuppliers(this);
+        shiftFirebaseLogic.syncShifts(this);
 
         WorkerFirebaseLogic workerFirebaseLogic = new WorkerFirebaseLogic();
-        workerFirebaseLogic.syncMedicines(this);
+        workerFirebaseLogic.syncWorkers(this);
 
         MachineFirebaseLogic machineFirebaseLogic = new MachineFirebaseLogic();
-        machineFirebaseLogic.syncReceipt(this);
+        machineFirebaseLogic.syncMachines(this);
 
         MachineWorkersFirebaseLogic machineWorkersFirebaseLogic = new MachineWorkersFirebaseLogic();
-        machineWorkersFirebaseLogic.syncReceiptMedicines(this);
+        machineWorkersFirebaseLogic.syncMachineWorkers(this);
 
     }
 

@@ -92,11 +92,11 @@ public class ShiftsActivity extends AppCompatActivity {
     }
 
 
-    void fillTable(List<String> titles, List<ShiftModel> suppliers) {
+    void fillTable(List<String> titles, List<ShiftModel> shifts) {
 
-        TableLayout tableLayoutSuppliers = findViewById(R.id.tableLayoutShifts);
+        TableLayout tableLayoutShifts = findViewById(R.id.tableLayoutShifts);
 
-        tableLayoutSuppliers.removeAllViews();
+        tableLayoutShifts.removeAllViews();
 
         TableRow tableRowTitles = new TableRow(this);
 
@@ -112,14 +112,14 @@ public class ShiftsActivity extends AppCompatActivity {
         }
 
         tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
-        tableLayoutSuppliers.addView(tableRowTitles);
+        tableLayoutShifts.addView(tableRowTitles);
 
 
-        for (ShiftModel supplier : suppliers) {
+        for (ShiftModel shift : shifts) {
             TableRow tableRow = new TableRow(this);
 
             TextView textViewName = new TextView(this);
-            textViewName.setText(supplier.getName());
+            textViewName.setText(shift.getName());
             textViewName.setHeight(100);
             textViewName.setTextSize(16);
             textViewName.setTextColor(Color.WHITE);
@@ -128,13 +128,13 @@ public class ShiftsActivity extends AppCompatActivity {
             TextView textViewContractExecution = new TextView(this);
             textViewName.setHeight(100);
             textViewContractExecution.setTextSize(16);
-            textViewContractExecution.setText(String.valueOf(new Date(supplier.getContractExecution())));
+            textViewContractExecution.setText(String.valueOf(new Date(shift.getContractExecution())));
             textViewContractExecution.setTextColor(Color.WHITE);
             textViewContractExecution.setGravity(Gravity.CENTER);
 
             TextView textViewId = new TextView(this);
             textViewId.setVisibility(View.INVISIBLE);
-            textViewId.setText(String.valueOf(supplier.getId()));
+            textViewId.setText(String.valueOf(shift.getId()));
 
             tableRow.addView(textViewName);
             tableRow.addView(textViewContractExecution);
@@ -146,8 +146,8 @@ public class ShiftsActivity extends AppCompatActivity {
 
                 selectedRow = tableRow;
 
-                for (int i = 0; i < tableLayoutSuppliers.getChildCount(); i++) {
-                    View view = tableLayoutSuppliers.getChildAt(i);
+                for (int i = 0; i < tableLayoutShifts.getChildCount(); i++) {
+                    View view = tableLayoutShifts.getChildAt(i);
                     if (view instanceof TableRow) {
                         view.setBackgroundColor(Color.parseColor("#FF6200EE"));
                     }
@@ -156,7 +156,7 @@ public class ShiftsActivity extends AppCompatActivity {
                 tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
             });
 
-            tableLayoutSuppliers.addView(tableRow);
+            tableLayoutShifts.addView(tableRow);
         }
     }
 }

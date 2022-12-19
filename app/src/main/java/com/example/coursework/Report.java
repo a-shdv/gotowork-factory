@@ -21,17 +21,17 @@ import java.util.Map;
 public class Report {
 
     final int TABLE_WIDTH = 400;
-    String[] columns = {"Supplier name", "Number of supplies"};
+    String[] columns = {"Shift name", "Number of shifts"};
     final int COLUMN_COUNT = 2;
 
-    public void generatePdf(List<MachineModel> receipts, Date dateFrom, Date dateTo) throws IOException {
+    public void generatePdf(List<MachineModel> machines, Date dateFrom, Date dateTo) throws IOException {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
         File file = new File(pdfPath, "report.pdf");
         PdfWriter pdfWriter = new PdfWriter(new FileOutputStream(file));
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         Document document = new Document(pdfDocument);
 
-        Paragraph paragraph = new Paragraph("Report on the number of supplies for the period from to " + dateFrom.getDate() + " / " + dateFrom.getMonth() + " / " + (dateFrom.getYear() + 1900) + " to " + dateTo.getDate() + " / " + dateTo.getMonth() + " / " + (dateTo.getYear() + 1900));
+        Paragraph paragraph = new Paragraph("Report on the number of shifts for the period from to " + dateFrom.getDate() + " / " + dateFrom.getMonth() + " / " + (dateFrom.getYear() + 1900) + " to " + dateTo.getDate() + " / " + dateTo.getMonth() + " / " + (dateTo.getYear() + 1900));
 
         document.add(paragraph);
 
@@ -46,38 +46,24 @@ public class Report {
             table.addCell(columns[i]);
         }
 
-        Map<Integer, Integer> supplierReceipts = new HashMap<>();
+        Map<Integer, Integer> shiftMachines = new HashMap<>();
 
-        for (MachineModel receipt : receipts) {
-            if (supplierReceipts.containsKey(receipt.getSupplierId())) {
-                supplierReceipts.put(receipt.getSupplierId(), supplierReceipts.get(receipt.getSupplierId()) + 1);
+        for (MachineModel machine : machines) {
+            if (shiftMachines.containsKey(machine.getShiftId())) {
+                shiftMachines.put(machine.getShiftId(), shiftMachines.get(machine.getShiftId()) + 1);
             } else {
-                supplierReceipts.put(receipt.getSupplierId(), 1);
+                shiftMachines.put(machine.getShiftId(), 1);
             }
         }
-
-
-/*        for (int i = 0; i < receipts.size(); i++) {
-            if (!checked.contains(receipts.get(i).getSupplierName())) {
-                checked.add(receipts.get(i).getSupplierName());
-            }
-        }*/
 
         List<String> checked = new ArrayList<>();
-        for (int i = 0; i < receipts.size(); i++) {
-            if (receipts.get(i) != null && !checked.contains(receipts.get(i).getSupplierName())) {
-                table.addCell(receipts.get(i).getSupplierId() + ". " + receipts.get(i).getSupplierName());
-                table.addCell(String.valueOf(supplierReceipts.get(receipts.get(i).getSupplierId())));
-                checked.add(receipts.get(i).getSupplierName());
+        for (int i = 0; i < machines.size(); i++) {
+            if (machines.get(i) != null && !checked.contains(machines.get(i).getShiftName())) {
+                table.addCell(machines.get(i).getShiftId() + ". " + machines.get(i).getShiftName());
+                table.addCell(String.valueOf(shiftMachines.get(machines.get(i).getShiftId())));
+                checked.add(machines.get(i).getShiftName());
             }
         }
-
-/*        for (ReceiptModel receipt : receipts) {
-            if (receipt.getSupplierId() != 0) {
-                table.addCell(receipt.getSupplierId() + ". " + receipt.getSupplierName());
-                table.addCell(String.valueOf(supplierReceipts.get(receipt.getSupplierId())));
-            }
-        }*/
 
         document.add(table);
         document.close();

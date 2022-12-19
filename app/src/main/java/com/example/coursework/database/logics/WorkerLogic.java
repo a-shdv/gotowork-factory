@@ -14,11 +14,10 @@ import java.util.List;
 public class WorkerLogic {
     DatabaseHelper sqlHelper;
     SQLiteDatabase db;
-    final String TABLE = "medicine";
+    final String TABLE = "worker";
     final String COLUMN_ID = "id";
     final String COLUMN_NAME = "name";
-    final String COLUMN_TYPE = "type";
-    final String COLUMN_PRICE = "price_per_package";
+    final String COLUMN_PRICE = "hours";
 
     public WorkerLogic(Context context) {
         sqlHelper = new DatabaseHelper(context);
@@ -45,7 +44,6 @@ public class WorkerLogic {
 
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
             obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-            obj.setType(cursor.getString((int) cursor.getColumnIndex(COLUMN_TYPE)));
             obj.setPrice_per_package(cursor.getInt((int) cursor.getColumnIndex(COLUMN_PRICE)));
 
             list.add(obj);
@@ -64,7 +62,6 @@ public class WorkerLogic {
 
         obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
         obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-        obj.setType(cursor.getString((int) cursor.getColumnIndex(COLUMN_TYPE)));
         obj.setPrice_per_package(cursor.getInt((int) cursor.getColumnIndex(COLUMN_PRICE)));
 
         return obj;
@@ -73,7 +70,6 @@ public class WorkerLogic {
     public void insert(WorkerModel model) {
         ContentValues content = new ContentValues();
         content.put(COLUMN_NAME,model.getName());
-        content.put(COLUMN_TYPE,model.getType());
         content.put(COLUMN_PRICE,model.getPrice_per_package());
         db.insert(TABLE,null,content);
     }
@@ -81,7 +77,6 @@ public class WorkerLogic {
     public void update(WorkerModel model) {
         ContentValues content=new ContentValues();
         content.put(COLUMN_NAME,model.getName());
-        content.put(COLUMN_TYPE,model.getType());
         content.put(COLUMN_PRICE,model.getPrice_per_package());
         String where = COLUMN_ID + " = " + model.getId();
         db.update(TABLE,content,where,null);

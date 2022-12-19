@@ -16,12 +16,12 @@ public class MachineLogic {
     Context context;
     DatabaseHelper sqlHelper;
     SQLiteDatabase db;
-    final String TABLE = "receipt";
+    final String TABLE = "machine";
     final String COLUMN_ID = "id";
     final String COLUMN_RECEIVING_DATE = "receiving_date";
     final String COLUMN_DISCHARGE_DATE = "discharge_date";
-    final String COLUMN_SUPPLIER_ID = "supplier_id";
-    final String COLUMN_SUPPLIER_NAME = "supplier_name";
+    final String COLUMN_SHIFT_ID = "shift_id";
+    final String COLUMN_SHIFT_NAME = "shift_name";
 
     public MachineLogic(Context context) {
         sqlHelper = new DatabaseHelper(context);
@@ -50,12 +50,12 @@ public class MachineLogic {
             obj.setId(id);
             obj.setReceiving_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_RECEIVING_DATE)));
             obj.setDischarge_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_DISCHARGE_DATE)));
-            obj.setSupplierId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SUPPLIER_ID)));
-            obj.setSupplierName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SUPPLIER_NAME)));
+            obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
+            obj.setShiftName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_NAME)));
 
             MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(context);
             machineWorkersLogic.open();
-            obj.setReceiptMedicines(machineWorkersLogic.getFilteredList(id));
+            obj.setMachineWorkers(machineWorkersLogic.getFilteredList(id));
             machineWorkersLogic.close();
             list.add(obj);
             cursor.moveToNext();
@@ -76,12 +76,12 @@ public class MachineLogic {
             obj.setId(id);
             obj.setReceiving_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_RECEIVING_DATE)));
             obj.setDischarge_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_DISCHARGE_DATE)));
-            obj.setSupplierId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SUPPLIER_ID)));
-            obj.setSupplierName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SUPPLIER_NAME)));
+            obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
+            obj.setShiftName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_NAME)));
 
             MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(context);
             machineWorkersLogic.open();
-            obj.setReceiptMedicines(machineWorkersLogic.getFilteredList(id));
+            obj.setMachineWorkers(machineWorkersLogic.getFilteredList(id));
             machineWorkersLogic.close();
             list.add(obj);
             cursor.moveToNext();
@@ -100,12 +100,12 @@ public class MachineLogic {
         obj.setId(id);
         obj.setReceiving_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_RECEIVING_DATE)));
         obj.setDischarge_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_DISCHARGE_DATE)));
-        obj.setSupplierId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SUPPLIER_ID)));
-        obj.setSupplierName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SUPPLIER_NAME)));
+        obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
+        obj.setShiftName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_NAME)));
 
         MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(context);
         machineWorkersLogic.open();
-        obj.setReceiptMedicines(machineWorkersLogic.getFilteredList(id));
+        obj.setMachineWorkers(machineWorkersLogic.getFilteredList(id));
         machineWorkersLogic.close();
 
         return obj;
@@ -113,16 +113,16 @@ public class MachineLogic {
 
     public void insert(MachineModel model) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_RECEIVING_DATE,model.getReceiving_date());
-        content.put(COLUMN_DISCHARGE_DATE,model.getDischarge_date());
-        content.put(COLUMN_SUPPLIER_ID,model.getSupplierId());
-        content.put(COLUMN_SUPPLIER_NAME, model.getSupplierName());
+        content.put(COLUMN_RECEIVING_DATE, model.getReceiving_date());
+        content.put(COLUMN_DISCHARGE_DATE, model.getDischarge_date());
+        content.put(COLUMN_SHIFT_ID, model.getShiftId());
+        content.put(COLUMN_SHIFT_NAME, model.getShiftName());
 
-        db.insert(TABLE,null,content);
+        db.insert(TABLE, null, content);
 
         MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(context);
         machineWorkersLogic.open();
-        for(MachineWorkersModel machineWorkersModel : model.getReceiptMedicines()){
+        for (MachineWorkersModel machineWorkersModel : model.getMachineWorkers()) {
             machineWorkersLogic.insert(machineWorkersModel);
         }
         machineWorkersLogic.close();
@@ -130,32 +130,32 @@ public class MachineLogic {
 
     public void update(MachineModel model) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_RECEIVING_DATE,model.getReceiving_date());
-        content.put(COLUMN_DISCHARGE_DATE,model.getDischarge_date());
-        content.put(COLUMN_SUPPLIER_ID,model.getSupplierId());
-        content.put(COLUMN_SUPPLIER_NAME,model.getSupplierName());
+        content.put(COLUMN_RECEIVING_DATE, model.getReceiving_date());
+        content.put(COLUMN_DISCHARGE_DATE, model.getDischarge_date());
+        content.put(COLUMN_SHIFT_ID, model.getShiftId());
+        content.put(COLUMN_SHIFT_NAME, model.getShiftName());
         String where = COLUMN_ID + " = " + model.getId();
 
-        db.update(TABLE,content,where,null);
+        db.update(TABLE, content, where, null);
 
         MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(context);
         machineWorkersLogic.open();
-        machineWorkersLogic.deleteByReceiptId(model.getId());
-        for(MachineWorkersModel machineWorkersModel : model.getReceiptMedicines()){
+        machineWorkersLogic.deleteByMachineId(model.getId());
+        for (MachineWorkersModel machineWorkersModel : model.getMachineWorkers()) {
             machineWorkersLogic.insert(machineWorkersModel);
         }
         machineWorkersLogic.close();
     }
 
     public void delete(int id) {
-        String where = COLUMN_ID+" = "+id;
-        db.delete(TABLE,where,null);
+        String where = COLUMN_ID + " = " + id;
+        db.delete(TABLE, where, null);
         MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(context);
-        machineWorkersLogic.deleteByReceiptId(id);
+        machineWorkersLogic.deleteByMachineId(id);
     }
 
-    public void deleteBySupplierId(int supplierId) {
-        String where = COLUMN_SUPPLIER_ID +" = "+supplierId;
-        db.delete(TABLE,where,null);
+    public void deleteByShiftId(int shiftId) {
+        String where = COLUMN_SHIFT_ID + " = " + shiftId;
+        db.delete(TABLE, where, null);
     }
 }
