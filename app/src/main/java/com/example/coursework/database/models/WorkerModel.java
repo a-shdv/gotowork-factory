@@ -4,24 +4,24 @@ public class WorkerModel {
     private int id;
     private String name;
     private String type;
-    private float price_per_package;
+    private float salary;
 
-    public WorkerModel(String name, float price_per_package){
+    public WorkerModel(String name, float salary){
         this.name = name;
         this.type = type;
-        this.price_per_package = price_per_package;
+        this.salary = salary;
     }
 
     public WorkerModel(){
 
     }
 
-    public float getPrice_per_package() {
-        return price_per_package;
+    public float getSalary() {
+        return salary;
     }
 
-    public void setPrice_per_package(float price_per_package) {
-        this.price_per_package = price_per_package;
+    public void setSalary(float salary) {
+        this.salary = salary;
     }
 
     public String getType() {

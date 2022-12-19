@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="left"
-            android:text="@string/text_view_password_login" />
+            android:text="@string/text_view_login_text" />
 
         <EditText
             android:id="@+id/edit_text_login"

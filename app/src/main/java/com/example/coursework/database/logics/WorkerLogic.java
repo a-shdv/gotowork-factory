@@ -17,7 +17,7 @@ public class WorkerLogic {
     final String TABLE = "worker";
     final String COLUMN_ID = "id";
     final String COLUMN_NAME = "name";
-    final String COLUMN_PRICE = "hours";
+    final String COLUMN_SALARY = "salary";
 
     public WorkerLogic(Context context) {
         sqlHelper = new DatabaseHelper(context);
@@ -44,7 +44,7 @@ public class WorkerLogic {
 
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
             obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-            obj.setPrice_per_package(cursor.getInt((int) cursor.getColumnIndex(COLUMN_PRICE)));
+            obj.setSalary(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SALARY)));
 
             list.add(obj);
             cursor.moveToNext();
@@ -62,7 +62,7 @@ public class WorkerLogic {
 
         obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
         obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-        obj.setPrice_per_package(cursor.getInt((int) cursor.getColumnIndex(COLUMN_PRICE)));
+        obj.setSalary(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SALARY)));
 
         return obj;
     }
@@ -70,14 +70,14 @@ public class WorkerLogic {
     public void insert(WorkerModel model) {
         ContentValues content = new ContentValues();
         content.put(COLUMN_NAME,model.getName());
-        content.put(COLUMN_PRICE,model.getPrice_per_package());
+        content.put(COLUMN_SALARY,model.getSalary());
         db.insert(TABLE,null,content);
     }
 
     public void update(WorkerModel model) {
         ContentValues content=new ContentValues();
         content.put(COLUMN_NAME,model.getName());
-        content.put(COLUMN_PRICE,model.getPrice_per_package());
+        content.put(COLUMN_SALARY,model.getSalary());
         String where = COLUMN_ID + " = " + model.getId();
         db.update(TABLE,content,where,null);
     }

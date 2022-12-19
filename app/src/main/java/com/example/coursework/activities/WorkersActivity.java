@@ -32,7 +32,7 @@ public class WorkersActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         logic.open();
-        fillTable(Arrays.asList("Имя", "Часы"), logic.getFullList());
+        fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
         logic.close();
     }
 
@@ -74,7 +74,7 @@ public class WorkersActivity extends AppCompatActivity {
                         logic.open();
                         TextView textView = (TextView) selectedRow.getChildAt(3);
                         logic.delete(Integer.valueOf(textView.getText().toString()));
-                        fillTable(Arrays.asList("Имя", "Часы"), logic.getFullList());
+                        fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
                         logic.close();
                         selectedRow = null;
                     }
@@ -86,7 +86,7 @@ public class WorkersActivity extends AppCompatActivity {
         });
 
         logic.open();
-        fillTable(Arrays.asList("Имя", "Часы"), logic.getFullList());
+        fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
         logic.close();
 
     }
@@ -131,12 +131,12 @@ public class WorkersActivity extends AppCompatActivity {
             textViewType.setTextColor(Color.WHITE);
             textViewType.setGravity(Gravity.CENTER);
 
-            TextView textViewPrice = new TextView(this);
+            TextView textViewSalary = new TextView(this);
             textViewName.setHeight(100);
-            textViewPrice.setTextSize(16);
-            textViewPrice.setText(String.valueOf(worker.getPrice_per_package()));
-            textViewPrice.setTextColor(Color.WHITE);
-            textViewPrice.setGravity(Gravity.CENTER);
+            textViewSalary.setTextSize(16);
+            textViewSalary.setText(String.valueOf(worker.getSalary()));
+            textViewSalary.setTextColor(Color.WHITE);
+            textViewSalary.setGravity(Gravity.CENTER);
 
             TextView textViewId = new TextView(this);
             textViewId.setVisibility(View.INVISIBLE);
@@ -144,7 +144,7 @@ public class WorkersActivity extends AppCompatActivity {
 
             tableRow.addView(textViewName);
             tableRow.addView(textViewType);
-            tableRow.addView(textViewPrice);
+            tableRow.addView(textViewSalary);
             tableRow.addView(textViewId);
 
             tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));

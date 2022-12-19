@@ -187,7 +187,7 @@ public class MachineActivity extends AppCompatActivity {
                     machineWorkers.add(new MachineWorkersModel(id, workerId, Integer.valueOf(edit_text_count.getText().toString())));
                     edit_text_count.setText("");
                     spinnerWorkers.setSelection(0);
-                    fillTable(Arrays.asList("Имя работника", "Количество"), machineWorkers);
+                    fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
                 }
         );
 

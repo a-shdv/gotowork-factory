@@ -41,7 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE worker (" +
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name character(100) NOT NULL,\n" +
-                "    hours real NOT NULL);");
+                "    salary real NOT NULL);");
 
         db.execSQL("CREATE TABLE machine_workers (" +
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +

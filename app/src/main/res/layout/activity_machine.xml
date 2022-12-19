@@ -98,7 +98,7 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_count" />
+        android:text="@string/text_view_hours" />
 
     <EditText
         android:id="@+id/edit_text_count"

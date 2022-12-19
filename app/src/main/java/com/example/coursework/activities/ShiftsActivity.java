@@ -35,7 +35,7 @@ public class ShiftsActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         logic.open();
-        fillTable(Arrays.asList("Имя", "Дата оформления договора"), logic.getFilteredList(userId));
+        fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(userId));
         logic.close();
     }
 
@@ -54,7 +54,7 @@ public class ShiftsActivity extends AppCompatActivity {
         userId = getIntent().getExtras().getInt("userId");
 
         logic.open();
-        fillTable(Arrays.asList("Имя", "Дата оформления договора"), logic.getFilteredList(userId));
+        fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(userId));
         logic.close();
 
         button_create.setOnClickListener(v -> {
@@ -80,7 +80,7 @@ public class ShiftsActivity extends AppCompatActivity {
                 logic.open();
                 TextView textView = (TextView) selectedRow.getChildAt(2);
                 logic.delete(Integer.parseInt(textView.getText().toString()));
-                fillTable(Arrays.asList("Имя", "Дата оформления договора"), logic.getFilteredList(userId));
+                fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(userId));
                 logic.close();
                 selectedRow = null;
             }

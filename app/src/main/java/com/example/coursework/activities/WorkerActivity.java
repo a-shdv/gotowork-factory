@@ -15,7 +15,7 @@ public class WorkerActivity extends AppCompatActivity {
     Button button_create;
     Button button_cancel;
     EditText edit_text_worker_name;
-    EditText edit_text_hours;
+    EditText edit_text_salary;
     WorkerLogic logic;
 
     @Override
@@ -30,7 +30,7 @@ public class WorkerActivity extends AppCompatActivity {
         button_create = findViewById(R.id.button_create);
         button_cancel = findViewById(R.id.button_cancel);
         edit_text_worker_name = findViewById(R.id.edit_text_worker_name);
-        edit_text_hours = findViewById(R.id.edit_text_hours);
+        edit_text_salary = findViewById(R.id.edit_text_salary);
 
         if (id != 0) {
             logic.open();
@@ -38,12 +38,12 @@ public class WorkerActivity extends AppCompatActivity {
             logic.close();
 
             edit_text_worker_name.setText(model.getName());
-            edit_text_hours.setText(String.valueOf(model.getPrice_per_package()));
+            edit_text_salary.setText(String.valueOf(model.getSalary()));
         }
 
         button_create.setOnClickListener(
                 v -> {
-                    WorkerModel model = new WorkerModel(edit_text_worker_name.getText().toString(), Float.parseFloat(edit_text_hours.getText().toString()));
+                    WorkerModel model = new WorkerModel(edit_text_worker_name.getText().toString(), Float.parseFloat(edit_text_salary.getText().toString()));
                     logic.open();
 
                     if (id != 0) {
