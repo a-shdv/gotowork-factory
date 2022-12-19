@@ -15,10 +15,10 @@
 
         <TextView
             android:id="@+id/text_view_login"
-            android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:gravity="left"
             android:text="@string/text_view_password_login" />
 
         <EditText
@@ -37,12 +37,12 @@
         android:layout_margin="10dp">
 
 
-    <TextView
+        <TextView
             android:id="@+id/text_view_password"
-            android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:gravity="left"
             android:text="@string/text_view_password_text" />
 
         <EditText

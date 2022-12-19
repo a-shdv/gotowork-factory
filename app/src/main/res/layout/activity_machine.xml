@@ -30,15 +30,15 @@
     </LinearLayout>
 
     <TextView
-            android:id="@+id/text_view_supplier"
+            android:id="@+id/text_view_shift"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/text_view_supplier" />
+            android:text="@string/text_view_shift" />
 
     <Spinner
-        android:id="@+id/spinner_suppliers"
+        android:id="@+id/spinner_shifts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -51,21 +51,21 @@
         android:layout_margin="10dp"
         android:layout_weight="1000" >
         <ScrollView
-            android:id="@+id/scrollViewReceiptMedicines"
+            android:id="@+id/scrollViewMachineWorkers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:layout_alignParentLeft="true" >
 
             <RelativeLayout
-                android:id="@+id/relativeLayoutReceiptMedicines"
+                android:id="@+id/relativeLayoutMachineWorkers"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="top"
                 android:orientation="vertical" >
 
                 <TableLayout
-                    android:id="@+id/tableLayoutReceiptMedicines"
+                    android:id="@+id/tableLayoutMachineWorkers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"></TableLayout>
@@ -81,14 +81,14 @@
         android:layout_weight="1" >
 
     <TextView
-        android:id="@+id/text_view_medicine"
+        android:id="@+id/text_view_worker"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_medicine" />
+        android:text="@string/text_view_worker" />
 
     <Spinner
-        android:id="@+id/spinner_medicines"
+        android:id="@+id/spinner_workers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"/>
@@ -114,20 +114,20 @@
         android:layout_margin="10dp"
         android:layout_weight="1" >
         <Button
-            android:id="@+id/button_add_medicine"
+            android:id="@+id/button_add_worker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/button_add_medicine"/>
+            android:text="@string/button_add_worker"/>
 
         <Button
-            android:id="@+id/button_delete_medicine"
+            android:id="@+id/button_delete_worker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:text="@string/button_delete_medicine"/>
+            android:text="@string/button_delete_worker"/>
     </LinearLayout>
 
     <Button

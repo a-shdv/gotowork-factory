@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Будьте больны</string>
-    <string name="button_suppliers_text">Поставщики</string>
-    <string name="button_medicine_text">Лекарства</string>
+    <string name="app_name">Иди работать!</string>
+    <string name="button_shifts_text">Смены</string>
+    <string name="button_workers_text">Работники</string>
     <string name="button_exit_text">Выйти из личного кабинета</string>
     <string name="button_report_text">Сформировать отчет</string>
     <string name="text_view_password_text">Пароль: </string>
@@ -10,23 +10,22 @@
     <string name="button_register_text">Зарегестрироваться</string>
     <string name="button_create_text">Создать</string>
     <string name="button_save_text">Сохранить</string>
-    <string name="button_receipt_text">Рецепты</string>
-    <string name="text_view_contract_execution">Дата оформления договора: </string>
+    <string name="button_machines_text">Станки</string>
+    <string name="text_view_shift_date">Дата смены: </string>
     <string name="button_cancel_text">Отмена</string>
     <string name="text_view_name">Имя: </string>
     <string name="button_update_text">Изменить</string>
     <string name="button_delete_text">Удалить</string>
     <string name="button_back_text">Назад</string>
-    <string name="text_view_medicine_name">Название: </string>
-    <string name="text_view_type">Тип: </string>
-    <string name="text_view_price">Цена за упаковку: </string>
-    <string name="button_discharge_date">Установить дату назначения</string>
-    <string name="button_receiving_date">Установить дату получения</string>
-    <string name="button_add_medicine">Добавить лекарство</string>
-    <string name="button_delete_medicine">Удалить лекарство</string>
-    <string name="text_view_supplier">Поставщик: </string>
-    <string name="text_view_medicine">Название лекарства: </string>
-    <string name="text_view_count">Количество штук: </string>
+    <string name="text_view_worker_name">Название: </string>
+    <string name="text_view_hours">Количество часов: </string>
+    <string name="button_discharge_date">Установить дату назначения</string><!-- Пока неизвестно-->
+    <string name="button_receiving_date">Установить дату получения</string><!-- Пока неизвестно-->
+    <string name="button_add_worker">Добавить работника</string>
+    <string name="button_delete_worker">Удалить работника</string>
+    <string name="text_view_shift">Смена: </string>
+    <string name="text_view_worker">Имя работника: </string>
+    <string name="text_view_count">Количество штук: </string> <!-- Пока неизвестно-->
     <string name="button_date_from">Установить начальную дату</string>
     <string name="button_date_to">Установить конечную дату</string>
 </resources>

@@ -43,8 +43,8 @@ public class MachineActivity extends AppCompatActivity {
     Button button_receiving_date;
     Button button_create;
     Button button_cancel;
-    Button button_add_medicine;
-    Button button_delete_medicine;
+    Button button_add_worker;
+    Button button_delete_worker;
 
     Calendar discharge_date;
     Calendar receiving_date;
@@ -57,7 +57,7 @@ public class MachineActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_receipt);
+        setContentView(R.layout.activity_machine);
 
         logic = new MachineLogic(this);
 
@@ -72,8 +72,8 @@ public class MachineActivity extends AppCompatActivity {
         button_receiving_date = findViewById(R.id.button_receiving_date);
         button_create = findViewById(R.id.button_create);
         button_cancel = findViewById(R.id.button_cancel);
-        button_add_medicine = findViewById(R.id.button_add_medicine);
-        button_delete_medicine = findViewById(R.id.button_delete_medicine);
+        button_add_worker = findViewById(R.id.button_add_worker);
+        button_delete_worker = findViewById(R.id.button_delete_worker);
 
         discharge_date = new GregorianCalendar();
         receiving_date = new GregorianCalendar();
@@ -91,10 +91,10 @@ public class MachineActivity extends AppCompatActivity {
             suppliersNames.add(supplier.getName());
         }
 
-        Spinner spinnerSuppliers = findViewById(R.id.spinner_suppliers);
+        Spinner spinnerShifts = findViewById(R.id.spinner_shifts);
         ArrayAdapter<String> adapterSuppliers = new ArrayAdapter(this, android.R.layout.simple_spinner_item, suppliersNames);
         adapterSuppliers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSuppliers.setAdapter(adapterSuppliers);
+        spinnerShifts.setAdapter(adapterSuppliers);
 
         //комбо бокс лекарств
         WorkerLogic workerLogic = new WorkerLogic(this);
@@ -107,10 +107,10 @@ public class MachineActivity extends AppCompatActivity {
             medicinesNames.add(medicine.getName());
         }
 
-        Spinner spinnerMedicines = findViewById(R.id.spinner_medicines);
+        Spinner spinnerWorkers = findViewById(R.id.spinner_workers);
         ArrayAdapter<String> adapterMedicines = new ArrayAdapter(this, android.R.layout.simple_spinner_item, medicinesNames);
         adapterMedicines.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerMedicines.setAdapter(adapterMedicines);
+        spinnerWorkers.setAdapter(adapterMedicines);
 
         button_discharge_date.setOnClickListener(
                 v -> {
@@ -150,8 +150,8 @@ public class MachineActivity extends AppCompatActivity {
 
         button_create.setOnClickListener(
                 v -> {
-                    int supplierId = suppliers.get(spinnerSuppliers.getSelectedItemPosition()).getId();
-                    String supplierName =  suppliers.get(spinnerSuppliers.getSelectedItemPosition()).getName();
+                    int supplierId = suppliers.get(spinnerShifts.getSelectedItemPosition()).getId();
+                    String supplierName =  suppliers.get(spinnerShifts.getSelectedItemPosition()).getName();
                     MachineModel model = new MachineModel(receiving_date.getTime().getTime(), discharge_date.getTime().getTime(), supplierId,
                            supplierName, receiptMedicines);
                     logic.open();
@@ -176,9 +176,9 @@ public class MachineActivity extends AppCompatActivity {
                 }
         );
 
-        button_add_medicine.setOnClickListener(
+        button_add_worker.setOnClickListener(
                 v -> {
-                    int medicineId = medicines.get(spinnerMedicines.getSelectedItemPosition()).getId();
+                    int medicineId = medicines.get(spinnerWorkers.getSelectedItemPosition()).getId();
                     for(MachineWorkersModel receiptMedicine : receiptMedicines){
                         if(receiptMedicine.getMedicineId() == medicineId){
                             return;
@@ -186,12 +186,12 @@ public class MachineActivity extends AppCompatActivity {
                     }
                     receiptMedicines.add(new MachineWorkersModel(id, medicineId, Integer.valueOf(edit_text_count.getText().toString())));
                     edit_text_count.setText("");
-                    spinnerMedicines.setSelection(0);
+                    spinnerWorkers.setSelection(0);
                     fillTable(Arrays.asList("Название лекарства", "Количество"), receiptMedicines);
                 }
         );
 
-        button_delete_medicine.setOnClickListener(
+        button_delete_worker.setOnClickListener(
                 v -> {
                     TextView textView = (TextView) selectedRow.getChildAt(2);
                     int index = Integer.valueOf(textView.getText().toString());
@@ -206,9 +206,9 @@ public class MachineActivity extends AppCompatActivity {
 
     void fillTable(List<String> titles, List<MachineWorkersModel> receiptMedicines) {
 
-        TableLayout tableLayoutReceiptMedicines = findViewById(R.id.tableLayoutReceiptMedicines);
+        TableLayout tableLayoutMachineWorkers = findViewById(R.id.tableLayoutMachineWorkers);
 
-        tableLayoutReceiptMedicines.removeAllViews();
+        tableLayoutMachineWorkers.removeAllViews();
 
         TableRow tableRowTitles = new TableRow(this);
 
@@ -224,7 +224,7 @@ public class MachineActivity extends AppCompatActivity {
         }
 
         tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
-        tableLayoutReceiptMedicines.addView(tableRowTitles);
+        tableLayoutMachineWorkers.addView(tableRowTitles);
 
         int index = 0;
         for (MachineWorkersModel receiptMedicine : receiptMedicines) {
@@ -260,8 +260,8 @@ public class MachineActivity extends AppCompatActivity {
 
                 selectedRow = tableRow;
 
-                for (int i = 0; i < tableLayoutReceiptMedicines.getChildCount(); i++) {
-                    View view = tableLayoutReceiptMedicines.getChildAt(i);
+                for (int i = 0; i < tableLayoutMachineWorkers.getChildCount(); i++) {
+                    View view = tableLayoutMachineWorkers.getChildAt(i);
                     if (view instanceof TableRow) {
                         view.setBackgroundColor(Color.parseColor("#FF6200EE"));
                     }
@@ -270,7 +270,7 @@ public class MachineActivity extends AppCompatActivity {
                 tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
             });
 
-            tableLayoutReceiptMedicines.addView(tableRow);
+            tableLayoutMachineWorkers.addView(tableRow);
             index++;
         }
     }

@@ -14,15 +14,14 @@ public class WorkerActivity extends AppCompatActivity {
 
     Button button_create;
     Button button_cancel;
-    EditText edit_text_medicine_name;
-    EditText edit_text_type;
-    EditText edit_text_price;
+    EditText edit_text_worker_name;
+    EditText edit_text_hours;
     WorkerLogic logic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medicine);
+        setContentView(R.layout.activity_worker);
 
         int id = getIntent().getExtras().getInt("id");
 
@@ -30,23 +29,21 @@ public class WorkerActivity extends AppCompatActivity {
 
         button_create = findViewById(R.id.button_create);
         button_cancel = findViewById(R.id.button_cancel);
-        edit_text_medicine_name = findViewById(R.id.edit_text_medicine_name);
-        edit_text_type = findViewById(R.id.edit_text_type);
-        edit_text_price = findViewById(R.id.edit_text_price);
+        edit_text_worker_name = findViewById(R.id.edit_text_worker_name);
+        edit_text_hours = findViewById(R.id.edit_text_hours);
 
         if (id != 0) {
             logic.open();
             WorkerModel model = logic.getElement(id);
             logic.close();
 
-            edit_text_medicine_name.setText(model.getName());
-            edit_text_type.setText(model.getType());
-            edit_text_price.setText(String.valueOf(model.getPrice_per_package()));
+            edit_text_worker_name.setText(model.getName());
+            edit_text_hours.setText(String.valueOf(model.getPrice_per_package()));
         }
 
         button_create.setOnClickListener(
                 v -> {
-                    WorkerModel model = new WorkerModel(edit_text_medicine_name.getText().toString(), edit_text_type.getText().toString(), Float.parseFloat(edit_text_price.getText().toString()));
+                    WorkerModel model = new WorkerModel(edit_text_worker_name.getText().toString(), Float.parseFloat(edit_text_hours.getText().toString()));
                     logic.open();
 
                     if (id != 0) {

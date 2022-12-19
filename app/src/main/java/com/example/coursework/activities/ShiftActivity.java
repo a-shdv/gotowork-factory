@@ -26,7 +26,7 @@ public class ShiftActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_supplier);
+        setContentView(R.layout.activity_shift);
 
         int userId = getIntent().getExtras().getInt("userId");
         int id = getIntent().getExtras().getInt("id");
@@ -36,7 +36,7 @@ public class ShiftActivity extends AppCompatActivity {
         button_create = findViewById(R.id.button_create);
         button_cancel = findViewById(R.id.button_cancel);
         edit_text_name = findViewById(R.id.edit_text_name);
-        date_picker_contract_execution = findViewById(R.id.date_picker_contract_execution);
+        date_picker_contract_execution = findViewById(R.id.date_picker_shift_date);
 
         if (id != 0){
             logic.open();

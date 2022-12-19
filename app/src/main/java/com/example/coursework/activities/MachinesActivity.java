@@ -44,7 +44,7 @@ public class MachinesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_receipts);
+        setContentView(R.layout.activity_machines);
 
         button_create = findViewById(R.id.button_create);
         button_update = findViewById(R.id.button_update);
@@ -99,7 +99,7 @@ public class MachinesActivity extends AppCompatActivity {
 
     void fillTable(List<String> titles, List<MachineModel> receipts) {
 
-        TableLayout tableLayoutReceipts = findViewById(R.id.tableLayoutReceipts);
+        TableLayout tableLayoutReceipts = findViewById(R.id.tableLayoutMachines);
 
         tableLayoutReceipts.removeAllViews();
 

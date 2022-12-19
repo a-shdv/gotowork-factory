@@ -39,7 +39,7 @@ public class WorkersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medicines);
+        setContentView(R.layout.activity_workers);
 
         button_create = findViewById(R.id.button_create);
         button_update = findViewById(R.id.button_update);
@@ -93,7 +93,7 @@ public class WorkersActivity extends AppCompatActivity {
 
     void fillTable(List<String> titles, List<WorkerModel> medicines) {
 
-        TableLayout tableLayoutMedicines = findViewById(R.id.tableLayoutMedicines);
+        TableLayout tableLayoutMedicines = findViewById(R.id.tableLayoutWorkers);
 
         tableLayoutMedicines.removeAllViews();
 

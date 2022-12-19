@@ -6,7 +6,7 @@ public class WorkerModel {
     private String type;
     private float price_per_package;
 
-    public WorkerModel(String name, String type, float price_per_package){
+    public WorkerModel(String name, float price_per_package){
         this.name = name;
         this.type = type;
         this.price_per_package = price_per_package;

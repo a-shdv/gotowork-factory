@@ -19,9 +19,9 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button_suppliers;
-    Button button_medicines;
-    Button button_receipts;
+    Button button_workers;
+    Button button_shifts;
+    Button button_machines;
     Button button_report;
     Button button_exit;
 
@@ -39,28 +39,28 @@ public class MainActivity extends AppCompatActivity {
 
         context = this;
 
-        button_receipts = findViewById(R.id.button_receipts);
-        button_medicines = findViewById(R.id.button_medicines);
-        button_suppliers = findViewById(R.id.button_suppliers);
+        button_machines = findViewById(R.id.button_machines);
+        button_workers = findViewById(R.id.button_workers);
+        button_shifts = findViewById(R.id.button_shifts);
         button_report = findViewById(R.id.button_report);
         button_exit = findViewById(R.id.button_exit);
 
 
-        button_receipts.setOnClickListener(
+        button_machines.setOnClickListener(
                 v -> {
                     Intent intent = new Intent(MainActivity.this, MachinesActivity.class);
                     startActivity(intent);
                 }
         );
 
-        button_medicines.setOnClickListener(
+        button_workers.setOnClickListener(
                 v -> {
                     Intent intent = new Intent(MainActivity.this, WorkersActivity.class);
                     startActivity(intent);
                 }
         );
 
-        button_suppliers.setOnClickListener(
+        button_shifts.setOnClickListener(
                 v -> {
                     int userId = getIntent().getExtras().getInt("userId");
                     Intent intent = new Intent(MainActivity.this, ShiftsActivity.class);

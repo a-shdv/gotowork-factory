@@ -5,41 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.ShiftActivity">
+    tools:context=".activities.WorkerActivity">
 
     <TextView
-        android:id="@+id/text_view_name"
+        android:id="@+id/text_view_worker_name"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_name" />
+        android:text="@string/text_view_worker_name" />
 
     <EditText
-        android:id="@+id/edit_text_name"
+        android:id="@+id/edit_text_worker_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_margin="10dp"/>
 
     <TextView
-        android:id="@+id/text_view_contract_execution"
+        android:id="@+id/text_view_hours"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_contract_execution" />
-    <LinearLayout
+        android:text="@string/text_view_hours" />
+
+    <EditText
+        android:id="@+id/edit_text_hours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="30dp">
-
-        <DatePicker
-            android:id="@+id/date_picker_contract_execution"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"/>
-
-    </LinearLayout>
+        android:ems="10"
+        android:layout_margin="10dp"/>
 
     <Button
         android:id="@+id/button_create"

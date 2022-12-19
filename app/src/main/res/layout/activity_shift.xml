@@ -5,49 +5,41 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.WorkerActivity">
+    tools:context=".activities.ShiftActivity">
 
     <TextView
-        android:id="@+id/text_view_medicine_name"
+        android:id="@+id/text_view_name"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_medicine_name" />
+        android:text="@string/text_view_name" />
 
     <EditText
-        android:id="@+id/edit_text_medicine_name"
+        android:id="@+id/edit_text_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:layout_margin="10dp"/>
 
     <TextView
-        android:id="@+id/text_view_type"
+        android:id="@+id/text_view_shift_date"
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_view_type" />
-
-    <EditText
-        android:id="@+id/edit_text_type"
+        android:text="@string/text_view_shift_date" />
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="10dp"/>
+        android:orientation="horizontal"
+        android:layout_margin="30dp">
 
-    <TextView
-        android:id="@+id/text_view_price"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/text_view_price" />
+        <DatePicker
+            android:id="@+id/date_picker_shift_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
 
-    <EditText
-        android:id="@+id/edit_text_price"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:layout_margin="10dp"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/button_create"

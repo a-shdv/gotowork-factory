@@ -42,7 +42,7 @@ public class ShiftsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_suppliers);
+        setContentView(R.layout.activity_shifts);
 
         button_create = findViewById(R.id.button_create);
         button_update = findViewById(R.id.button_update);
@@ -94,7 +94,7 @@ public class ShiftsActivity extends AppCompatActivity {
 
     void fillTable(List<String> titles, List<ShiftModel> suppliers) {
 
-        TableLayout tableLayoutSuppliers = findViewById(R.id.tableLayoutSuppliers);
+        TableLayout tableLayoutSuppliers = findViewById(R.id.tableLayoutShifts);
 
         tableLayoutSuppliers.removeAllViews();
 
