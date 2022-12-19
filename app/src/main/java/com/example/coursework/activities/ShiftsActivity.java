@@ -119,25 +119,25 @@ public class ShiftsActivity extends AppCompatActivity {
             TableRow tableRow = new TableRow(this);
 
             TextView textViewName = new TextView(this);
-            textViewName.setText(shift.getName());
+            textViewName.setText(shift.getType());
             textViewName.setHeight(100);
             textViewName.setTextSize(16);
             textViewName.setTextColor(Color.WHITE);
             textViewName.setGravity(Gravity.CENTER);
 
-            TextView textViewContractExecution = new TextView(this);
+            TextView textViewShiftDate = new TextView(this);
             textViewName.setHeight(100);
-            textViewContractExecution.setTextSize(16);
-            textViewContractExecution.setText(String.valueOf(new Date(shift.getContractExecution())));
-            textViewContractExecution.setTextColor(Color.WHITE);
-            textViewContractExecution.setGravity(Gravity.CENTER);
+            textViewShiftDate.setTextSize(16);
+            textViewShiftDate.setText(String.valueOf(new Date(shift.getDate())));
+            textViewShiftDate.setTextColor(Color.WHITE);
+            textViewShiftDate.setGravity(Gravity.CENTER);
 
             TextView textViewId = new TextView(this);
             textViewId.setVisibility(View.INVISIBLE);
             textViewId.setText(String.valueOf(shift.getId()));
 
             tableRow.addView(textViewName);
-            tableRow.addView(textViewContractExecution);
+            tableRow.addView(textViewShiftDate);
             tableRow.addView(textViewId);
 
             tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));

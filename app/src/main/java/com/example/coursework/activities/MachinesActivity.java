@@ -37,7 +37,7 @@ public class MachinesActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         logic.open();
-        fillTable(Arrays.asList("Начало смены", "Конец смены", "Имя работника"), logic.getFullList());
+        fillTable(Arrays.asList("Тип смены", "Начало смены", "Конец смены"), logic.getFullList());
         logic.close();
     }
 
@@ -79,7 +79,7 @@ public class MachinesActivity extends AppCompatActivity {
                         logic.open();
                         TextView textView = (TextView) selectedRow.getChildAt(3);
                         logic.delete(Integer.valueOf(textView.getText().toString()));
-                        fillTable(Arrays.asList("Начало смены", "Конец смены", "Имя работника"), logic.getFullList());
+                        fillTable(Arrays.asList("Тип смены", "Начало смены", "Конец смены"), logic.getFullList());
                         logic.close();
                         selectedRow = null;
                     }
@@ -92,7 +92,7 @@ public class MachinesActivity extends AppCompatActivity {
 
 
         logic.open();
-        fillTable(Arrays.asList("Начало смены", "Конец смены", "Имя работника"), logic.getFullList());
+        fillTable(Arrays.asList("Тип смены", "Начало смены", "Конец смены"), logic.getFullList());
         logic.close();
 
     }
@@ -112,7 +112,7 @@ public class MachinesActivity extends AppCompatActivity {
             textView.setText(title);
             textView.setTextColor(Color.WHITE);
             textView.setGravity(Gravity.CENTER);
-            textView.setWidth( (int)(getWindowManager().getDefaultDisplay().getWidth() / 3.2));
+            textView.setWidth((int) (getWindowManager().getDefaultDisplay().getWidth() / 3.2));
             tableRowTitles.addView(textView);
         }
 
@@ -122,6 +122,18 @@ public class MachinesActivity extends AppCompatActivity {
 
         for (MachineModel machine : machines) {
             TableRow tableRow = new TableRow(this);
+
+            ShiftLogic shiftLogic = new ShiftLogic(this);
+            shiftLogic.open();
+            ShiftModel shift = shiftLogic.getElement(machine.getShiftId());
+            shiftLogic.close();
+
+            TextView textViewShiftType = new TextView(this);
+            textViewShiftType.setHeight(100);
+            textViewShiftType.setTextSize(16);
+            textViewShiftType.setText(shift.getType());
+            textViewShiftType.setTextColor(Color.WHITE);
+            textViewShiftType.setGravity(Gravity.CENTER);
 
             TextView textViewShiftBegin = new TextView(this);
             textViewShiftBegin.setHeight(100);
@@ -137,24 +149,13 @@ public class MachinesActivity extends AppCompatActivity {
             textViewShiftEnd.setTextColor(Color.WHITE);
             textViewShiftEnd.setGravity(Gravity.CENTER);
 
-            ShiftLogic shiftLogic = new ShiftLogic(this);
-            shiftLogic.open();
-            ShiftModel shift = shiftLogic.getElement(machine.getShiftId());
-            shiftLogic.close();
-            TextView textViewShift = new TextView(this);
-            textViewShift.setHeight(100);
-            textViewShift.setTextSize(16);
-            textViewShift.setText(shift.getName());
-            textViewShift.setTextColor(Color.WHITE);
-            textViewShift.setGravity(Gravity.CENTER);
-
             TextView textViewId = new TextView(this);
             textViewId.setVisibility(View.INVISIBLE);
             textViewId.setText(String.valueOf(machine.getId()));
 
+            tableRow.addView(textViewShiftType);
             tableRow.addView(textViewShiftBegin);
             tableRow.addView(textViewShiftEnd);
-            tableRow.addView(textViewShift);
             tableRow.addView(textViewId);
 
             tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
@@ -163,9 +164,9 @@ public class MachinesActivity extends AppCompatActivity {
 
                 selectedRow = tableRow;
 
-                for(int i = 0; i < tableLayoutMachines.getChildCount(); i++){
+                for (int i = 0; i < tableLayoutMachines.getChildCount(); i++) {
                     View view = tableLayoutMachines.getChildAt(i);
-                    if (view instanceof TableRow){
+                    if (view instanceof TableRow) {
                         view.setBackgroundColor(Color.parseColor("#FF6200EE"));
                     }
                 }

@@ -88,7 +88,7 @@ public class MachineActivity extends AppCompatActivity {
         shiftLogic.close();
 
         for (ShiftModel shift : shifts) {
-            shiftsNames.add(shift.getName());
+            shiftsNames.add(shift.getType());
         }
 
         Spinner spinnerShifts = findViewById(R.id.spinner_shifts);
@@ -151,7 +151,7 @@ public class MachineActivity extends AppCompatActivity {
         button_create.setOnClickListener(
                 v -> {
                     int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
-                    String shiftName =  shifts.get(spinnerShifts.getSelectedItemPosition()).getName();
+                    String shiftName =  shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
                     MachineModel model = new MachineModel(shift_end_date.getTime().getTime(), shift_begin_date.getTime().getTime(), shiftId,
                            shiftName, machineWorkers);
                     logic.open();

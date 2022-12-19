@@ -34,14 +34,14 @@ public class FaceQuestActivity extends AppCompatActivity {
         View view = findViewById(R.id.erase);
         view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         ((EraseView) view).setParent(this);
-
+/*
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(FaceQuestActivity.this, EnterActivity.class));
                 finish();
             }
-        }, 15 * 1000);
+        }, 1 * 1000);*/
     }
 
     void updateThePicture() {
@@ -54,7 +54,7 @@ public class FaceQuestActivity extends AppCompatActivity {
                 startActivity(new Intent(FaceQuestActivity.this, EnterActivity.class));
                 finish();
             }
-        }, 15000);
+        }, 1000);
     }
 
     private void setBitmapAsBackground(Mood mood) {

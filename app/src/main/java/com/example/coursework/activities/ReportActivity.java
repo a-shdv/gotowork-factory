@@ -11,8 +11,8 @@ import android.widget.Toast;
 
 import com.example.coursework.R;
 import com.example.coursework.Report;
-import com.example.coursework.database.logics.MachineLogic;
-import com.example.coursework.database.models.MachineModel;
+import com.example.coursework.database.logics.ShiftLogic;
+import com.example.coursework.database.models.ShiftModel;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -92,10 +92,10 @@ public class ReportActivity extends AppCompatActivity {
         button_report.setOnClickListener(
                 v -> {
                     Report report = new Report();
-                    MachineLogic machineLogic = new MachineLogic(this);
+                    ShiftLogic shiftLogic = new ShiftLogic(this);
 
                     try {
-                        List<MachineModel> full = machineLogic.getFullList();
+                        List<ShiftModel> full = shiftLogic.getFullList();
                         report.generatePdf(full, dateFrom.getTime(), dateTo.getTime());
                         Toast.makeText(ReportActivity.this, "Отчет успешно сформирован!", Toast.LENGTH_LONG).show();
                     } catch (IOException e) {

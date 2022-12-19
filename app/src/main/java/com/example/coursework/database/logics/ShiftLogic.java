@@ -46,8 +46,8 @@ public class ShiftLogic {
             ShiftModel obj = new ShiftModel();
 
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
-            obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-            obj.setContractExecution(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
+            obj.setType(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
+            obj.setDate(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
             obj.setUserid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_USERID)));
 
             list.add(obj);
@@ -67,8 +67,8 @@ public class ShiftLogic {
             ShiftModel obj = new ShiftModel();
 
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
-            obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-            obj.setContractExecution(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
+            obj.setType(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
+            obj.setDate(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
             obj.setUserid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_USERID)));
 
             list.add(obj);
@@ -85,24 +85,24 @@ public class ShiftLogic {
             return null;
         }
         obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
-        obj.setName(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
-        obj.setContractExecution(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
+        obj.setType(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
+        obj.setDate(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
         obj.setUserid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_USERID)));
         return obj;
     }
 
     public void insert(ShiftModel model) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_NAME,model.getName());
-        content.put(COLUMN_SHIFT_DATE,model.getContractExecution());
+        content.put(COLUMN_NAME,model.getType());
+        content.put(COLUMN_SHIFT_DATE,model.getDate());
         content.put(COLUMN_USERID,model.getUserid());
         db.insert(TABLE,null,content);
     }
 
     public void update(ShiftModel model) {
         ContentValues content=new ContentValues();
-        content.put(COLUMN_NAME,model.getName());
-        content.put(COLUMN_SHIFT_DATE,model.getContractExecution());
+        content.put(COLUMN_NAME,model.getType());
+        content.put(COLUMN_SHIFT_DATE,model.getDate());
         content.put(COLUMN_USERID,model.getUserid());
         String where = COLUMN_ID + " = " + model.getId();
         db.update(TABLE,content,where,null);

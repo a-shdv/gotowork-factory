@@ -2,13 +2,13 @@ package com.example.coursework.database.models;
 
 public class ShiftModel {
     private int id;
-    private String name;
-    private long contractExecution;
+    private String type;
+    private long date;
     private int userid;
 
-    public ShiftModel(String name, long contractExecution, int userid){
-        this.name = name;
-        this.contractExecution = contractExecution;
+    public ShiftModel(String type, long date, int userid){
+        this.type = type;
+        this.date = date;
         this.userid = userid;
     }
 
@@ -24,20 +24,20 @@ public class ShiftModel {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public long getContractExecution() {
-        return contractExecution;
+    public long getDate() {
+        return date;
     }
 
-    public void setContractExecution(long contractExecution) {
-        this.contractExecution = contractExecution;
+    public void setDate(long date) {
+        this.date = date;
     }
 
     public int getUserid() {
