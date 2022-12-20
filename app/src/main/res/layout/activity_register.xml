@@ -64,5 +64,12 @@
         android:layout_margin="10dp"
         android:text="@string/button_register_text"/>
 
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/button_back_text" />
+
 
 </LinearLayout>

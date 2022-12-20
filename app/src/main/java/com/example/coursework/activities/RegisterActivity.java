@@ -17,6 +17,7 @@ import java.util.List;
 public class RegisterActivity extends AppCompatActivity {
 
     Button buttonRegister;
+    Button buttonBack;
     EditText editTextLogin;
     EditText editTextPassword;
     UserLogic logic;
@@ -28,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         buttonRegister = findViewById(R.id.button_register);
+        buttonBack = findViewById(R.id.button_back);
         editTextLogin = findViewById(R.id.edit_text_login);
         editTextPassword = findViewById(R.id.edit_text_password);
 
@@ -66,5 +68,9 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
         );
+
+        buttonBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 }
