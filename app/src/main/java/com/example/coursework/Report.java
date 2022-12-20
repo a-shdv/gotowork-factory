@@ -14,7 +14,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,14 +29,14 @@ public class Report {
     String[] columns = {"Machine", "Shift", "Workers"};
     final int COLUMN_COUNT = 3;
 
-    public void generatePdf(List<MachineModel> machines, Date dateFrom, Date dateTo) throws IOException {
+    public void generatePdf(List<MachineModel> machines) throws IOException {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
         File file = new File(pdfPath, "report.pdf");
         PdfWriter pdfWriter = new PdfWriter(new FileOutputStream(file));
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         Document document = new Document(pdfDocument);
 
-        Paragraph paragraph = new Paragraph("Report on the workers\' shifts by the machine for the period time from to " + dateFrom.getDate() + "." + dateFrom.getMonth() + "." + (dateFrom.getYear() + 1900) + " to " + dateTo.getDate() + "." + dateTo.getMonth() + "." + (dateTo.getYear() + 1900));
+        Paragraph paragraph = new Paragraph("Report on the workers\' shifts by the machine");
 
         document.add(paragraph);
 
@@ -48,32 +51,14 @@ public class Report {
             table.addCell(columns[i]);
         }
 
-        Map<Integer, Integer> shiftMachines = new HashMap<>();
-/*
-        for (MachineModel machine : machines) {
-            int test = machine.getId();
-            if (shiftMachines.containsKey(machine.getId())) {
-                int test1 = shiftMachines.get(machine.getId()) + 1;
-                shiftMachines.put(machine.getId(), shiftMachines.get(machine.getId()) + 1);
-            } else {
-                shiftMachines.put(machine.getId(), 1);
-            }
-        }*/
-
         List<String> checked = new ArrayList<>();
         for (int i = 0; i < machines.size(); i++) {
             MachineModel machine = machines.get(i);
-
             if (machine != null && !checked.contains(machine.getMachine_type())) {
                 table.addCell(machine.getId() + ". " + machine.getMachine_type());
-                table.addCell(machine.getShiftId()+ ". " + machine.getShiftName());
+                table.addCell(machine.getShiftId() + ". " + machine.getShiftName());
                 table.addCell(machine.getMachineWorkers().toString());
                 checked.add(machine.getMachine_type());
-/*                if (new Date(shiftDate).after(dateFrom) && new Date(shiftDate).before(dateTo)) {
-                    table.addCell(machine.getId() + ". " + machine.getMachine_type());
-                    table.addCell(String.valueOf(shiftMachines.get(machine.getId())));
-                    checked.add(machine.getMachine_type());
-                }*/
             }
         }
 

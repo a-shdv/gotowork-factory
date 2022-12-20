@@ -6,15 +6,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.coursework.R;
+import com.example.coursework.Report;
 import com.example.coursework.database.firebase.ShiftFirebaseLogic;
 import com.example.coursework.database.firebase.WorkerFirebaseLogic;
 import com.example.coursework.database.firebase.MachineFirebaseLogic;
 import com.example.coursework.database.firebase.MachineWorkersFirebaseLogic;
 import com.example.coursework.database.firebase.UserFirebaseLogic;
+import com.example.coursework.database.logics.MachineLogic;
 import com.example.coursework.database.logics.UserLogic;
 
+import java.io.IOException;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,8 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button button_report;
     Button button_exit;
 
-    Calendar dateFrom;
-    Calendar dateTo;
+
     Context context;
 
     @Override
@@ -79,8 +82,15 @@ public class MainActivity extends AppCompatActivity {
 
         button_report.setOnClickListener(
                 v -> {
-                    Intent intent = new Intent(MainActivity.this, ReportActivity.class);
-                    startActivity(intent);
+                    Report report = new Report();
+                    MachineLogic shiftLogic = new MachineLogic(this);
+
+                    try {
+                        report.generatePdf(shiftLogic.getFullList());
+                        Toast.makeText(MainActivity.this, "Отчет успешно сформирован!", Toast.LENGTH_LONG).show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
         );
     }

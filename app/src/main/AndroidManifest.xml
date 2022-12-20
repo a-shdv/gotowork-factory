@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CourseWork">
         <activity
-            android:name=".activities.ReportActivity"
-            android:exported="true" />
-        <activity
             android:name=".activities.MachineActivity"
             android:exported="true" />
         <activity

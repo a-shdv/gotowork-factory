@@ -39,7 +39,6 @@ public class MachineActivity extends AppCompatActivity {
     TableRow selectedRow;
 
     MachineLogic logic;
-
     Button button_shift_begin_time;
     Button button_shift_end_time;
     Button button_create;
@@ -220,15 +219,18 @@ public class MachineActivity extends AppCompatActivity {
 
         button_create.setOnClickListener(
                 v -> {
+                    String machine = edit_text_machine_type.getText().toString();
+
                     SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
                     String dateTimeBegin = dateFormat.format(shift_begin_time.getTime());
                     String dateTimeEnd = dateFormat.format(shift_end_time.getTime());
 
                     int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
                     String shiftName = shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
+                    long shiftDate = shifts.get(spinnerShifts.getSelectedItemPosition()).getDate();
 
-                    MachineModel model = new MachineModel(edit_text_machine_type.getText().toString(),
-                            dateTimeBegin, dateTimeEnd, shiftId, shiftName, machineWorkers);
+
+                    MachineModel model = new MachineModel(machine, dateTimeBegin, dateTimeEnd, shiftId, shiftName, machineWorkers);
                     logic.open();
 
 
