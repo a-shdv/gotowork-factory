@@ -128,7 +128,7 @@ public class ShiftsActivity extends AppCompatActivity {
 
             // Formatting date
             Date shiftTimeDate = new Date(shift.getDate());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
             String formattedShiftTimeDate = dateFormat.format(shiftTimeDate);
 
             TextView textViewShiftDate = new TextView(this);
