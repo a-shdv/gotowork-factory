@@ -22,8 +22,8 @@ import java.util.Map;
 public class Report {
 
     final int TABLE_WIDTH = 400;
-    String[] columns = {"Shift name", "Number of shifts"};
-    final int COLUMN_COUNT = 2;
+    String[] columns = {"Machine type", "Shift name", "Number of shifts"};
+    final int COLUMN_COUNT = 3;
 
     public void generatePdf(List<MachineModel> machines, Date dateFrom, Date dateTo) throws IOException {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
@@ -48,7 +48,7 @@ public class Report {
         }
 
         Map<Integer, Integer> shiftMachines = new HashMap<>();
-
+/*
         for (MachineModel machine : machines) {
             int test = machine.getId();
             if (shiftMachines.containsKey(machine.getId())) {
@@ -57,7 +57,7 @@ public class Report {
             } else {
                 shiftMachines.put(machine.getId(), 1);
             }
-        }
+        }*/
 
         List<String> checked = new ArrayList<>();
         for (int i = 0; i < machines.size(); i++) {
@@ -65,11 +65,15 @@ public class Report {
             long shiftDate = machines.get(i).getShiftId();
 
             if (machine != null && !checked.contains(machine.getMachine_type())) {
-                if (new Date(shiftDate).after(dateFrom) && new Date(shiftDate).before(dateTo)) {
+                table.addCell(machine.getId() + ". " + machine.getMachine_type());
+                table.addCell(machine.getShiftId()+ ". " + machine.getShiftName());
+                table.addCell(machine.getMachineWorkers().toString());
+                checked.add(machine.getMachine_type());
+/*                if (new Date(shiftDate).after(dateFrom) && new Date(shiftDate).before(dateTo)) {
                     table.addCell(machine.getId() + ". " + machine.getMachine_type());
                     table.addCell(String.valueOf(shiftMachines.get(machine.getId())));
                     checked.add(machine.getMachine_type());
-                }
+                }*/
             }
         }
 

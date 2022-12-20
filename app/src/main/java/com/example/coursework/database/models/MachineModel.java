@@ -81,4 +81,12 @@ public class MachineModel {
     public void setMachineWorkers(List<MachineWorkersModel> machineWorkers) {
         this.machineWorkers = machineWorkers;
     }
+
+/*    @Override
+    public String toString() {
+        for (int i = 0; i < machineWorkers.size(); i++) {
+            machineWorkers.get(i).;
+        };
+        return "";
+    }*/
 }
