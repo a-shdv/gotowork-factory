@@ -17,6 +17,7 @@ import com.example.coursework.database.logics.ShiftLogic;
 import com.example.coursework.database.models.ShiftModel;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -118,17 +119,22 @@ public class ShiftsActivity extends AppCompatActivity {
         for (ShiftModel shift : shifts) {
             TableRow tableRow = new TableRow(this);
 
-            TextView textViewName = new TextView(this);
-            textViewName.setText(shift.getType());
-            textViewName.setHeight(100);
-            textViewName.setTextSize(16);
-            textViewName.setTextColor(Color.WHITE);
-            textViewName.setGravity(Gravity.CENTER);
+            TextView textViewShiftType = new TextView(this);
+            textViewShiftType.setText(shift.getType());
+            textViewShiftType.setHeight(100);
+            textViewShiftType.setTextSize(16);
+            textViewShiftType.setTextColor(Color.WHITE);
+            textViewShiftType.setGravity(Gravity.CENTER);
+
+            // Formatting date
+            Date shiftTimeDate = new Date(shift.getDate());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String formattedShiftTimeDate = dateFormat.format(shiftTimeDate);
 
             TextView textViewShiftDate = new TextView(this);
-            textViewName.setHeight(100);
+            textViewShiftDate.setText(formattedShiftTimeDate);
+            textViewShiftDate.setHeight(100);
             textViewShiftDate.setTextSize(16);
-            textViewShiftDate.setText(String.valueOf(new Date(shift.getDate())));
             textViewShiftDate.setTextColor(Color.WHITE);
             textViewShiftDate.setGravity(Gravity.CENTER);
 
@@ -136,7 +142,7 @@ public class ShiftsActivity extends AppCompatActivity {
             textViewId.setVisibility(View.INVISIBLE);
             textViewId.setText(String.valueOf(shift.getId()));
 
-            tableRow.addView(textViewName);
+            tableRow.addView(textViewShiftType);
             tableRow.addView(textViewShiftDate);
             tableRow.addView(textViewId);
 
