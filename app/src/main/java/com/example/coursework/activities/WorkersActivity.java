@@ -60,7 +60,7 @@ public class WorkersActivity extends AppCompatActivity {
                 v -> {
                     if (selectedRow != null) {
                         Intent intent = new Intent(WorkersActivity.this, WorkerActivity.class);
-                        TextView textView = (TextView) selectedRow.getChildAt(3);
+                        TextView textView = (TextView) selectedRow.getChildAt(2);
                         intent.putExtra("id", Integer.valueOf(textView.getText().toString()));
                         startActivity(intent);
                         selectedRow = null;
@@ -72,7 +72,8 @@ public class WorkersActivity extends AppCompatActivity {
                 v -> {
                     if (selectedRow != null) {
                         logic.open();
-                        TextView textView = (TextView) selectedRow.getChildAt(3);
+                        TextView textView = (TextView) selectedRow.getChildAt(2);
+                        String test = textView.getText().toString();
                         logic.delete(Integer.valueOf(textView.getText().toString()));
                         fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
                         logic.close();
