@@ -48,6 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +
                 "    machine_id integer NOT NULL,\n" +
                 "    worker_id integer NOT NULL,\n" +
+                "    hours integer NOT NULL,\n" +
                 "    CONSTRAINT machine_fk FOREIGN KEY (machine_id)\n" +
                 "    REFERENCES machine(id) ON DELETE CASCADE,\n"  +
                 "    CONSTRAINT worker_fk FOREIGN KEY (worker_id)\n" +

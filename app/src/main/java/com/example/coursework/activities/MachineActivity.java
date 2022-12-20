@@ -67,7 +67,7 @@ public class MachineActivity extends AppCompatActivity {
 
         if (id != 0) {
             MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(this);
-            machineWorkers = machineWorkersLogic.getFullList();
+            machineWorkers = machineWorkersLogic.getFilteredList(id);
         }
 
         button_add_worker = findViewById(R.id.button_add_worker);
@@ -86,6 +86,10 @@ public class MachineActivity extends AppCompatActivity {
         shift_end_time.set(Calendar.MINUTE, 0);
 
         edit_text_machine_type = findViewById(R.id.edit_text_machine_type);
+        String machineType = getIntent().getExtras().getString("machine_type");
+        if (machineType != "") {
+            edit_text_machine_type.setText(machineType);
+        }
 
         edit_text_hours = findViewById(R.id.edit_text_hours);
         edit_text_hours.setEnabled(false);
@@ -215,12 +219,12 @@ public class MachineActivity extends AppCompatActivity {
 
         button_create.setOnClickListener(
                 v -> {
-                    int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
-                    String shiftName = shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
-
                     SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
                     String dateTimeBegin = dateFormat.format(shift_begin_time.getTime());
                     String dateTimeEnd = dateFormat.format(shift_end_time.getTime());
+
+                    int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
+                    String shiftName = shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
 
                     MachineModel model = new MachineModel(edit_text_machine_type.getText().toString(),
                             dateTimeBegin, dateTimeEnd, shiftId, shiftName, machineWorkers);

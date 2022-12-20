@@ -64,8 +64,10 @@ public class MachinesActivity extends AppCompatActivity {
                 v -> {
                     if (selectedRow != null) {
                         Intent intent = new Intent(MachinesActivity.this, MachineActivity.class);
-                        TextView textView = (TextView) selectedRow.getChildAt(3);
-                        intent.putExtra("id", Integer.valueOf(textView.getText().toString()));
+                        TextView textViewId = (TextView) selectedRow.getChildAt(3);
+                        TextView textViewMachineType = (TextView) selectedRow.getChildAt(0);
+                        intent.putExtra("id", Integer.valueOf(textViewId.getText().toString()));
+                        intent.putExtra("machine_type", textViewMachineType.getText().toString());
                         startActivity(intent);
                         selectedRow = null;
                     }
@@ -144,7 +146,7 @@ public class MachinesActivity extends AppCompatActivity {
             TextView textViewMachineWorkers = new TextView(this);
             textViewMachineWorkers.setHeight(100);
             textViewMachineWorkers.setTextSize(16);
-            textViewMachineWorkers.setText(String.valueOf(machine.getMachineWorkers()));
+            textViewMachineWorkers.setText(String.valueOf(machine.getMachineWorkers().size()));
             textViewMachineWorkers.setTextColor(Color.WHITE);
             textViewMachineWorkers.setGravity(Gravity.CENTER);
 

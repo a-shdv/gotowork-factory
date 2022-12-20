@@ -57,7 +57,7 @@ public class MachineLogic {
 
             MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(context);
             machineWorkersLogic.open();
-            obj.setMachineWorkers(machineWorkersLogic.getFullList());
+            obj.setMachineWorkers(machineWorkersLogic.getFilteredList(id));
             machineWorkersLogic.close();
             list.add(obj);
             cursor.moveToNext();

@@ -73,7 +73,6 @@ public class WorkersActivity extends AppCompatActivity {
                     if (selectedRow != null) {
                         logic.open();
                         TextView textView = (TextView) selectedRow.getChildAt(2);
-                        String test = textView.getText().toString();
                         logic.delete(Integer.valueOf(textView.getText().toString()));
                         fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
                         logic.close();
