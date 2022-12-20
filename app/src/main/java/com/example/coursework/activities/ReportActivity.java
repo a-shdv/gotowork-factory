@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.coursework.R;
 import com.example.coursework.Report;
+import com.example.coursework.database.logics.MachineLogic;
 import com.example.coursework.database.logics.ShiftLogic;
 import com.example.coursework.database.models.ShiftModel;
 
@@ -41,8 +42,8 @@ public class ReportActivity extends AppCompatActivity {
 
         text_view_report_info = findViewById(R.id.text_view_report_info);
 
-        dateFrom.set(2021, 1, 1);
-        dateTo.set(2021, 1, 1);
+        dateFrom.set(2022, 1, 1);
+        dateTo.set(2022, 1, 1);
 
         String text = "Отчет по количеству поставок за период с " + dateFrom.getTime().getDate() + " / " + dateFrom.getTime().getMonth() + " / " + (dateFrom.getTime().getYear()+ 1900) + " по " + dateTo.getTime().getDate() + " / " + dateTo.getTime().getMonth() + " / " + (dateTo.getTime().getYear()+ 1900);
         text_view_report_info.setText(text);
@@ -62,7 +63,7 @@ public class ReportActivity extends AppCompatActivity {
                     DatePickerDialog datePickerDialog;
                     datePickerDialog = new DatePickerDialog(this,
                             android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-                            dateSetListener, 2021, 0, 1);
+                            dateSetListener, 2022, 0, 1);
 
                     datePickerDialog.show();
                 }
@@ -83,7 +84,7 @@ public class ReportActivity extends AppCompatActivity {
                     DatePickerDialog datePickerDialog;
                     datePickerDialog = new DatePickerDialog(this,
                             android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-                            dateSetListener, 2021, 0, 1);
+                            dateSetListener, 2022, 0, 1);
 
                     datePickerDialog.show();
                 }
@@ -92,11 +93,10 @@ public class ReportActivity extends AppCompatActivity {
         button_report.setOnClickListener(
                 v -> {
                     Report report = new Report();
-                    ShiftLogic shiftLogic = new ShiftLogic(this);
+                    MachineLogic shiftLogic = new MachineLogic(this);
 
                     try {
-                        List<ShiftModel> full = shiftLogic.getFullList();
-                        report.generatePdf(full, dateFrom.getTime(), dateTo.getTime());
+                        report.generatePdf(shiftLogic.getFullList(), dateFrom.getTime(), dateTo.getTime());
                         Toast.makeText(ReportActivity.this, "Отчет успешно сформирован!", Toast.LENGTH_LONG).show();
                     } catch (IOException e) {
                         e.printStackTrace();

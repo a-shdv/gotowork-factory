@@ -92,6 +92,7 @@ public class MachineActivity extends AppCompatActivity {
         }
 
         edit_text_hours = findViewById(R.id.edit_text_hours);
+        edit_text_hours.setText(Integer.toString(0));
         edit_text_hours.setEnabled(false);
 
         ShiftLogic shiftLogic = new ShiftLogic(this);
@@ -259,7 +260,7 @@ public class MachineActivity extends AppCompatActivity {
                         }
                     }
                     machineWorkers.add(new MachineWorkersModel(id, workerId, Integer.valueOf(edit_text_hours.getText().toString())));
-                    edit_text_hours.setText("");
+                    edit_text_hours.setText(Integer.toString(0));
                     spinnerWorkers.setSelection(0);
                     fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
                 }

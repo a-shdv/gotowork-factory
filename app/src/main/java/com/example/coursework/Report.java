@@ -2,6 +2,7 @@ package com.example.coursework;
 
 import android.os.Environment;
 
+import com.example.coursework.database.models.MachineModel;
 import com.example.coursework.database.models.ShiftModel;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
@@ -24,7 +25,7 @@ public class Report {
     String[] columns = {"Shift name", "Number of shifts"};
     final int COLUMN_COUNT = 2;
 
-    public void generatePdf(List<ShiftModel> shifts, Date dateFrom, Date dateTo) throws IOException {
+    public void generatePdf(List<MachineModel> machines, Date dateFrom, Date dateTo) throws IOException {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
         File file = new File(pdfPath, "report.pdf");
         PdfWriter pdfWriter = new PdfWriter(new FileOutputStream(file));
@@ -48,20 +49,27 @@ public class Report {
 
         Map<Integer, Integer> shiftMachines = new HashMap<>();
 
-        for (ShiftModel shift : shifts) {
-            if (shiftMachines.containsKey(shift.getId())) {
-                shiftMachines.put(shift.getId(), shiftMachines.get(shift.getId()) + 1);
+        for (MachineModel machine : machines) {
+            int test = machine.getId();
+            if (shiftMachines.containsKey(machine.getId())) {
+                int test1 = shiftMachines.get(machine.getId()) + 1;
+                shiftMachines.put(machine.getId(), shiftMachines.get(machine.getId()) + 1);
             } else {
-                shiftMachines.put(shift.getId(), 1);
+                shiftMachines.put(machine.getId(), 1);
             }
         }
 
         List<String> checked = new ArrayList<>();
-        for (int i = 0; i < shifts.size(); i++) {
-            if (shifts.get(i) != null && !checked.contains(shifts.get(i).getType())) {
-                table.addCell(shifts.get(i).getId() + ". " + shifts.get(i).getType());
-                table.addCell(String.valueOf(shiftMachines.get(shifts.get(i).getId())));
-                checked.add(shifts.get(i).getType());
+        for (int i = 0; i < machines.size(); i++) {
+            MachineModel machine = machines.get(i);
+            long shiftDate = machines.get(i).getShiftId();
+
+            if (machine != null && !checked.contains(machine.getMachine_type())) {
+                if (new Date(shiftDate).after(dateFrom) && new Date(shiftDate).before(dateTo)) {
+                    table.addCell(machine.getId() + ". " + machine.getMachine_type());
+                    table.addCell(String.valueOf(shiftMachines.get(machine.getId())));
+                    checked.add(machine.getMachine_type());
+                }
             }
         }
 
