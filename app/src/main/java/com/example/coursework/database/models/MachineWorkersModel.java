@@ -7,11 +7,11 @@ public class MachineWorkersModel {
     private String workerName;
     private int hours;
 
-    public MachineWorkersModel(){
+    public MachineWorkersModel() {
 
     }
 
-    public MachineWorkersModel(int machineId, int workerId, String workerName, int hours){
+    public MachineWorkersModel(int machineId, int workerId, String workerName, int hours) {
         this.machineId = machineId;
         this.workerId = workerId;
         this.workerName = workerName;
@@ -56,5 +56,10 @@ public class MachineWorkersModel {
 
     public void setHours(int hours) {
         this.hours = hours;
+    }
+
+    @Override
+    public String toString() {
+        return workerName;
     }
 }

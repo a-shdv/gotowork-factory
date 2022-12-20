@@ -32,7 +32,7 @@ public class Report {
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         Document document = new Document(pdfDocument);
 
-        Paragraph paragraph = new Paragraph("Report on the number of shifts for the period from to " + dateFrom.getDate() + " / " + dateFrom.getMonth() + " / " + (dateFrom.getYear() + 1900) + " to " + dateTo.getDate() + " / " + dateTo.getMonth() + " / " + (dateTo.getYear() + 1900));
+        Paragraph paragraph = new Paragraph("Report on the workers\' shifts by the machine for the period from to " + dateFrom.getDate() + " / " + dateFrom.getMonth() + " / " + (dateFrom.getYear() + 1900) + " to " + dateTo.getDate() + " / " + dateTo.getMonth() + " / " + (dateTo.getYear() + 1900));
 
         document.add(paragraph);
 
@@ -62,7 +62,6 @@ public class Report {
         List<String> checked = new ArrayList<>();
         for (int i = 0; i < machines.size(); i++) {
             MachineModel machine = machines.get(i);
-            long shiftDate = machines.get(i).getShiftId();
 
             if (machine != null && !checked.contains(machine.getMachine_type())) {
                 table.addCell(machine.getId() + ". " + machine.getMachine_type());
