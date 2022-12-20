@@ -4,15 +4,17 @@ public class MachineWorkersModel {
     private int id;
     private int machineId;
     private int workerId;
+    private String workerName;
     private int hours;
 
     public MachineWorkersModel(){
 
     }
 
-    public MachineWorkersModel(int machineId, int workerId, int hours){
+    public MachineWorkersModel(int machineId, int workerId, String workerName, int hours){
         this.machineId = machineId;
         this.workerId = workerId;
+        this.workerName = workerName;
         this.hours = hours;
     }
 
@@ -38,6 +40,14 @@ public class MachineWorkersModel {
 
     public void setWorkerId(int workerId) {
         this.workerId = workerId;
+    }
+
+    public String getWorkerName() {
+        return workerName;
+    }
+
+    public void setWorkerName(String workerName) {
+        this.workerName = workerName;
     }
 
     public int getHours() {

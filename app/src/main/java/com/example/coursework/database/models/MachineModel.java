@@ -82,11 +82,12 @@ public class MachineModel {
         this.machineWorkers = machineWorkers;
     }
 
-/*    @Override
+    @Override
     public String toString() {
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < machineWorkers.size(); i++) {
-            machineWorkers.get(i).;
-        };
-        return "";
-    }*/
+            result.append(machineWorkers.get(i).getWorkerName() + ", ");
+        }
+        return result.toString();
+    }
 }

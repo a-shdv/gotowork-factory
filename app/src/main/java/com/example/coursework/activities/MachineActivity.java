@@ -254,12 +254,14 @@ public class MachineActivity extends AppCompatActivity {
         button_add_worker.setOnClickListener(
                 v -> {
                     int workerId = workers.get(spinnerWorkers.getSelectedItemPosition()).getId();
+                    String workerName = workers.get(spinnerWorkers.getSelectedItemPosition()).getName();
                     for (MachineWorkersModel machineWorker : machineWorkers) {
                         if (machineWorker.getWorkerId() == workerId) {
                             return;
                         }
                     }
-                    machineWorkers.add(new MachineWorkersModel(id, workerId, Integer.valueOf(edit_text_hours.getText().toString())));
+                    machineWorkers.add(new MachineWorkersModel(id, workerId, workerName,
+                            Integer.valueOf(edit_text_hours.getText().toString())));
                     edit_text_hours.setText(Integer.toString(0));
                     spinnerWorkers.setSelection(0);
                     fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
