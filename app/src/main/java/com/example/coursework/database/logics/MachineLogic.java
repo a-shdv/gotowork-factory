@@ -18,6 +18,7 @@ public class MachineLogic {
     SQLiteDatabase db;
     final String TABLE = "machine";
     final String COLUMN_ID = "id";
+    final String COLUMN_MACHINE_TYPE = "machine_type";
     final String COLUMN_SHIFT_BEGIN_TIME = "shift_begin_time";
     final String COLUMN_SHIFT_END_TIME = "shift_end_time";
     final String COLUMN_SHIFT_ID = "shift_id";
@@ -48,6 +49,7 @@ public class MachineLogic {
             MachineModel obj = new MachineModel();
             int id = cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID));
             obj.setId(id);
+            obj.setMachine_type(cursor.getString((int) cursor.getColumnIndex(COLUMN_MACHINE_TYPE)));
             obj.setShift_begin_time(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_TIME)));
             obj.setShift_end_time(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_END_TIME)));
             obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
@@ -55,7 +57,7 @@ public class MachineLogic {
 
             MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(context);
             machineWorkersLogic.open();
-            obj.setMachineWorkers(machineWorkersLogic.getFilteredList(id));
+            obj.setMachineWorkers(machineWorkersLogic.getFullList());
             machineWorkersLogic.close();
             list.add(obj);
             cursor.moveToNext();
@@ -74,6 +76,7 @@ public class MachineLogic {
             MachineModel obj = new MachineModel();
             int id = cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID));
             obj.setId(id);
+            obj.setMachine_type(cursor.getString((int) cursor.getColumnIndex(COLUMN_MACHINE_TYPE)));
             obj.setShift_begin_time(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_TIME)));
             obj.setShift_end_time(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_END_TIME)));
             obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
@@ -98,6 +101,7 @@ public class MachineLogic {
         }
 
         obj.setId(id);
+        obj.setMachine_type(cursor.getString((int) cursor.getColumnIndex(COLUMN_MACHINE_TYPE)));
         obj.setShift_begin_time(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_TIME)));
         obj.setShift_end_time(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_END_TIME)));
         obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
@@ -113,6 +117,7 @@ public class MachineLogic {
 
     public void insert(MachineModel model) {
         ContentValues content = new ContentValues();
+        content.put(COLUMN_MACHINE_TYPE, model.getMachine_type());
         content.put(COLUMN_SHIFT_BEGIN_TIME, model.getShift_begin_time());
         content.put(COLUMN_SHIFT_END_TIME, model.getShift_end_time());
         content.put(COLUMN_SHIFT_ID, model.getShiftId());
@@ -130,6 +135,7 @@ public class MachineLogic {
 
     public void update(MachineModel model) {
         ContentValues content = new ContentValues();
+        content.put(COLUMN_MACHINE_TYPE, model.getMachine_type());
         content.put(COLUMN_SHIFT_BEGIN_TIME, model.getShift_begin_time());
         content.put(COLUMN_SHIFT_END_TIME, model.getShift_end_time());
         content.put(COLUMN_SHIFT_ID, model.getShiftId());

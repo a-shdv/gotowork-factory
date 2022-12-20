@@ -11,6 +11,7 @@
     <string name="button_create_text">Создать</string>
     <string name="button_save_text">Сохранить</string>
     <string name="button_machines_text">Станки</string>
+    <string name="text_view_machine_type">Тип станка: </string>
     <string name="text_view_shift_date">Дата смены: </string>
     <string name="button_cancel_text">Отмена</string>
     <string name="text_view_shift_type">Тип смены: </string>

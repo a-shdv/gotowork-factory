@@ -5,6 +5,7 @@ import java.util.List;
 
 public class MachineModel {
     private int id;
+    private String machine_type;
     private String shift_begin_time;
     private String shift_end_time;
     private int shiftId;
@@ -15,8 +16,9 @@ public class MachineModel {
 
     }
 
-    public MachineModel(String shift_begin_time, String shift_end_time, int shiftId, String shiftName,
+    public MachineModel(String machine_type, String shift_begin_time, String shift_end_time, int shiftId, String shiftName,
                         List<MachineWorkersModel> machineWorkers) {
+        this.machine_type = machine_type;
         this.shift_begin_time = shift_begin_time;
         this.shift_end_time = shift_end_time;
         this.shiftId = shiftId;
@@ -30,6 +32,14 @@ public class MachineModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getMachine_type() {
+        return machine_type;
+    }
+
+    public void setMachine_type(String machine_type) {
+        this.machine_type = machine_type;
     }
 
     public String getShift_begin_time() {

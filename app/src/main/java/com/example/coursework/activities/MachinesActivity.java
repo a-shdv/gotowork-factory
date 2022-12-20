@@ -36,7 +36,7 @@ public class MachinesActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         logic.open();
-        fillTable(Arrays.asList( "Тип смены", "Начало смены", "Конец смены"), logic.getFullList());
+        fillTable(Arrays.asList("Тип станка", "Смена", "Количество работников"), logic.getFullList());
         logic.close();
     }
 
@@ -78,7 +78,7 @@ public class MachinesActivity extends AppCompatActivity {
                         logic.open();
                         TextView textView = (TextView) selectedRow.getChildAt(3);
                         logic.delete(Integer.valueOf(textView.getText().toString()));
-                        fillTable(Arrays.asList("Тип смены", "Начало смены", "Конец смены"), logic.getFullList());
+                        fillTable(Arrays.asList("Тип станка", "Смена", "Количество работников"), logic.getFullList());
                         logic.close();
                         selectedRow = null;
                     }
@@ -91,7 +91,7 @@ public class MachinesActivity extends AppCompatActivity {
 
 
         logic.open();
-        fillTable(Arrays.asList("Тип смены", "Начало смены", "Конец смены"), logic.getFullList());
+        fillTable(Arrays.asList("Тип станка", "Смена", "Количество работников"), logic.getFullList());
         logic.close();
 
     }
@@ -127,6 +127,13 @@ public class MachinesActivity extends AppCompatActivity {
             ShiftModel shift = shiftLogic.getElement(machine.getShiftId());
             shiftLogic.close();
 
+            TextView textViewMachineType = new TextView(this);
+            textViewMachineType.setHeight(100);
+            textViewMachineType.setTextSize(16);
+            textViewMachineType.setText(machine.getMachine_type());
+            textViewMachineType.setTextColor(Color.WHITE);
+            textViewMachineType.setGravity(Gravity.CENTER);
+
             TextView textViewShiftType = new TextView(this);
             textViewShiftType.setHeight(100);
             textViewShiftType.setTextSize(16);
@@ -134,30 +141,20 @@ public class MachinesActivity extends AppCompatActivity {
             textViewShiftType.setTextColor(Color.WHITE);
             textViewShiftType.setGravity(Gravity.CENTER);
 
-            TextView textViewShiftBegin = new TextView(this);
-            textViewShiftBegin.setHeight(100);
-            textViewShiftBegin.setTextSize(16);
-            textViewShiftBegin.setText(String.valueOf(machine.getShift_begin_time()));
-            textViewShiftBegin.setTextColor(Color.WHITE);
-            textViewShiftBegin.setGravity(Gravity.CENTER);
-
-            TextView textViewShiftEnd = new TextView(this);
-            textViewShiftEnd.setHeight(100);
-            textViewShiftEnd.setTextSize(16);
-            textViewShiftEnd.setText(String.valueOf(machine.getShift_end_time()));
-            textViewShiftEnd.setTextColor(Color.WHITE);
-            textViewShiftEnd.setGravity(Gravity.CENTER);
+            TextView textViewMachineWorkers = new TextView(this);
+            textViewMachineWorkers.setHeight(100);
+            textViewMachineWorkers.setTextSize(16);
+            textViewMachineWorkers.setText(String.valueOf(machine.getMachineWorkers()));
+            textViewMachineWorkers.setTextColor(Color.WHITE);
+            textViewMachineWorkers.setGravity(Gravity.CENTER);
 
             TextView textViewId = new TextView(this);
             textViewId.setVisibility(View.INVISIBLE);
-/*
-            textViewId.setTextColor(Color.WHITE);
-*/
             textViewId.setText(String.valueOf(machine.getId()));
 
+            tableRow.addView(textViewMachineType);
             tableRow.addView(textViewShiftType);
-            tableRow.addView(textViewShiftBegin);
-            tableRow.addView(textViewShiftEnd);
+            tableRow.addView(textViewMachineWorkers);
             tableRow.addView(textViewId);
 
             tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));

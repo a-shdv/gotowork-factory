@@ -2,9 +2,7 @@ package com.example.coursework.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -29,7 +27,6 @@ import com.example.coursework.database.models.MachineWorkersModel;
 import com.example.coursework.database.models.MachineModel;
 
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -53,6 +50,7 @@ public class MachineActivity extends AppCompatActivity {
     Calendar shift_begin_time;
     Calendar shift_end_time;
 
+    EditText edit_text_machine_type;
     EditText edit_text_hours;
 
     List<MachineWorkersModel> machineWorkers = new ArrayList<>();
@@ -69,7 +67,7 @@ public class MachineActivity extends AppCompatActivity {
 
         if (id != 0) {
             MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(this);
-            machineWorkers = machineWorkersLogic.getFilteredList(id);
+            machineWorkers = machineWorkersLogic.getFullList();
         }
 
         button_add_worker = findViewById(R.id.button_add_worker);
@@ -86,6 +84,8 @@ public class MachineActivity extends AppCompatActivity {
         shift_end_time = new GregorianCalendar();
         shift_end_time.set(Calendar.HOUR_OF_DAY, 0);
         shift_end_time.set(Calendar.MINUTE, 0);
+
+        edit_text_machine_type = findViewById(R.id.edit_text_machine_type);
 
         edit_text_hours = findViewById(R.id.edit_text_hours);
         edit_text_hours.setEnabled(false);
@@ -222,8 +222,8 @@ public class MachineActivity extends AppCompatActivity {
                     String dateTimeBegin = dateFormat.format(shift_begin_time.getTime());
                     String dateTimeEnd = dateFormat.format(shift_end_time.getTime());
 
-                    MachineModel model = new MachineModel(dateTimeBegin, dateTimeEnd, shiftId,
-                            shiftName, machineWorkers);
+                    MachineModel model = new MachineModel(edit_text_machine_type.getText().toString(),
+                            dateTimeBegin, dateTimeEnd, shiftId, shiftName, machineWorkers);
                     logic.open();
 
 
