@@ -48,8 +48,8 @@ public class MachineLogic {
             MachineModel obj = new MachineModel();
             int id = cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID));
             obj.setId(id);
-            obj.setShift_end_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_END_DATE)));
-            obj.setShift_begin_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_DATE)));
+            obj.setShift_begin_date(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_DATE)));
+            obj.setShift_end_date(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_END_DATE)));
             obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
             obj.setShiftName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_NAME)));
 
@@ -74,8 +74,8 @@ public class MachineLogic {
             MachineModel obj = new MachineModel();
             int id = cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID));
             obj.setId(id);
-            obj.setShift_end_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_END_DATE)));
-            obj.setShift_begin_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_DATE)));
+            obj.setShift_begin_date(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_DATE)));
+            obj.setShift_end_date(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_END_DATE)));
             obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
             obj.setShiftName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_NAME)));
 
@@ -98,8 +98,8 @@ public class MachineLogic {
         }
 
         obj.setId(id);
-        obj.setShift_end_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_END_DATE)));
-        obj.setShift_begin_date(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_DATE)));
+        obj.setShift_begin_date(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_BEGIN_DATE)));
+        obj.setShift_end_date(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_END_DATE)));
         obj.setShiftId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_SHIFT_ID)));
         obj.setShiftName(cursor.getString((int) cursor.getColumnIndex(COLUMN_SHIFT_NAME)));
 
@@ -113,8 +113,8 @@ public class MachineLogic {
 
     public void insert(MachineModel model) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_SHIFT_END_DATE, model.getShift_end_date());
         content.put(COLUMN_SHIFT_BEGIN_DATE, model.getShift_begin_date());
+        content.put(COLUMN_SHIFT_END_DATE, model.getShift_end_date());
         content.put(COLUMN_SHIFT_ID, model.getShiftId());
         content.put(COLUMN_SHIFT_NAME, model.getShiftName());
 
@@ -130,8 +130,8 @@ public class MachineLogic {
 
     public void update(MachineModel model) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_SHIFT_END_DATE, model.getShift_end_date());
         content.put(COLUMN_SHIFT_BEGIN_DATE, model.getShift_begin_date());
+        content.put(COLUMN_SHIFT_END_DATE, model.getShift_end_date());
         content.put(COLUMN_SHIFT_ID, model.getShiftId());
         content.put(COLUMN_SHIFT_NAME, model.getShiftName());
         String where = COLUMN_ID + " = " + model.getId();

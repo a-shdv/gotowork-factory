@@ -3,12 +3,10 @@ package com.example.coursework.database.models;
 public class WorkerModel {
     private int id;
     private String name;
-    private String type;
     private float salary;
 
     public WorkerModel(String name, float salary){
         this.name = name;
-        this.type = type;
         this.salary = salary;
     }
 
@@ -22,14 +20,6 @@ public class WorkerModel {
 
     public void setSalary(float salary) {
         this.salary = salary;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getName() {

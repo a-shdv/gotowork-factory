@@ -3,6 +3,7 @@ package com.example.coursework.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.coursework.R;
 import com.example.coursework.database.logics.ShiftLogic;
@@ -26,9 +28,12 @@ import com.example.coursework.database.models.WorkerModel;
 import com.example.coursework.database.models.MachineWorkersModel;
 import com.example.coursework.database.models.MachineModel;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,11 +73,11 @@ public class MachineActivity extends AppCompatActivity {
             machineWorkers = machineWorkersLogic.getFilteredList(id);
         }
 
+        button_add_worker = findViewById(R.id.button_add_worker);
         button_shift_begin_date = findViewById(R.id.button_shift_begin_date);
         button_shift_end_date = findViewById(R.id.button_shift_end_date);
         button_create = findViewById(R.id.button_create);
         button_cancel = findViewById(R.id.button_cancel);
-        button_add_worker = findViewById(R.id.button_add_worker);
         button_delete_worker = findViewById(R.id.button_delete_worker);
 
         shift_begin_date = new GregorianCalendar();
@@ -80,7 +85,6 @@ public class MachineActivity extends AppCompatActivity {
 
         edit_text_hours = findViewById(R.id.edit_text_hours);
 
-        //комбо бокс покупателей
         ShiftLogic shiftLogic = new ShiftLogic(this);
         shiftLogic.open();
         List<ShiftModel> shifts = shiftLogic.getFullList();
@@ -96,7 +100,6 @@ public class MachineActivity extends AppCompatActivity {
         adapterShifts.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerShifts.setAdapter(adapterShifts);
 
-        //комбо бокс лекарств
         WorkerLogic workerLogic = new WorkerLogic(this);
         workerLogic.open();
         List<WorkerModel> workers = workerLogic.getFullList();
@@ -114,37 +117,37 @@ public class MachineActivity extends AppCompatActivity {
 
         button_shift_begin_date.setOnClickListener(
                 v -> {
-                    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-
+                    TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                         @Override
-                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            shift_begin_date.set(year, monthOfYear + 1, dayOfMonth);
+                        public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                            shift_begin_date.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            shift_begin_date.set(Calendar.MINUTE, minute);
                         }
                     };
 
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                             android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-                            dateSetListener, 2021, 0, 1);
+                            timeSetListener, 0, 0, true);
 
-                    datePickerDialog.show();
+                    timePickerDialog.show();
                 }
         );
 
         button_shift_end_date.setOnClickListener(
                 v -> {
-                    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener() {
-
+                    TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                         @Override
-                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            shift_end_date.set(year, monthOfYear + 1, dayOfMonth);
+                        public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
+                            shift_end_date.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            shift_end_date.set(Calendar.MINUTE, minute);
                         }
                     };
-                    DatePickerDialog datePickerDialog;
-                        datePickerDialog = new DatePickerDialog(this,
-                                android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
-                                dateSetListener, 2021, 0, 1);
 
-                    datePickerDialog.show();
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                            android.R.style.Theme_Holo_Light_Dialog_NoActionBar,
+                            timeSetListener, 0, 0, true);
+
+                    timePickerDialog.show();
                 }
         );
 
@@ -152,7 +155,12 @@ public class MachineActivity extends AppCompatActivity {
                 v -> {
                     int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
                     String shiftName =  shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
-                    MachineModel model = new MachineModel(shift_end_date.getTime().getTime(), shift_begin_date.getTime().getTime(), shiftId,
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                    String dateTimeBegin = dateFormat.format(shift_begin_date.getTime());
+                    String dateTimeEnd = dateFormat.format(shift_end_date.getTime());
+
+                    MachineModel model = new MachineModel(dateTimeBegin, dateTimeEnd, shiftId,
                            shiftName, machineWorkers);
                     logic.open();
 

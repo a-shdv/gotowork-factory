@@ -5,17 +5,18 @@ import java.util.List;
 
 public class MachineModel {
     private int id;
-    private long shift_begin_date;
-    private long shift_end_date;
+    private String shift_begin_date;
+    private String shift_end_date;
     private int shiftId;
     private String shiftName;
     private List<MachineWorkersModel> machineWorkers = new LinkedList<>();
 
-    public MachineModel(){
+    public MachineModel() {
 
     }
 
-    public MachineModel(long shift_end_date, long shift_begin_date, int shiftId, String shiftName, List<MachineWorkersModel> machineWorkers){
+    public MachineModel(String shift_begin_date, String shift_end_date, int shiftId, String shiftName,
+                        List<MachineWorkersModel> machineWorkers) {
         this.shift_begin_date = shift_begin_date;
         this.shift_end_date = shift_end_date;
         this.shiftId = shiftId;
@@ -31,20 +32,20 @@ public class MachineModel {
         this.id = id;
     }
 
-    public long getShift_end_date() {
-        return shift_end_date;
-    }
-
-    public void setShift_end_date(long shift_end_date) {
-        this.shift_end_date = shift_end_date;
-    }
-
-    public long getShift_begin_date() {
+    public String getShift_begin_date() {
         return shift_begin_date;
     }
 
-    public void setShift_begin_date(long shift_begin_date) {
+    public void setShift_begin_date(String shift_begin_date) {
         this.shift_begin_date = shift_begin_date;
+    }
+
+    public String getShift_end_date() {
+        return shift_end_date;
+    }
+
+    public void setShift_end_date(String shift_end_date) {
+        this.shift_end_date = shift_end_date;
     }
 
     public int getShiftId() {

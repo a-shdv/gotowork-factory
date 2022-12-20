@@ -55,8 +55,8 @@ public class ShiftActivity extends AppCompatActivity {
                 v -> {
                     Calendar date = new GregorianCalendar();
                     date.set( date_picker_shift_date.getYear(), date_picker_shift_date.getMonth(), date_picker_shift_date.getDayOfMonth());
-                    ShiftModel model = new ShiftModel(edit_text_name.getText().toString(),date.getTime().getTime(), userId);
 
+                    ShiftModel model = new ShiftModel(edit_text_name.getText().toString(),date.getTime().getTime(), userId);
                     logic.open();
 
                     if(id != 0){
