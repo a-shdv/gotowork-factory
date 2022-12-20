@@ -19,8 +19,9 @@
     <string name="button_back_text">Назад</string>
     <string name="text_view_worker_name">Имя работника: </string>
     <string name="text_view_salary">Зарплата: </string>
-    <string name="button_shift_begin_time">Начало смены</string><!-- Пока неизвестно-->
-    <string name="button_shift_end_time">Конец смены</string><!-- Пока неизвестно-->
+    <string name="button_shift_begin_time">Начало смены</string>
+    <string name="button_shift_end_time">Конец смены</string>
+    <string name="text_view_shift_time">Время смены: </string>
     <string name="button_add_worker">Добавить работника</string>
     <string name="button_delete_worker">Удалить работника</string>
     <string name="text_view_shift">Смена: </string>

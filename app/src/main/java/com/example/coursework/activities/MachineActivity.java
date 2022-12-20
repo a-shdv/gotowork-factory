@@ -2,7 +2,9 @@ package com.example.coursework.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -27,6 +29,7 @@ import com.example.coursework.database.models.MachineWorkersModel;
 import com.example.coursework.database.models.MachineModel;
 
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -64,7 +67,7 @@ public class MachineActivity extends AppCompatActivity {
 
         int id = getIntent().getExtras().getInt("id");
 
-        if(id != 0){
+        if (id != 0) {
             MachineWorkersLogic machineWorkersLogic = new MachineWorkersLogic(this);
             machineWorkers = machineWorkersLogic.getFilteredList(id);
         }
@@ -77,9 +80,15 @@ public class MachineActivity extends AppCompatActivity {
         button_delete_worker = findViewById(R.id.button_delete_worker);
 
         shift_begin_time = new GregorianCalendar();
+        shift_begin_time.set(Calendar.HOUR_OF_DAY, 0);
+        shift_begin_time.set(Calendar.MINUTE, 0);
+
         shift_end_time = new GregorianCalendar();
+        shift_end_time.set(Calendar.HOUR_OF_DAY, 0);
+        shift_end_time.set(Calendar.MINUTE, 0);
 
         edit_text_hours = findViewById(R.id.edit_text_hours);
+        edit_text_hours.setEnabled(false);
 
         ShiftLogic shiftLogic = new ShiftLogic(this);
         shiftLogic.open();
@@ -118,6 +127,34 @@ public class MachineActivity extends AppCompatActivity {
                         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                             shift_begin_time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                             shift_begin_time.set(Calendar.MINUTE, minute);
+
+                            // Formatting
+                            StringBuilder formattedHourOfDay = new StringBuilder();
+                            StringBuilder formattedMinute = new StringBuilder();
+
+                            // Hours formatting
+                            if (hourOfDay / 10 == 0) {
+                                formattedHourOfDay.append("0");
+                                formattedHourOfDay.append(hourOfDay);
+                            } else {
+                                formattedHourOfDay.append(hourOfDay);
+                            }
+
+                            // Minutes formatting
+                            if (minute / 10 == 0) {
+                                formattedMinute.append("0");
+                                formattedMinute.append(minute);
+                            } else {
+                                formattedMinute.append(minute);
+                            }
+
+                            button_shift_begin_time.setText(formattedHourOfDay + ":" + formattedMinute);
+
+                            // Calculating Worker's hours
+                            int beginHours = shift_begin_time.getTime().getHours() * 60 + shift_begin_time.getTime().getMinutes();
+                            int endHours = shift_end_time.getTime().getHours() * 60 + shift_end_time.getTime().getMinutes();
+                            int difference = Math.abs( (endHours - beginHours) / 60);
+                            edit_text_hours.setText(Integer.toString(difference));
                         }
                     };
 
@@ -136,6 +173,35 @@ public class MachineActivity extends AppCompatActivity {
                         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
                             shift_end_time.set(Calendar.HOUR_OF_DAY, hourOfDay);
                             shift_end_time.set(Calendar.MINUTE, minute);
+
+                            // Formatting
+                            StringBuilder formattedHourOfDay = new StringBuilder();
+                            StringBuilder formattedMinute = new StringBuilder();
+
+                            // Hours formatting
+                            if (hourOfDay / 10 == 0) {
+                                formattedHourOfDay.append("0");
+                                formattedHourOfDay.append(hourOfDay);
+                            } else {
+                                formattedHourOfDay.append(hourOfDay);
+                            }
+
+                            // Minutes formatting
+                            if (minute / 10 == 0) {
+                                formattedMinute.append("0");
+                                formattedMinute.append(minute);
+                            } else {
+                                formattedMinute.append(minute);
+                            }
+
+                            button_shift_end_time.setText(formattedHourOfDay + ":" + formattedMinute);
+
+                            // Calculating Worker's hours
+                            int beginHours = shift_begin_time.getTime().getHours() * 60 + shift_begin_time.getTime().getMinutes();
+                            int endHours = shift_end_time.getTime().getHours() * 60 + shift_end_time.getTime().getMinutes();
+                            int difference = Math.abs( (endHours - beginHours) / 60 );
+                            edit_text_hours.setText(Integer.toString(difference));
+
                         }
                     };
 
@@ -150,14 +216,14 @@ public class MachineActivity extends AppCompatActivity {
         button_create.setOnClickListener(
                 v -> {
                     int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
-                    String shiftName =  shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
+                    String shiftName = shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
                     String dateTimeBegin = dateFormat.format(shift_begin_time.getTime());
                     String dateTimeEnd = dateFormat.format(shift_end_time.getTime());
 
                     MachineModel model = new MachineModel(dateTimeBegin, dateTimeEnd, shiftId,
-                           shiftName, machineWorkers);
+                            shiftName, machineWorkers);
                     logic.open();
 
 
@@ -183,8 +249,8 @@ public class MachineActivity extends AppCompatActivity {
         button_add_worker.setOnClickListener(
                 v -> {
                     int workerId = workers.get(spinnerWorkers.getSelectedItemPosition()).getId();
-                    for(MachineWorkersModel machineWorker : machineWorkers){
-                        if(machineWorker.getWorkerId() == workerId){
+                    for (MachineWorkersModel machineWorker : machineWorkers) {
+                        if (machineWorker.getWorkerId() == workerId) {
                             return;
                         }
                     }

@@ -43,7 +43,8 @@ public class WorkerActivity extends AppCompatActivity {
 
         button_create.setOnClickListener(
                 v -> {
-                    WorkerModel model = new WorkerModel(edit_text_worker_name.getText().toString(), Float.parseFloat(edit_text_salary.getText().toString()));
+                    WorkerModel model = new WorkerModel(edit_text_worker_name.getText().toString(),
+                            Float.parseFloat(edit_text_salary.getText().toString()));
                     logic.open();
 
                     if (id != 0) {
