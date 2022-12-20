@@ -2,7 +2,6 @@ package com.example.coursework.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableLayout;
@@ -28,12 +26,10 @@ import com.example.coursework.database.models.WorkerModel;
 import com.example.coursework.database.models.MachineWorkersModel;
 import com.example.coursework.database.models.MachineModel;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,15 +40,15 @@ public class MachineActivity extends AppCompatActivity {
 
     MachineLogic logic;
 
-    Button button_shift_begin_date;
-    Button button_shift_end_date;
+    Button button_shift_begin_time;
+    Button button_shift_end_time;
     Button button_create;
     Button button_cancel;
     Button button_add_worker;
     Button button_delete_worker;
 
-    Calendar shift_begin_date;
-    Calendar shift_end_date;
+    Calendar shift_begin_time;
+    Calendar shift_end_time;
 
     EditText edit_text_hours;
 
@@ -74,14 +70,14 @@ public class MachineActivity extends AppCompatActivity {
         }
 
         button_add_worker = findViewById(R.id.button_add_worker);
-        button_shift_begin_date = findViewById(R.id.button_shift_begin_date);
-        button_shift_end_date = findViewById(R.id.button_shift_end_date);
+        button_shift_begin_time = findViewById(R.id.button_shift_begin_time);
+        button_shift_end_time = findViewById(R.id.button_shift_end_time);
         button_create = findViewById(R.id.button_create);
         button_cancel = findViewById(R.id.button_cancel);
         button_delete_worker = findViewById(R.id.button_delete_worker);
 
-        shift_begin_date = new GregorianCalendar();
-        shift_end_date = new GregorianCalendar();
+        shift_begin_time = new GregorianCalendar();
+        shift_end_time = new GregorianCalendar();
 
         edit_text_hours = findViewById(R.id.edit_text_hours);
 
@@ -115,13 +111,13 @@ public class MachineActivity extends AppCompatActivity {
         adapterWorkers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerWorkers.setAdapter(adapterWorkers);
 
-        button_shift_begin_date.setOnClickListener(
+        button_shift_begin_time.setOnClickListener(
                 v -> {
                     TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                            shift_begin_date.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                            shift_begin_date.set(Calendar.MINUTE, minute);
+                            shift_begin_time.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            shift_begin_time.set(Calendar.MINUTE, minute);
                         }
                     };
 
@@ -133,13 +129,13 @@ public class MachineActivity extends AppCompatActivity {
                 }
         );
 
-        button_shift_end_date.setOnClickListener(
+        button_shift_end_time.setOnClickListener(
                 v -> {
                     TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                            shift_end_date.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                            shift_end_date.set(Calendar.MINUTE, minute);
+                            shift_end_time.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            shift_end_time.set(Calendar.MINUTE, minute);
                         }
                     };
 
@@ -157,8 +153,8 @@ public class MachineActivity extends AppCompatActivity {
                     String shiftName =  shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-                    String dateTimeBegin = dateFormat.format(shift_begin_date.getTime());
-                    String dateTimeEnd = dateFormat.format(shift_end_date.getTime());
+                    String dateTimeBegin = dateFormat.format(shift_begin_time.getTime());
+                    String dateTimeEnd = dateFormat.format(shift_end_time.getTime());
 
                     MachineModel model = new MachineModel(dateTimeBegin, dateTimeEnd, shiftId,
                            shiftName, machineWorkers);

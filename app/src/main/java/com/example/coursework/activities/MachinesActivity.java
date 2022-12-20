@@ -18,8 +18,6 @@ import com.example.coursework.database.logics.MachineLogic;
 import com.example.coursework.database.models.ShiftModel;
 import com.example.coursework.database.models.MachineModel;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
 
@@ -139,14 +137,14 @@ public class MachinesActivity extends AppCompatActivity {
             TextView textViewShiftBegin = new TextView(this);
             textViewShiftBegin.setHeight(100);
             textViewShiftBegin.setTextSize(16);
-            textViewShiftBegin.setText(String.valueOf(machine.getShift_begin_date()));
+            textViewShiftBegin.setText(String.valueOf(machine.getShift_begin_time()));
             textViewShiftBegin.setTextColor(Color.WHITE);
             textViewShiftBegin.setGravity(Gravity.CENTER);
 
             TextView textViewShiftEnd = new TextView(this);
             textViewShiftEnd.setHeight(100);
             textViewShiftEnd.setTextSize(16);
-            textViewShiftEnd.setText(String.valueOf(machine.getShift_end_date()));
+            textViewShiftEnd.setText(String.valueOf(machine.getShift_end_time()));
             textViewShiftEnd.setTextColor(Color.WHITE);
             textViewShiftEnd.setGravity(Gravity.CENTER);
 
