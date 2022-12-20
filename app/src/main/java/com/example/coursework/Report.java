@@ -13,6 +13,7 @@ import com.itextpdf.layout.element.Table;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class Report {
 
     final int TABLE_WIDTH = 400;
-    String[] columns = {"Machine type", "Shift name", "Number of shifts"};
+    String[] columns = {"Machine", "Shift", "Workers"};
     final int COLUMN_COUNT = 3;
 
     public void generatePdf(List<MachineModel> machines, Date dateFrom, Date dateTo) throws IOException {
@@ -32,7 +33,7 @@ public class Report {
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
         Document document = new Document(pdfDocument);
 
-        Paragraph paragraph = new Paragraph("Report on the workers\' shifts by the machine for the period from to " + dateFrom.getDate() + " / " + dateFrom.getMonth() + " / " + (dateFrom.getYear() + 1900) + " to " + dateTo.getDate() + " / " + dateTo.getMonth() + " / " + (dateTo.getYear() + 1900));
+        Paragraph paragraph = new Paragraph("Report on the workers\' shifts by the machine for the period time from to " + dateFrom.getDate() + "." + dateFrom.getMonth() + "." + (dateFrom.getYear() + 1900) + " to " + dateTo.getDate() + "." + dateTo.getMonth() + "." + (dateTo.getYear() + 1900));
 
         document.add(paragraph);
 

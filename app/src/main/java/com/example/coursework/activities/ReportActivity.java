@@ -45,7 +45,7 @@ public class ReportActivity extends AppCompatActivity {
         dateFrom.set(2022, 1, 1);
         dateTo.set(2022, 1, 1);
 
-        String text = "Отчет по количеству поставок за период с " + dateFrom.getTime().getDate() + " / " + dateFrom.getTime().getMonth() + " / " + (dateFrom.getTime().getYear()+ 1900) + " по " + dateTo.getTime().getDate() + " / " + dateTo.getTime().getMonth() + " / " + (dateTo.getTime().getYear()+ 1900);
+        String text = "Отчет по количеству поставок за период с " + dateFrom.getTime().getDate() + "." + dateFrom.getTime().getMonth() + "." + (dateFrom.getTime().getYear()+ 1900) + " по " + dateTo.getTime().getDate() + "." + dateTo.getTime().getMonth() + "." + (dateTo.getTime().getYear()+ 1900);
         text_view_report_info.setText(text);
 
         button_date_from.setOnClickListener(
@@ -56,7 +56,7 @@ public class ReportActivity extends AppCompatActivity {
                         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                             dateFrom.set(year, monthOfYear + 1, dayOfMonth);
                             text_view_report_info.clearComposingText();
-                            String text = "Отчет по количеству поставок за период с " + dateFrom.getTime().getDate() + " / " + dateFrom.getTime().getMonth() + " / " + (dateFrom.getTime().getYear()+ 1900) + " по " + dateTo.getTime().getDate() + " / " + dateTo.getTime().getMonth() + " / " + (dateTo.getTime().getYear()+ 1900);
+                            String text = "Отчет по количеству поставок за период с " + dateFrom.getTime().getDate() + "." + dateFrom.getTime().getMonth() + "." + (dateFrom.getTime().getYear()+ 1900) + " по " + dateTo.getTime().getDate() + "." + dateTo.getTime().getMonth() + "." + (dateTo.getTime().getYear()+ 1900);
                             text_view_report_info.setText(text);
                         }
                     };
@@ -77,7 +77,7 @@ public class ReportActivity extends AppCompatActivity {
                         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                             dateTo.set(year, monthOfYear + 1, dayOfMonth);
                             text_view_report_info.clearComposingText();
-                            String text = "Отчет по количеству поставок за период с " + dateFrom.getTime().getDate() + " / " + dateFrom.getTime().getMonth() + " / " + (dateFrom.getTime().getYear()+ 1900) + " по " + dateTo.getTime().getDate() + " / " + dateTo.getTime().getMonth() + " / " + (dateTo.getTime().getYear()+ 1900);
+                            String text = "Отчет по количеству поставок за период с " + dateFrom.getTime().getDate() + "." + dateFrom.getTime().getMonth() + "." + (dateFrom.getTime().getYear()+ 1900) + " по " + dateTo.getTime().getDate() + "." + dateTo.getTime().getMonth() + "." + (dateTo.getTime().getYear()+ 1900);
                             text_view_report_info.setText(text);
                         }
                     };
