@@ -58,7 +58,7 @@ public class WorkersActivity extends AppCompatActivity {
 
         button_update.setOnClickListener(
                 v -> {
-                    if(selectedRow != null) {
+                    if (selectedRow != null) {
                         Intent intent = new Intent(WorkersActivity.this, WorkerActivity.class);
                         TextView textView = (TextView) selectedRow.getChildAt(3);
                         intent.putExtra("id", Integer.valueOf(textView.getText().toString()));
@@ -70,7 +70,7 @@ public class WorkersActivity extends AppCompatActivity {
 
         button_delete.setOnClickListener(
                 v -> {
-                    if(selectedRow != null) {
+                    if (selectedRow != null) {
                         logic.open();
                         TextView textView = (TextView) selectedRow.getChildAt(3);
                         logic.delete(Integer.valueOf(textView.getText().toString()));
@@ -106,7 +106,7 @@ public class WorkersActivity extends AppCompatActivity {
             textView.setText(title);
             textView.setTextColor(Color.WHITE);
             textView.setGravity(Gravity.CENTER);
-            textView.setWidth( (int)(getWindowManager().getDefaultDisplay().getWidth() / 2.2));
+            textView.setWidth((int) (getWindowManager().getDefaultDisplay().getWidth() / 2.2));
             tableRowTitles.addView(textView);
         }
 
@@ -145,9 +145,9 @@ public class WorkersActivity extends AppCompatActivity {
 
                 selectedRow = tableRow;
 
-                for(int i = 0; i < tableLayoutWorkers.getChildCount(); i++){
+                for (int i = 0; i < tableLayoutWorkers.getChildCount(); i++) {
                     View view = tableLayoutWorkers.getChildAt(i);
-                    if (view instanceof TableRow){
+                    if (view instanceof TableRow) {
                         view.setBackgroundColor(Color.parseColor("#FF6200EE"));
                     }
                 }
