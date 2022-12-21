@@ -26,42 +26,52 @@ public class FaceBitmap {
             if (mood == Mood.sad) {
                 canvas.drawARGB(16, 0, 0, 0);
             } else {
-                canvas.drawARGB(160, 217, 19, 60);
+                canvas.drawARGB(255, 98, 0, 238);
             }
 
             //Head
-            if (mood == Mood.sad) {
-                paint.setARGB(255, 203, 229, 153);
-                paint.setStyle(Paint.Style.FILL);
-                canvas.drawCircle(center_x, center_y, radius, paint);
-            } else {
-                paint.setARGB(255, 255, 219, 172);
-                paint.setStyle(Paint.Style.FILL);
-                canvas.drawCircle(center_x, center_y, radius, paint);
-            }
+            paint.setARGB(255, 255, 219, 172);
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawCircle(center_x, center_y, radius, paint);
+
+            //Hat
+            paint.setARGB(255, 254, 227, 55);
+            paint.setStyle(Paint.Style.FILL);
+            RectF oval = new RectF();
+            oval.set(center_x - radius, center_y - radius - 20, center_x + radius,
+                    center_y + radius - 160);
+
+            canvas.drawArc(oval, 180, 180, true, paint);
+
+            paint.setARGB(255, 220, 171, 40);
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(50);
+            oval.set(center_x - radius,
+                    center_y - radius + 200,
+                    center_x + radius,
+                    center_y + radius - 360);
+            canvas.drawArc(oval, 180, 180, true, paint);
 
             //Left eye
-            RectF oval = new RectF();
             paint.setColor(Color.WHITE);
             paint.setStyle(Paint.Style.FILL);
             oval.set(center_x - 60 - eye_radius * 2,
                     center_y - eye_radius,
                     center_x - 60,
                     center_y + eye_radius);
-            canvas.drawArc(oval, 0, 360, true, paint);
+            canvas.drawArc(oval, 0, 180, true, paint);
             paint.setStyle(Paint.Style.STROKE);
             paint.setColor(Color.BLACK);
             paint.setStrokeWidth(5);
-            canvas.drawArc(oval, 0, 360, true, paint);
+            canvas.drawArc(oval, 0, 180, true, paint);
 
-            // Left pupil
             paint.setColor(Color.BLACK);
             paint.setStyle(Paint.Style.FILL);
             oval.set(center_x - 60 - eye_radius - pupil_radius,
                     center_y - eye_radius + pupil_radius,
                     center_x - 60 - pupil_radius,
                     center_y + eye_radius - pupil_radius);
-            canvas.drawArc(oval, 0, 360, true, paint);
+            canvas.drawArc(oval, 0, 180, true, paint);
 
             //Right eye
             paint.setColor(Color.WHITE);
@@ -70,20 +80,19 @@ public class FaceBitmap {
                     center_y - eye_radius,
                     center_x + 60 + eye_radius * 2,
                     center_y + eye_radius);
-            canvas.drawArc(oval, 0, 360, true, paint);
+            canvas.drawArc(oval, 0, 180, true, paint);
             paint.setStyle(Paint.Style.STROKE);
             paint.setColor(Color.BLACK);
             paint.setStrokeWidth(5);
-            canvas.drawArc(oval, 0, 360, true, paint);
+            canvas.drawArc(oval, 0, 180, true, paint);
 
-            // Right pupil
             paint.setColor(Color.BLACK);
             paint.setStyle(Paint.Style.FILL);
             oval.set(center_x + 60 + pupil_radius,
                     center_y - eye_radius + pupil_radius,
                     center_x + 60 + eye_radius + pupil_radius,
                     center_y + eye_radius - pupil_radius);
-            canvas.drawArc(oval, 0, 360, true, paint);
+            canvas.drawArc(oval, 0, 180, true, paint);
 
             //Mouth
             if (mood == Mood.sad) {
@@ -94,7 +103,7 @@ public class FaceBitmap {
                         center_y + radius - mouth_radius,
                         center_x + mouth_radius,
                         center_y + radius + mouth_radius);
-                canvas.drawArc(oval, 210, 120, false, paint);
+                canvas.drawArc(oval, 240, 60, false, paint);
             } else {
                 paint.setColor(Color.BLACK);
                 paint.setStyle(Paint.Style.STROKE);
@@ -103,32 +112,16 @@ public class FaceBitmap {
                         center_y + radius - 2 * mouth_radius,
                         center_x + mouth_radius,
                         center_y + radius - mouth_radius);
-                canvas.drawArc(oval, 65, 50, true, paint);
+                canvas.drawArc(oval, 65, 50, false, paint);
             }
 
             paint.setTextSize(150);
             int step = 200;
             int space = 350;
-            if (mood == Mood.sad) {
+            if (mood == Mood.happy) {
                 String[] strings = new String[]{
-                        "Кажется, ",
-                        "Вы больны!"
+                        "Brand New!"
                 };
-
-                int len = step * strings.length;
-
-                for (int i = 0; i < strings.length; i++) {
-                    int inner_space = ((heigth - len - radius - center_y) / 2);
-
-                    canvas.drawText(strings[i], space,
-                            (i * step + center_y + radius + inner_space),
-                            paint);
-                }
-            } else {
-                String[] strings = new String[]{
-                        "С вас $100"
-                };
-                space = 350;
                 int len = step * strings.length;
 
                 for (int i = 0; i < strings.length; i++) {

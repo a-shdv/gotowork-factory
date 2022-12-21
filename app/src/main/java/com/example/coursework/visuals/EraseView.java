@@ -80,35 +80,24 @@ public class EraseView extends View {
             paint.setStrokeWidth(3);
             int step = 10;
             Random random = new Random();
-            int eye_radius = 80;
-            RectF oval = new RectF();
 
             int radius = 300;
             int center_x = 725;
             int center_y = 1000;
 
-            //Left pouches
-            paint.setColor(Color.BLACK);
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(5);
-            for (int i = 1; i < 3; i++) {
-                oval.set(center_x - 50 - eye_radius * 2,
-                        center_y - eye_radius,
-                        center_x - 50,
-                        center_y + eye_radius + 15 * i);
-                mCanvas.drawArc(oval, 25, 130, false, paint);
-            }
+            for (int i = center_y; i < center_y + radius; i += step) {
+                for (int j = center_x - radius; j < center_x + radius; j += step) {
+                    int y = i + random.nextInt(step);
+                    int x = j + random.nextInt(step);
+                    if (IsInTheBeard(center_x, center_y,
+                            radius, y, x, radius - 120)) {
 
-            //Right pouches
-            paint.setColor(Color.BLACK);
-            paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(5);
-            for (int i = 1; i < 3; i++) {
-                oval.set(center_x + 60,
-                        center_y - eye_radius,
-                        center_x + 60 + eye_radius * 2,
-                        center_y + eye_radius + 15 * i);
-                mCanvas.drawArc(oval, 25, 130, false, paint);
+                        mPath.moveTo(x, y);
+                        mPath.lineTo(x + 1, y + 1);
+                        mCanvas.drawPath(mPath, paint);
+                        mPath.reset();
+                    }
+                }
             }
 
             isFirstDraw = false;

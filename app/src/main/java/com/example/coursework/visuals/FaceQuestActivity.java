@@ -34,26 +34,26 @@ public class FaceQuestActivity extends AppCompatActivity {
         View view = findViewById(R.id.erase);
         view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         ((EraseView) view).setParent(this);
-        new Handler().postDelayed(new Runnable() {
+/*        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(FaceQuestActivity.this, EnterActivity.class));
                 finish();
             }
-        }, 1 * 1000);
+        }, 1 * 1000);*/
     }
 
     void updateThePicture() {
         setBitmapAsBackground(Mood.happy);
 
-/*        Handler handler = new Handler();
+        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(FaceQuestActivity.this, EnterActivity.class));
                 finish();
             }
-        }, 1000);*/
+        }, 1000);
     }
 
     private void setBitmapAsBackground(Mood mood) {
