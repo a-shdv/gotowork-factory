@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".visuals.FaceQuestActivity"
+            android:name=".graphics.GraphScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

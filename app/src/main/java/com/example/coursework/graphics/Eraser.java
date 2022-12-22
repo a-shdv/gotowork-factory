@@ -1,4 +1,4 @@
-package com.example.coursework.visuals;
+package com.example.coursework.graphics;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +16,7 @@ import androidx.annotation.Nullable;
 
 import java.util.Random;
 
-public class EraseView extends View {
+public class Eraser extends View {
 
     private Bitmap mBitmap;
     private Canvas mCanvas;
@@ -25,16 +24,16 @@ public class EraseView extends View {
     private Paint mBitmapPaint;
     Context context;
     private Paint mPaint;
-    private FaceQuestActivity parent;
+    private GraphScreenActivity parent;
 
     boolean isFirstDraw = true;
     boolean isClear = false;
 
-    public void setParent(FaceQuestActivity parent){
+    public void setParent(GraphScreenActivity parent){
         this.parent = parent;
     }
 
-    public EraseView(Context context) {
+    public Eraser(Context context) {
         super(context);
         init(context);
     }
@@ -51,12 +50,12 @@ public class EraseView extends View {
         mPaint.setStrokeWidth(164);
     }
 
-    public EraseView(Context context, @Nullable AttributeSet attrs) {
+    public Eraser(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public EraseView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public Eraser(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }

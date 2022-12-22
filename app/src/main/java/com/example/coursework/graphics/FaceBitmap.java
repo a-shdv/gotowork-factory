@@ -1,4 +1,4 @@
-package com.example.coursework.visuals;
+package com.example.coursework.graphics;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -14,11 +14,10 @@ public class FaceBitmap {
         Bitmap bmp = Bitmap.createBitmap(wigth, heigth, conf); // this creates a MUTABLE bitmap
         Canvas canvas = new Canvas(bmp);
         Paint paint = new Paint();
-
         {
             int radius = 300;
-            int center_x = 725; //165
-            int center_y = 1000; //390
+            int center_x = 725;
+            int center_y = 1000;
             int eye_radius = 80;
             int pupil_radius = eye_radius / 2;
             int mouth_radius = 80;

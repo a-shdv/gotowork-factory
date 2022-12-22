@@ -12,13 +12,13 @@
 
     </ImageView>
 
-    <com.example.coursework.visuals.EraseView
+    <com.example.coursework.graphics.Eraser
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/erase"
         tools:layout_editor_absoluteY="-138dp"
         tools:layout_editor_absoluteX="-166dp">
 
-    </com.example.coursework.visuals.EraseView>
+    </com.example.coursework.graphics.Eraser>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     Button button_report;
     Button button_exit;
 
-
     Context context;
 
     @Override
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         button_shifts = findViewById(R.id.button_shifts);
         button_report = findViewById(R.id.button_report);
         button_exit = findViewById(R.id.button_exit);
-
 
         button_machines.setOnClickListener(
                 v -> {
@@ -72,14 +70,6 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
 
-        button_exit.setOnClickListener(
-                v -> {
-                    finish();
-                    Intent intent = new Intent(MainActivity.this, EnterActivity.class);
-                    startActivity(intent);
-                }
-        );
-
         button_report.setOnClickListener(
                 v -> {
                     Report report = new Report();
@@ -91,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+        );
+
+        button_exit.setOnClickListener(
+                v -> {
+                    finish();
+                    Intent intent = new Intent(MainActivity.this, EnterActivity.class);
+                    startActivity(intent);
                 }
         );
     }

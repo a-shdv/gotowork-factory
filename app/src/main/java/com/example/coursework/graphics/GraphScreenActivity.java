@@ -1,4 +1,4 @@
-package com.example.coursework.visuals;
+package com.example.coursework.graphics;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,24 +16,23 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.coursework.R;
 import com.example.coursework.activities.EnterActivity;
-import com.example.coursework.activities.MainActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-public class FaceQuestActivity extends AppCompatActivity {
+public class GraphScreenActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_face_quest);
+        setContentView(R.layout.activity_graph_screen);
 
         setBitmapAsBackground(Mood.sad);
 
         View view = findViewById(R.id.erase);
         view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        ((EraseView) view).setParent(this);
+        ((Eraser) view).setParent(this);
 /*        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -50,7 +49,7 @@ public class FaceQuestActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(FaceQuestActivity.this, EnterActivity.class));
+                startActivity(new Intent(GraphScreenActivity.this, EnterActivity.class));
                 finish();
             }
         }, 1000);

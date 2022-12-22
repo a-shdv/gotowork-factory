@@ -54,6 +54,7 @@ public class MachineActivity extends AppCompatActivity {
 
     List<MachineWorkersModel> machineWorkers = new ArrayList<>();
 
+    int differenceBetweenShiftHours = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,11 +155,9 @@ public class MachineActivity extends AppCompatActivity {
 
                             button_shift_begin_time.setText(formattedHourOfDay + ":" + formattedMinute);
 
-                            // Calculating Worker's hours
-                            int beginHours = shift_begin_time.getTime().getHours() * 60 + shift_begin_time.getTime().getMinutes();
-                            int endHours = shift_end_time.getTime().getHours() * 60 + shift_end_time.getTime().getMinutes();
-                            int difference = Math.abs( (endHours - beginHours) / 60);
-                            edit_text_hours.setText(Integer.toString(difference));
+                            differenceBetweenShiftHours = calculateDifferenceBetweenShiftHours(shift_begin_time, shift_end_time);
+
+                            edit_text_hours.setText(Integer.toString(differenceBetweenShiftHours));
                         }
                     };
 
@@ -200,11 +199,9 @@ public class MachineActivity extends AppCompatActivity {
 
                             button_shift_end_time.setText(formattedHourOfDay + ":" + formattedMinute);
 
-                            // Calculating Worker's hours
-                            int beginHours = shift_begin_time.getTime().getHours() * 60 + shift_begin_time.getTime().getMinutes();
-                            int endHours = shift_end_time.getTime().getHours() * 60 + shift_end_time.getTime().getMinutes();
-                            int difference = Math.abs( (endHours - beginHours) / 60 );
-                            edit_text_hours.setText(Integer.toString(difference));
+                            differenceBetweenShiftHours = calculateDifferenceBetweenShiftHours(shift_begin_time, shift_end_time);
+
+                            edit_text_hours.setText(Integer.toString(differenceBetweenShiftHours));
 
                         }
                     };
@@ -257,14 +254,15 @@ public class MachineActivity extends AppCompatActivity {
                 v -> {
                     int workerId = workers.get(spinnerWorkers.getSelectedItemPosition()).getId();
                     String workerName = workers.get(spinnerWorkers.getSelectedItemPosition()).getName();
+                    int hours = Integer.valueOf(edit_text_hours.getText().toString());
                     for (MachineWorkersModel machineWorker : machineWorkers) {
                         if (machineWorker.getWorkerId() == workerId) {
                             return;
                         }
                     }
                     machineWorkers.add(new MachineWorkersModel(id, workerId, workerName,
-                            Integer.valueOf(edit_text_hours.getText().toString())));
-                    edit_text_hours.setText(Integer.toString(0));
+                            hours));
+                    edit_text_hours.setText(Integer.toString(differenceBetweenShiftHours));
                     spinnerWorkers.setSelection(0);
                     fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
                 }
@@ -352,5 +350,17 @@ public class MachineActivity extends AppCompatActivity {
             tableLayoutMachineWorkers.addView(tableRow);
             index++;
         }
+    }
+
+    int calculateDifferenceBetweenShiftHours(Calendar shift_begin_time, Calendar shift_end_time) {
+        int beginHours = shift_begin_time.getTime().getHours() * 60 + shift_begin_time.getTime().getMinutes();
+        int endHours = shift_end_time.getTime().getHours() * 60 + shift_end_time.getTime().getMinutes();
+        int difference;
+        if (endHours < beginHours) {
+            difference = 24 - Math.abs(endHours - beginHours) / 60;
+        } else {
+            difference = Math.abs(endHours - beginHours) / 60;
+        }
+        return difference;
     }
 }
