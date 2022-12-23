@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Иди работать!</string>
+    <string name="registration">Регистрация</string>
+    <string name="authorization">Авторизация</string>
     <string name="button_shifts_text">Смены</string>
     <string name="button_workers_text">Работники</string>
     <string name="button_exit_text">Выйти из личного кабинета</string>

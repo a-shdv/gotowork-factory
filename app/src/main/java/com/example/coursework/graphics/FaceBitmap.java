@@ -23,9 +23,9 @@ public class FaceBitmap {
             int mouth_radius = 80;
 
             if (mood == Mood.sad) {
-                canvas.drawARGB(16, 0, 0, 0);
+                canvas.drawARGB(0, 0, 0, 0);
             } else {
-                canvas.drawARGB(255, 98, 0, 238);
+                canvas.drawRGB(10, 38, 71);
             }
 
             //Head
@@ -126,9 +126,11 @@ public class FaceBitmap {
                 for (int i = 0; i < strings.length; i++) {
                     int inner_space = ((heigth - len - radius - center_y) / 2);
 
+                    paint.setColor(Color.WHITE);
                     canvas.drawText(strings[i], space,
                             (i * step + center_y + radius + inner_space),
                             paint);
+
                 }
             }
         }

@@ -79,25 +79,10 @@ public class GraphScreenActivity extends AppCompatActivity {
             fOut = new FileOutputStream(file);
 
             bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
-            fOut.flush(); // Not really required
-            fOut.close(); // do not forget to close the stream
+            fOut.flush();
+            fOut.close();
         }
         catch (Exception ex) {
         }
-    }
-
-    private Bitmap LoadBitmap() {
-        try {
-            String path = Environment.getExternalStorageDirectory().toString();
-            File file = new File(path, "bitmap.jpg");
-            if (file.exists()) {
-                Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-                return myBitmap;
-            }
-        }
-        catch (Exception ex) {
-
-        }
-        return null;
     }
 }

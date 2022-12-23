@@ -82,8 +82,7 @@ public class RegisterActivity extends AppCompatActivity {
                         logic.close();
 
                         this.finish();
-                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        startActivity(intent);
+                        LoginActivity.checkBoxOfflineMode.setEnabled(true);
                     } else { // ONLINE
                         login = editTextLogin.getText().toString().trim();
                         password = editTextPassword.getText().toString().trim();
