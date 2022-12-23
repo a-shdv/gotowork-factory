@@ -14,7 +14,6 @@ if ($connection->connect_error) {
 
 if (isset($_POST['login']) && isset($_POST['password'])) {
     // Include the necessary files
-    require_once "connect.php";
     require_once "validate.php";
 
     // Call validate, pass form data as parameter and store the returned value

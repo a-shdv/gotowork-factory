@@ -12,15 +12,12 @@ if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
-if (isset($_POST['login']) && isset($_POST['password'])) {
-    // Include the necessary files
-    require_once "validate.php";
-
+if (isset($_POST['name']) && isset($_POST['salary'])) {
     // Call validate, pass form data as parameter and store the returned value
-    $login = validate($_POST['login']);
-    $password = validate($_POST['password']);
+    $name = $_POST['name'];
+    $salary = $_POST['salary'];
     // Create the SQL query string
-    $sql = "select * from boss where login='$login' and password='" . md5($password) . "'";
+    $sql = "insert into worker values('', '$name', '$salary')";
 
     // Execute the query
     $result = $connection->query($sql);
