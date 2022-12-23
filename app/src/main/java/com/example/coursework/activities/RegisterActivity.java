@@ -101,8 +101,6 @@ public class RegisterActivity extends AppCompatActivity {
                                         finish();
                                     } else if (response.equals("failure")) {
                                         Toast.makeText(RegisterActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
-                                    } else{
-                                        Toast.makeText(RegisterActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {

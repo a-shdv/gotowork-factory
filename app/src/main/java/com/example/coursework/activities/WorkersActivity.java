@@ -32,8 +32,15 @@ public class WorkersActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         logic.open();
-        fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
-        logic.close();
+        if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+            fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
+            logic.close();
+        } else {
+            fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
+
+        }
+
+
     }
 
     @Override
