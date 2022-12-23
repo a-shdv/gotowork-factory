@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.coursework.R;
-import com.example.coursework.activities.EnterActivity;
+import com.example.coursework.activities.LoginActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,26 +33,26 @@ public class GraphScreenActivity extends AppCompatActivity {
         View view = findViewById(R.id.erase);
         view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         ((Eraser) view).setParent(this);
-/*        new Handler().postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(FaceQuestActivity.this, EnterActivity.class));
+                startActivity(new Intent(GraphScreenActivity.this, LoginActivity.class));
                 finish();
             }
-        }, 1 * 1000);*/
+        }, 1 * 1000);
     }
 
     void updateThePicture() {
         setBitmapAsBackground(Mood.happy);
 
-        Handler handler = new Handler();
+/*        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(GraphScreenActivity.this, EnterActivity.class));
+                startActivity(new Intent(GraphScreenActivity.this, LoginActivity.class));
                 finish();
             }
-        }, 1000);
+        }, 1000);*/
     }
 
     private void setBitmapAsBackground(Mood mood) {

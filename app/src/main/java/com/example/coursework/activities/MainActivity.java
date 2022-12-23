@@ -19,9 +19,9 @@ import com.example.coursework.database.logics.MachineLogic;
 import com.example.coursework.database.logics.UserLogic;
 
 import java.io.IOException;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
+
 
     Button button_workers;
     Button button_shifts;
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         button_exit.setOnClickListener(
                 v -> {
                     finish();
-                    Intent intent = new Intent(MainActivity.this, EnterActivity.class);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent);
                 }
         );

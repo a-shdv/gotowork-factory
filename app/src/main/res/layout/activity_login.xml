@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.EnterActivity"
+    tools:context=".activities.LoginActivity"
     android:orientation="vertical">
 
     <LinearLayout
@@ -68,5 +68,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:text="@string/button_register_text"/>
+
+    <CheckBox
+        android:id="@+id/checkBoxOfflineMode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_view_offline" />
 
 </LinearLayout>

@@ -30,4 +30,5 @@
     <string name="text_view_hours">Количество часов: </string>
     <string name="button_date_from">Установить начальную дату</string>
     <string name="button_date_to">Установить конечную дату</string>
+    <string name="text_view_offline">Оффлайн режим</string>
 </resources>
