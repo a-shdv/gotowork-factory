@@ -187,7 +187,7 @@ public class ShiftsActivity extends AppCompatActivity {
                     logic.open();
                     TextView textView = (TextView) selectedRow.getChildAt(2);
                     logic.delete(Integer.parseInt(textView.getText().toString()));
-                    fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossIntId));
+                    fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(Integer.valueOf(textView.getText().toString())));
                     logic.close();
                     selectedRow = null;
                 } else { // ONLINE
@@ -217,10 +217,12 @@ public class ShiftsActivity extends AppCompatActivity {
                         };
                         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                         requestQueue.add(stringRequest);
+
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
                     }
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
+
                 }
             }
         });

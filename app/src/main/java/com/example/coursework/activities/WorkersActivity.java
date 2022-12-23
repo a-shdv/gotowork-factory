@@ -37,6 +37,7 @@ public class WorkersActivity extends AppCompatActivity {
     InputStream inputStream;
     String line = "";
     String result = "";
+    String urlDelete = "http://192.168.31.7:8000/gotowork/worker/delete.php";
 
     TableRow selectedRow;
     Button button_create;

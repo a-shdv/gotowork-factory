@@ -28,7 +28,7 @@ import java.util.Map;
 public class ShiftActivity extends AppCompatActivity {
     String urlCreate = "http://192.168.31.7:8000/gotowork/shift/create.php";
     String urlUpdate = "http://192.168.31.7:8000/gotowork/shift/update.php";
-    String type, date, bossId;
+    String type, date, bossStrId;
 
     Button button_create;
     Button button_cancel;
@@ -41,7 +41,7 @@ public class ShiftActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shift);
 
-        type = date = bossId = "";
+        type = date = bossStrId = "";
 
         int id = getIntent().getExtras().getInt("id");
         logic = new ShiftLogic(this);
@@ -87,7 +87,7 @@ public class ShiftActivity extends AppCompatActivity {
                         Calendar calendar = new GregorianCalendar();
                         calendar.set(date_picker_shift_date.getYear(), date_picker_shift_date.getMonth(), date_picker_shift_date.getDayOfMonth());
 
-                        bossId = getIntent().getExtras().getString("bossStrId");
+                        bossStrId = getIntent().getExtras().getString("bossStrId");
                         type = edit_text_type.getText().toString().trim();
                         Date shiftTimeDate = new Date(calendar.getTime().getTime());
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
@@ -95,7 +95,7 @@ public class ShiftActivity extends AppCompatActivity {
 
                         // CREATE
                         if (id == 0) {
-                            if (!bossId.equals("") && !type.equals("") || !date.equals("")) {
+                            if (!bossStrId.equals("") && !type.equals("") || !date.equals("")) {
                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, urlCreate, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
@@ -112,16 +112,18 @@ public class ShiftActivity extends AppCompatActivity {
                                         Map<String, String> data = new HashMap<>();
                                         data.put("type", type);
                                         data.put("shift_date", date);
-                                        data.put("boss_id", bossId);
+                                        data.put("boss_id", bossStrId);
                                         return data;
                                     }
                                 };
                                 RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                                 requestQueue.add(stringRequest);
                             }
+
                             this.finish();
+
                         } else { // UPDATE
-                            if (!Integer.toString(id).equals("") && !bossId.equals("") && !type.equals("") || !date.equals("")) {
+                            if (!Integer.toString(id).equals("") && !bossStrId.equals("") && !type.equals("") || !date.equals("")) {
                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpdate, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
@@ -139,7 +141,7 @@ public class ShiftActivity extends AppCompatActivity {
                                         data.put("id", Integer.toString(id));
                                         data.put("type", type);
                                         data.put("shift_date", date);
-                                        data.put("boss_id", bossId);
+                                        data.put("boss_id", bossStrId);
                                         return data;
                                     }
                                 };
