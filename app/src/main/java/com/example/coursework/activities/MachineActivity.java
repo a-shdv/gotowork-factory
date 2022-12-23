@@ -300,7 +300,7 @@ public class MachineActivity extends AppCompatActivity {
             tableRowTitles.addView(textView);
         }
 
-        tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
+        tableRowTitles.setBackgroundColor(Color.parseColor("#0A2647"));
         tableLayoutMachineWorkers.addView(tableRowTitles);
 
         int index = 0;
@@ -331,7 +331,7 @@ public class MachineActivity extends AppCompatActivity {
             tableRow.addView(textViewHours);
             tableRow.addView(textViewIndex);
 
-            tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
+            tableRow.setBackgroundColor(Color.parseColor("#0A2647"));
 
             tableRow.setOnClickListener(v -> {
 
@@ -340,11 +340,11 @@ public class MachineActivity extends AppCompatActivity {
                 for (int i = 0; i < tableLayoutMachineWorkers.getChildCount(); i++) {
                     View view = tableLayoutMachineWorkers.getChildAt(i);
                     if (view instanceof TableRow) {
-                        view.setBackgroundColor(Color.parseColor("#FF6200EE"));
+                        view.setBackgroundColor(Color.parseColor("#0A2647"));
                     }
                 }
 
-                tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
+                tableRow.setBackgroundColor(Color.WHITE);
             });
 
             tableLayoutMachineWorkers.addView(tableRow);

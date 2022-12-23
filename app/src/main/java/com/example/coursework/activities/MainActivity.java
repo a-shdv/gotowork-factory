@@ -66,11 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(MainActivity.this, ShiftsActivity.class);
                     if (LoginActivity.checkBoxOfflineMode.isChecked()) {
-                        int bossId = getIntent().getExtras().getInt("bossId");
-                        intent.putExtra("bossId", bossId);
+                        int bossIntId = getIntent().getExtras().getInt("bossIntId");
+                        intent.putExtra("bossIntId", bossIntId);
                     } else {
-                        int bossId = getIntent().getExtras().getInt("bossId");
-                        intent.putExtra("bossId", bossId);
+                        String bossStrId = getIntent().getExtras().getString("bossStrId");
+                        intent.putExtra("bossIdId", bossStrId);
                     }
                     startActivity(intent);
                 }

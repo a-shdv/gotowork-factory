@@ -190,7 +190,7 @@ public class ShiftsActivity extends AppCompatActivity {
             tableRowTitles.addView(textView);
         }
 
-        tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
+        tableRowTitles.setBackgroundColor(Color.parseColor("#0A2647"));
         tableLayoutShifts.addView(tableRowTitles);
 
 
@@ -224,20 +224,20 @@ public class ShiftsActivity extends AppCompatActivity {
             tableRow.addView(textViewShiftDate);
             tableRow.addView(textViewId);
 
-            tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
+            tableRow.setBackgroundColor(Color.parseColor("#0A2647"));
 
             tableRow.setOnClickListener(v -> {
 
                 selectedRow = tableRow;
 
-                for (int i = 0; i < tableLayoutShifts.getChildCount(); i++) {
-                    View view = tableLayoutShifts.getChildAt(i);
+                for (int j = 0; j < tableLayoutShifts.getChildCount(); j++) {
+                    View view = tableLayoutShifts.getChildAt(j);
                     if (view instanceof TableRow) {
-                        view.setBackgroundColor(Color.parseColor("#FF6200EE"));
+                        view.setBackgroundColor(Color.parseColor("#0A2647"));
                     }
                 }
 
-                tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
+                tableRow.setBackgroundColor(Color.parseColor("#144272"));
             });
 
             tableLayoutShifts.addView(tableRow);
@@ -262,7 +262,7 @@ public class ShiftsActivity extends AppCompatActivity {
             tableRowTitles.addView(textView);
         }
 
-        tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
+        tableRowTitles.setBackgroundColor(Color.parseColor("#0A2647"));
         tableLayoutShifts.addView(tableRowTitles);
 
 
@@ -296,7 +296,7 @@ public class ShiftsActivity extends AppCompatActivity {
             tableRow.addView(textViewShiftDate);
             tableRow.addView(textViewId);
 
-            tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
+            tableRow.setBackgroundColor(Color.parseColor("#0A2647"));
 
             tableRow.setOnClickListener(v -> {
 
@@ -305,11 +305,11 @@ public class ShiftsActivity extends AppCompatActivity {
                 for (int j = 0; j < tableLayoutShifts.getChildCount(); j++) {
                     View view = tableLayoutShifts.getChildAt(j);
                     if (view instanceof TableRow) {
-                        view.setBackgroundColor(Color.parseColor("#FF6200EE"));
+                        view.setBackgroundColor(Color.parseColor("#0A2647"));
                     }
                 }
 
-                tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
+                tableRow.setBackgroundColor(Color.parseColor("#144272"));
             });
 
             tableLayoutShifts.addView(tableRow);

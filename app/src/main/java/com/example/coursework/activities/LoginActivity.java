@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,6 +21,17 @@ import com.example.coursework.R;
 import com.example.coursework.database.logics.BossLogic;
 import com.example.coursework.database.models.BossModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,9 +43,14 @@ public class LoginActivity extends AppCompatActivity {
     EditText editTextLogin;
     EditText editTextPassword;
 
-    String URL = "http://192.168.31.7:8000/gotowork/boss/login.php";
+    URL url;
+    String address = "http://192.168.31.7:8000/gotowork/boss/login.php";
 
-    String login, password;
+    InputStream inputStream;
+    String line = "";
+    String result = "";
+
+    String bossId, login, password;
     static CheckBox checkBoxOfflineMode;
 
     BossLogic logic;
@@ -43,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        login = password = "";
+        bossId = login = password = "";
 
         button_to_register_activity = findViewById(R.id.button_to_register_activity);
         button_enter = findViewById(R.id.button_enter);
@@ -96,12 +113,18 @@ public class LoginActivity extends AppCompatActivity {
                         AlertDialog alert = builder.create();
                         alert.show();
                     } else { // ONLINE
+                        try {
+                            bossId = getBossStrId();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         login = editTextLogin.getText().toString().trim();
                         password = editTextPassword.getText().toString().trim();
                         if (!login.equals("") && !password.equals("")) {
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, response -> {
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, address, response -> {
                                 if (response.equals("success")) {
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    intent.putExtra("bossId", bossId);
                                     startActivity(intent);
                                     finish();
                                 } else if (response.equals("failure")) {
@@ -120,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 protected Map<String, String> getParams() throws AuthFailureError {
                                     Map<String, String> data = new HashMap<>();
+                                    data.put("bossId", bossId);
                                     data.put("login", login);
                                     data.put("password", password);
                                     return data;
@@ -149,5 +173,45 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
         );
+    }
+
+    public String getBossStrId() throws JSONException {
+        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+        try {
+            url = new URL("http://192.168.31.7:8000/gotowork/boss/get.php");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            inputStream = new BufferedInputStream(connection.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read inputStream content into a String
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line + "\n");
+            }
+            inputStream.close();
+            result = stringBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray jsonArray = new JSONArray(result);
+        JSONObject jsonObject = null;
+
+        String result = "";
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            jsonObject = jsonArray.getJSONObject(i);
+            if (jsonObject.getString("name") == editTextLogin.getText().toString()) {
+                result = jsonObject.getString("id");
+            }
+        }
+        return result;
+
     }
 }

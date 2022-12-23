@@ -41,9 +41,7 @@ public class ShiftActivity extends AppCompatActivity {
 
         type = date = bossId = "";
 
-        int bossId = getIntent().getExtras().getInt("bossId");
         int id = getIntent().getExtras().getInt("id");
-
         logic = new ShiftLogic(this);
 
         button_create = findViewById(R.id.button_create);
@@ -71,7 +69,7 @@ public class ShiftActivity extends AppCompatActivity {
                         Calendar date = new GregorianCalendar();
                         date.set(date_picker_shift_date.getYear(), date_picker_shift_date.getMonth(), date_picker_shift_date.getDayOfMonth());
 
-                        ShiftModel model = new ShiftModel(edit_text_type.getText().toString(), date.getTime().getTime(), bossId);
+                        ShiftModel model = new ShiftModel(edit_text_type.getText().toString(), date.getTime().getTime(), id);
                         logic.open();
 
                         if (id != 0) {
@@ -87,11 +85,11 @@ public class ShiftActivity extends AppCompatActivity {
                         Calendar calendar = new GregorianCalendar();
                         calendar.set(date_picker_shift_date.getYear(), date_picker_shift_date.getMonth(), date_picker_shift_date.getDayOfMonth());
 
-                        this.bossId = Integer.toString(bossId);
+                        bossId = getIntent().getExtras().getString("bossId");
                         type = edit_text_type.getText().toString().trim();
                         date = calendar.getTime().toString().trim();
 
-                        if (!type.equals("") || !date.equals("")) {
+                        if (!bossId.equals("") && !type.equals("") || !date.equals("")) {
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -106,6 +104,7 @@ public class ShiftActivity extends AppCompatActivity {
                                 @Override
                                 protected Map<String, String> getParams() throws AuthFailureError {
                                     Map<String, String> data = new HashMap<>();
+                                    data.put("bossId", bossId);
                                     data.put("name", type);
                                     data.put("shift_date", date);
                                     return data;

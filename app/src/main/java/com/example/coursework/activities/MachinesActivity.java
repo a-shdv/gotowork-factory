@@ -117,7 +117,7 @@ public class MachinesActivity extends AppCompatActivity {
             tableRowTitles.addView(textView);
         }
 
-        tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
+        tableRowTitles.setBackgroundColor(Color.parseColor("#0A2647"));
         tableLayoutMachines.addView(tableRowTitles);
 
 
@@ -159,20 +159,20 @@ public class MachinesActivity extends AppCompatActivity {
             tableRow.addView(textViewMachineWorkers);
             tableRow.addView(textViewId);
 
-            tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
+            tableRow.setBackgroundColor(Color.parseColor("#0A2647"));
 
             tableRow.setOnClickListener(v -> {
 
                 selectedRow = tableRow;
 
-                for (int i = 0; i < tableLayoutMachines.getChildCount(); i++) {
-                    View view = tableLayoutMachines.getChildAt(i);
+                for (int j = 0; j < tableLayoutMachines.getChildCount(); j++) {
+                    View view = tableLayoutMachines.getChildAt(j);
                     if (view instanceof TableRow) {
-                        view.setBackgroundColor(Color.parseColor("#FF6200EE"));
+                        view.setBackgroundColor(Color.parseColor("#0A2647"));
                     }
                 }
 
-                tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
+                tableRow.setBackgroundColor(Color.parseColor("#144272"));
             });
 
             tableLayoutMachines.addView(tableRow);

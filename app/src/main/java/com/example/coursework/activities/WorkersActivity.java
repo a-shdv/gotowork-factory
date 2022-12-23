@@ -190,7 +190,7 @@ public class WorkersActivity extends AppCompatActivity {
             tableRowTitles.addView(textView);
         }
 
-        tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
+        tableRowTitles.setBackgroundColor(Color.parseColor("#0A2647"));
         tableLayoutWorkers.addView(tableRowTitles);
 
 
@@ -219,20 +219,20 @@ public class WorkersActivity extends AppCompatActivity {
             tableRow.addView(textViewSalary);
             tableRow.addView(textViewId);
 
-            tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
+            tableRow.setBackgroundColor(Color.parseColor("#0A2647"));
 
             tableRow.setOnClickListener(v -> {
 
                 selectedRow = tableRow;
 
-                for (int i = 0; i < tableLayoutWorkers.getChildCount(); i++) {
-                    View view = tableLayoutWorkers.getChildAt(i);
+                for (int j = 0; j < tableLayoutWorkers.getChildCount(); j++) {
+                    View view = tableLayoutWorkers.getChildAt(j);
                     if (view instanceof TableRow) {
-                        view.setBackgroundColor(Color.parseColor("#FF6200EE"));
+                        view.setBackgroundColor(Color.parseColor("#0A2647"));
                     }
                 }
 
-                tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
+                tableRow.setBackgroundColor(Color.parseColor("#144272"));
             });
 
             tableLayoutWorkers.addView(tableRow);
@@ -257,7 +257,7 @@ public class WorkersActivity extends AppCompatActivity {
             tableRowTitles.addView(textView);
         }
 
-        tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
+        tableRowTitles.setBackgroundColor(Color.parseColor("#0A2647"));
         tableLayoutWorkers.addView(tableRowTitles);
 
 
@@ -291,7 +291,7 @@ public class WorkersActivity extends AppCompatActivity {
             tableRow.addView(textViewSalary);
             tableRow.addView(textViewId);
 
-            tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
+            tableRow.setBackgroundColor(Color.parseColor("#0A2647"));
 
             tableRow.setOnClickListener(v -> {
 
@@ -300,11 +300,11 @@ public class WorkersActivity extends AppCompatActivity {
                 for (int j = 0; j < tableLayoutWorkers.getChildCount(); j++) {
                     View view = tableLayoutWorkers.getChildAt(j);
                     if (view instanceof TableRow) {
-                        view.setBackgroundColor(Color.parseColor("#FF6200EE"));
+                        view.setBackgroundColor(Color.parseColor("#0A2647"));
                     }
                 }
 
-                tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
+                tableRow.setBackgroundColor(Color.parseColor("#144272"));
             });
 
             tableLayoutWorkers.addView(tableRow);
