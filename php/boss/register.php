@@ -19,6 +19,7 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
     // Call validate, pass form data as parameter and store the returned value
     $login = validate($_POST['login']);
     $password = validate($_POST['password']);
+
     // Create the SQL query string. We'll use md5() function for data security. It calculates and returns the MD5 hash of a string
     $sql = "insert into boss values('','$login', '" . md5($password) . "')";
     // Execute the query. Print "success" on a successful execution, otherwise "failure".

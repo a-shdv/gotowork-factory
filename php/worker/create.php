@@ -16,6 +16,7 @@ if (isset($_POST['name']) && isset($_POST['salary'])) {
     // Call validate, pass form data as parameter and store the returned value
     $name = $_POST['name'];
     $salary = $_POST['salary'];
+
     // Create the SQL query string
     $sql = "insert into worker values('', '$name', '$salary')";
 

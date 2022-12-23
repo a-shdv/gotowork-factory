@@ -12,7 +12,7 @@ if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
-$query = mysqli_query($connection, "SELECT * FROM boss");
+$query = mysqli_query($connection, "SELECT id, login, password FROM boss");
 
 $flag = array();
 if ($query) {

@@ -12,7 +12,14 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.coursework.R;
 import com.example.coursework.database.logics.ShiftLogic;
 import com.example.coursework.database.models.ShiftModel;
@@ -31,14 +38,19 @@ import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShiftsActivity extends AppCompatActivity {
     URL url;
     InputStream inputStream;
     String line = "";
     String result = "";
-    String bossStrId;
+    String shiftId, bossStrId;
+    String urlDelete = "http://192.168.31.7:8000/gotowork/shift/delete.php";
 
     TableRow selectedRow;
     Button button_create;
@@ -98,6 +110,8 @@ public class ShiftsActivity extends AppCompatActivity {
         button_delete = findViewById(R.id.button_delete);
         button_back = findViewById(R.id.button_back);
 
+        shiftId = bossStrId = "";
+
         logic = new ShiftLogic(this);
 
         if (LoginActivity.checkBoxOfflineMode.isChecked()) {
@@ -114,7 +128,6 @@ public class ShiftsActivity extends AppCompatActivity {
                 connection.setRequestMethod("GET");
                 inputStream = new BufferedInputStream(connection.getInputStream());
                 fillTableFromJSON(Arrays.asList("Тип смены", "Дата смены"), new JSONArray(result));
-
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
@@ -156,7 +169,10 @@ public class ShiftsActivity extends AppCompatActivity {
         button_update.setOnClickListener(v -> {
             if (selectedRow != null) {
                 Intent intent = new Intent(ShiftsActivity.this, ShiftActivity.class);
-                intent.putExtra("bossId", bossIntId);
+                if (bossIntId != 0)
+                    intent.putExtra("bossIntId", bossIntId);
+                if (bossStrId != "")
+                    intent.putExtra("bossStrId", bossStrId);
                 TextView textView = (TextView) selectedRow.getChildAt(2);
                 intent.putExtra("id", Integer.valueOf(textView.getText().toString()));
                 startActivity(intent);
@@ -166,12 +182,46 @@ public class ShiftsActivity extends AppCompatActivity {
 
         button_delete.setOnClickListener(v -> {
             if (selectedRow != null) {
-                logic.open();
-                TextView textView = (TextView) selectedRow.getChildAt(2);
-                logic.delete(Integer.parseInt(textView.getText().toString()));
-                fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossIntId));
-                logic.close();
-                selectedRow = null;
+                // OFFLINE
+                if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+                    logic.open();
+                    TextView textView = (TextView) selectedRow.getChildAt(2);
+                    logic.delete(Integer.parseInt(textView.getText().toString()));
+                    fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossIntId));
+                    logic.close();
+                    selectedRow = null;
+                } else { // ONLINE
+                    TextView textView = (TextView) selectedRow.getChildAt(2);
+
+                    int parsedShiftId = Integer.parseInt(textView.getText().toString());
+                    shiftId = Integer.toString(parsedShiftId);
+
+                    if (!shiftId.equals("")) {
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlDelete, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                if (response.equals("success")) {
+                                    Toast.makeText(ShiftsActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else if (response.equals("failure")) {
+                                    Toast.makeText(ShiftsActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> data = new HashMap<>();
+                                data.put("id", shiftId);
+                                return data;
+                            }
+                        };
+                        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                        requestQueue.add(stringRequest);
+                    }
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
             }
         });
 
@@ -276,7 +326,7 @@ public class ShiftsActivity extends AppCompatActivity {
         tableLayoutShifts.addView(tableRowTitles);
 
 
-        for(int i = 0; i < shifts.length(); i++){
+        for (int i = 0; i < shifts.length(); i++) {
             JSONObject json = shifts.getJSONObject(i);
             String id = json.getString("id");
             String name = json.getString("type");

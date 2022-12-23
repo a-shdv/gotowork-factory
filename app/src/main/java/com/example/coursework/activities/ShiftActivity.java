@@ -26,7 +26,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ShiftActivity extends AppCompatActivity {
-    String URL = "http://192.168.31.7:8000/gotowork/shift/create.php";
+    String urlCreate = "http://192.168.31.7:8000/gotowork/shift/create.php";
+    String urlUpdate = "http://192.168.31.7:8000/gotowork/shift/update.php";
     String type, date, bossId;
 
     Button button_create;
@@ -92,31 +93,61 @@ public class ShiftActivity extends AppCompatActivity {
                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
                         date = simpleDateFormat.format(shiftTimeDate);
 
-                        if (!bossId.equals("") && !type.equals("") || !date.equals("")) {
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if (response.equals("success")) {
-                                        Toast.makeText(ShiftActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    } else if (response.equals("failure")) {
-                                        Toast.makeText(ShiftActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
+                        // CREATE
+                        if (id == 0) {
+                            if (!bossId.equals("") && !type.equals("") || !date.equals("")) {
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlCreate, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        if (response.equals("success")) {
+                                            Toast.makeText(ShiftActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        } else if (response.equals("failure")) {
+                                            Toast.makeText(ShiftActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
-                                }
-                            }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
-                                @Override
-                                protected Map<String, String> getParams() throws AuthFailureError {
-                                    Map<String, String> data = new HashMap<>();
-                                    data.put("type", type);
-                                    data.put("shift_date", date);
-                                    data.put("boss_id", bossId);
-                                    return data;
-                                }
-                            };
-                            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                            requestQueue.add(stringRequest);
+                                }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> data = new HashMap<>();
+                                        data.put("type", type);
+                                        data.put("shift_date", date);
+                                        data.put("boss_id", bossId);
+                                        return data;
+                                    }
+                                };
+                                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                requestQueue.add(stringRequest);
+                            }
+                            this.finish();
+                        } else { // UPDATE
+                            if (!Integer.toString(id).equals("") && !bossId.equals("") && !type.equals("") || !date.equals("")) {
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlUpdate, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        if (response.equals("success")) {
+                                            Toast.makeText(ShiftActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        } else if (response.equals("failure")) {
+                                            Toast.makeText(ShiftActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> data = new HashMap<>();
+                                        data.put("id", Integer.toString(id));
+                                        data.put("type", type);
+                                        data.put("shift_date", date);
+                                        data.put("boss_id", bossId);
+                                        return data;
+                                    }
+                                };
+                                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                requestQueue.add(stringRequest);
+                            }
+                            this.finish();
                         }
-                        this.finish();
                     }
                 }
         );

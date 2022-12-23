@@ -12,7 +12,7 @@ if ($connection->connect_error) {
     die("Connection failed: " . $connection->connect_error);
 }
 
-$query = mysqli_query($connection, "SELECT * FROM shift");
+$query = mysqli_query($connection, "SELECT id, type, shift_date, boss_id FROM shift");
 
 $flag = array();
 if ($query) {
