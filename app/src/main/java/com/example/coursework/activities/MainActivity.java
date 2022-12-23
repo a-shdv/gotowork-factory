@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     MachineLogic shiftLogic = new MachineLogic(this);
 
                     try {
-                        report.generatePdf(shiftLogic.getFullList());
+                        report.createPdf(shiftLogic.getFullList());
                         Toast.makeText(MainActivity.this, "Отчет успешно сформирован!", Toast.LENGTH_LONG).show();
                     } catch (IOException e) {
                         e.printStackTrace();

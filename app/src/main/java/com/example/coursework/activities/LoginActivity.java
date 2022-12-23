@@ -118,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+
                         login = editTextLogin.getText().toString().trim();
                         password = editTextPassword.getText().toString().trim();
                         if (!login.equals("") && !password.equals("")) {
@@ -201,13 +202,16 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         JSONArray jsonArray = new JSONArray(result);
-        JSONObject jsonObject = null;
+        JSONObject jsonObject;
 
         String result = "";
 
         for (int i = 0; i < jsonArray.length(); i++) {
             jsonObject = jsonArray.getJSONObject(i);
-            if (jsonObject.getString("name") == editTextLogin.getText().toString()) {
+            String test = jsonObject.getString("login");
+            String test1 = editTextLogin.getText().toString();
+
+            if (jsonObject.getString("login").equals(editTextLogin.getText().toString())) {
                 result = jsonObject.getString("id");
             }
         }
