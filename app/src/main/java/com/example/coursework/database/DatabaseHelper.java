@@ -16,7 +16,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS user (\n" +
+        db.execSQL("CREATE TABLE IF NOT EXISTS boss (\n" +
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +
                 "    login character(100) NOT NULL,\n" +
                 "    password character(100) NOT NULL);\n");
@@ -25,9 +25,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +
                 "    name character(100) NOT NULL,\n" +
                 "    shift_date long NOT NULL,\n" +
-                "    user_id integer NOT NULL,\n" +
-                "    CONSTRAINT user_fk FOREIGN KEY (user_id)\n" +
-                "    REFERENCES user(id) ON DELETE CASCADE);");
+                "    boss_id integer NOT NULL,\n" +
+                "    CONSTRAINT boss_fk FOREIGN KEY (boss_id)\n" +
+                "    REFERENCES boss(id) ON DELETE CASCADE);");
 
         db.execSQL("CREATE TABLE machine (" +
                 "    id integer PRIMARY KEY AUTOINCREMENT,\n" +

@@ -14,9 +14,9 @@ import com.example.coursework.database.firebase.ShiftFirebaseLogic;
 import com.example.coursework.database.firebase.WorkerFirebaseLogic;
 import com.example.coursework.database.firebase.MachineFirebaseLogic;
 import com.example.coursework.database.firebase.MachineWorkersFirebaseLogic;
-import com.example.coursework.database.firebase.UserFirebaseLogic;
+import com.example.coursework.database.firebase.BossFirebaseLogic;
 import com.example.coursework.database.logics.MachineLogic;
-import com.example.coursework.database.logics.UserLogic;
+import com.example.coursework.database.logics.BossLogic;
 
 import java.io.IOException;
 
@@ -33,11 +33,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        UserLogic userLogic = new UserLogic(this);
+        BossLogic bossLogic = new BossLogic(this);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        userLogic.open();
+        bossLogic.open();
 
         context = this;
 
@@ -63,9 +63,15 @@ public class MainActivity extends AppCompatActivity {
 
         button_shifts.setOnClickListener(
                 v -> {
-                    int userId = getIntent().getExtras().getInt("userId");
+
                     Intent intent = new Intent(MainActivity.this, ShiftsActivity.class);
-                    intent.putExtra("userId", userId);
+                    if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+                        int bossId = getIntent().getExtras().getInt("bossId");
+                        intent.putExtra("bossId", bossId);
+                    } else {
+                        int bossId = getIntent().getExtras().getInt("bossId");
+                        intent.putExtra("bossId", bossId);
+                    }
                     startActivity(intent);
                 }
         );
@@ -97,8 +103,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        UserFirebaseLogic userFirebaseLogic = new UserFirebaseLogic();
-        userFirebaseLogic.syncUsers(this);
+        BossFirebaseLogic bossFirebaseLogic = new BossFirebaseLogic();
+        bossFirebaseLogic.syncBosses(this);
 
         ShiftFirebaseLogic shiftFirebaseLogic = new ShiftFirebaseLogic();
         shiftFirebaseLogic.syncShifts(this);

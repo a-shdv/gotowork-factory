@@ -47,7 +47,7 @@ public class WorkerActivity extends AppCompatActivity {
 
         name = salary = "";
 
-        if (id != 0) {
+        if (id != 0 && LoginActivity.checkBoxOfflineMode.isChecked()) {
             logic.open();
             WorkerModel model = logic.getElement(id);
             logic.close();

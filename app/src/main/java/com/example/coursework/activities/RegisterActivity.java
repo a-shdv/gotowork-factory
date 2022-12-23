@@ -10,11 +10,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.example.coursework.R;
-import com.example.coursework.database.firebase.UserFirebaseLogic;
-import com.example.coursework.database.logics.UserLogic;
-import com.example.coursework.database.models.UserModel;
+import com.example.coursework.database.firebase.BossFirebaseLogic;
+import com.example.coursework.database.logics.BossLogic;
+import com.example.coursework.database.models.BossModel;
 
 import java.util.List;
 
@@ -23,12 +22,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.coursework.R;
-import com.example.coursework.database.logics.UserLogic;
-import com.example.coursework.database.models.UserModel;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -38,10 +33,10 @@ public class RegisterActivity extends AppCompatActivity {
     Button buttonBack;
     EditText editTextLogin;
     EditText editTextPassword;
-    UserLogic logic;
-    UserFirebaseLogic firebaseLogic;
+    BossLogic logic;
+    BossFirebaseLogic firebaseLogic;
 
-    String URL = "http://192.168.31.7:8000/gotowork/authorization/register.php";
+    String URL = "http://192.168.31.7:8000/gotowork/boss/register.php";
     String login, password;
 
     @Override
@@ -54,21 +49,21 @@ public class RegisterActivity extends AppCompatActivity {
         editTextLogin = findViewById(R.id.edit_text_login);
         editTextPassword = findViewById(R.id.edit_text_password);
 
-        logic = new UserLogic(this);
-        firebaseLogic = new UserFirebaseLogic();
+        logic = new BossLogic(this);
+        firebaseLogic = new BossFirebaseLogic();
 
         buttonRegister.setOnClickListener(
                 v -> {
                     // OFFLINE
                     if (LoginActivity.checkBoxOfflineMode.isChecked()) {
-                        UserModel model = new UserModel(editTextLogin.getText().toString(), editTextPassword.getText().toString());
+                        BossModel model = new BossModel(editTextLogin.getText().toString(), editTextPassword.getText().toString());
 
                         logic.open();
 
-                        List<UserModel> users = logic.getFullList();
+                        List<BossModel> bosses = logic.getFullList();
 
-                        for (UserModel user : users) {
-                            if (user.getLogin().equals(model.getLogin())) {
+                        for (BossModel boss : bosses) {
+                            if (boss.getLogin().equals(model.getLogin())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                 builder.setMessage("Такой логин уже зарегистрирован");
                                 builder.setCancelable(true);

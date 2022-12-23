@@ -4,12 +4,12 @@ public class ShiftModel {
     private int id;
     private String type;
     private long date;
-    private int userid;
+    private int bossid;
 
-    public ShiftModel(String type, long date, int userid){
+    public ShiftModel(String type, long date, int bossid){
         this.type = type;
         this.date = date;
-        this.userid = userid;
+        this.bossid = bossid;
     }
 
     public ShiftModel(){
@@ -40,11 +40,11 @@ public class ShiftModel {
         this.date = date;
     }
 
-    public int getUserid() {
-        return userid;
+    public int getBossid() {
+        return bossid;
     }
 
-    public void setUserid(int userid) {
-        this.userid = userid;
+    public void setBossid(int bossid) {
+        this.bossid = bossid;
     }
 }

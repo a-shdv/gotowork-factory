@@ -38,7 +38,6 @@ public class WorkersActivity extends AppCompatActivity {
     String line = "";
     String result = "";
 
-
     TableRow selectedRow;
     Button button_create;
     Button button_update;
@@ -56,7 +55,7 @@ public class WorkersActivity extends AppCompatActivity {
         } else {
             StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
             try {
-                url = new URL("http://192.168.31.7:8000/gotowork/worker/test.php");
+                url = new URL("http://192.168.31.7:8000/gotowork/worker/get.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 inputStream = new BufferedInputStream(connection.getInputStream());
@@ -143,7 +142,7 @@ public class WorkersActivity extends AppCompatActivity {
         } else {
             StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
             try {
-                url = new URL("http://192.168.31.7:8000/gotowork/worker/test.php");
+                url = new URL("http://192.168.31.7:8000/gotowork/worker/get.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 inputStream = new BufferedInputStream(connection.getInputStream());
@@ -278,7 +277,7 @@ public class WorkersActivity extends AppCompatActivity {
             textViewName.setGravity(Gravity.CENTER);
 
             TextView textViewSalary = new TextView(this);
-            textViewName.setHeight(100);
+            textViewSalary.setHeight(100);
             textViewSalary.setTextSize(16);
             textViewSalary.setText(salary);
             textViewSalary.setTextColor(Color.WHITE);

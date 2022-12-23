@@ -17,8 +17,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.coursework.R;
-import com.example.coursework.database.logics.UserLogic;
-import com.example.coursework.database.models.UserModel;
+import com.example.coursework.database.logics.BossLogic;
+import com.example.coursework.database.models.BossModel;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +31,12 @@ public class LoginActivity extends AppCompatActivity {
     EditText editTextLogin;
     EditText editTextPassword;
 
-    String URL = "http://192.168.31.7:8000/gotowork/authorization/login.php";
+    String URL = "http://192.168.31.7:8000/gotowork/boss/login.php";
 
     String login, password;
     static CheckBox checkBoxOfflineMode;
 
-    UserLogic logic;
+    BossLogic logic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.edit_text_password);
         checkBoxOfflineMode = findViewById(R.id.checkBoxOfflineMode);
 
-        logic = new UserLogic(this);
+        logic = new BossLogic(this);
 
         checkBoxOfflineMode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,18 +65,18 @@ public class LoginActivity extends AppCompatActivity {
                 v -> {
                     // OFFLINE
                     if (checkBoxOfflineMode.isChecked()) {
-                        UserModel model = new UserModel(editTextLogin.getText().toString(), editTextPassword.getText().toString());
+                        BossModel model = new BossModel(editTextLogin.getText().toString(), editTextPassword.getText().toString());
 
                         logic.open();
 
-                        List<UserModel> users = logic.getFullList();
-                        for (UserModel user : users) {
-                            if (user.getLogin().equals(model.getLogin()) && user.getPassword().equals(model.getPassword())) {
+                        List<BossModel> bosses = logic.getFullList();
+                        for (BossModel boss : bosses) {
+                            if (boss.getLogin().equals(model.getLogin()) && boss.getPassword().equals(model.getPassword())) {
                                 logic.close();
 
                                 this.finish();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("userId", user.getId());
+                                intent.putExtra("bossId", boss.getId());
                                 startActivity(intent);
 
                                 return;

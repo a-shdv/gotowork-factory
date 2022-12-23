@@ -2,33 +2,33 @@ package com.example.coursework.database.firebase;
 
 import android.content.Context;
 
-import com.example.coursework.database.logics.UserLogic;
-import com.example.coursework.database.models.UserModel;
+import com.example.coursework.database.logics.BossLogic;
+import com.example.coursework.database.models.BossModel;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class UserFirebaseLogic {
+public class BossFirebaseLogic {
 
-    private final String TABLE = "user";
+    private final String TABLE = "boss";
 
     private DatabaseReference database;
 
-    public UserFirebaseLogic(){
+    public BossFirebaseLogic(){
         database = FirebaseDatabase.getInstance().getReference(TABLE);
     }
 
-    public void syncUsers(Context context) {
-        UserLogic logic = new UserLogic(context);
+    public void syncBosses(Context context) {
+        BossLogic logic = new BossLogic(context);
 
         logic.open();
-        List<UserModel> models = logic.getFullList();
+        List<BossModel> models = logic.getFullList();
         logic.close();
 
         database.removeValue();
 
-        for (UserModel model: models) {
+        for (BossModel model: models) {
             database.push().setValue(model);
         }
     }

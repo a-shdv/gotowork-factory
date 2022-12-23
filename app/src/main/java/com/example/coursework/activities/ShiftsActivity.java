@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -16,28 +17,74 @@ import com.example.coursework.R;
 import com.example.coursework.database.logics.ShiftLogic;
 import com.example.coursework.database.models.ShiftModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
 public class ShiftsActivity extends AppCompatActivity {
+    URL url;
+    InputStream inputStream;
+    String line = "";
+    String result = "";
 
     TableRow selectedRow;
-
     Button button_create;
     Button button_update;
     Button button_delete;
     Button button_back;
     ShiftLogic logic;
-    int userId;
+    int bossId;
 
     @Override
     public void onResume() {
         super.onResume();
-        logic.open();
-        fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(userId));
-        logic.close();
+        if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+            logic.open();
+            fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossId));
+            logic.close();
+        } else {
+            StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+            try {
+                url = new URL("http://192.168.31.7:8000/gotowork/shift/get.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                inputStream = new BufferedInputStream(connection.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Read inputStream content into a String
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line + "\n");
+                }
+                inputStream.close();
+                result = stringBuilder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                fillTableFromJSON(Arrays.asList("Тип смены", "Дата смены"), new JSONArray(result));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     @Override
@@ -52,15 +99,46 @@ public class ShiftsActivity extends AppCompatActivity {
 
         logic = new ShiftLogic(this);
 
-        userId = getIntent().getExtras().getInt("userId");
+        if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+            bossId = getIntent().getExtras().getInt("bossId");
+            logic.open();
+            fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossId));
+            logic.close();
+        } else {
+            StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+            try {
+                url = new URL("http://192.168.31.7:8000/gotowork/shift/get.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                inputStream = new BufferedInputStream(connection.getInputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        logic.open();
-        fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(userId));
-        logic.close();
+            // Read inputStream content into a String
+            try {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line + "\n");
+                }
+                inputStream.close();
+                result = stringBuilder.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                fillTableFromJSON(Arrays.asList("Тип смены", "Дата смены"), new JSONArray(result));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
 
         button_create.setOnClickListener(v -> {
             Intent intent = new Intent(ShiftsActivity.this, ShiftActivity.class);
-            intent.putExtra("userId", userId);
+            intent.putExtra("bossId", bossId);
             intent.putExtra("id", 0);
             startActivity(intent);
         });
@@ -68,7 +146,7 @@ public class ShiftsActivity extends AppCompatActivity {
         button_update.setOnClickListener(v -> {
             if (selectedRow != null) {
                 Intent intent = new Intent(ShiftsActivity.this, ShiftActivity.class);
-                intent.putExtra("userId", userId);
+                intent.putExtra("bossId", bossId);
                 TextView textView = (TextView) selectedRow.getChildAt(2);
                 intent.putExtra("id", Integer.valueOf(textView.getText().toString()));
                 startActivity(intent);
@@ -81,7 +159,7 @@ public class ShiftsActivity extends AppCompatActivity {
                 logic.open();
                 TextView textView = (TextView) selectedRow.getChildAt(2);
                 logic.delete(Integer.parseInt(textView.getText().toString()));
-                fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(userId));
+                fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossId));
                 logic.close();
                 selectedRow = null;
             }
@@ -165,4 +243,77 @@ public class ShiftsActivity extends AppCompatActivity {
             tableLayoutShifts.addView(tableRow);
         }
     }
+
+    void fillTableFromJSON(List<String> titles, JSONArray shifts) throws JSONException {
+        TableLayout tableLayoutShifts = findViewById(R.id.tableLayoutShifts);
+
+        tableLayoutShifts.removeAllViews();
+
+        TableRow tableRowTitles = new TableRow(this);
+
+        for (String title : titles) {
+            TextView textView = new TextView(this);
+
+            textView.setTextSize(16);
+            textView.setText(title);
+            textView.setTextColor(Color.WHITE);
+            textView.setGravity(Gravity.CENTER);
+            textView.setWidth((int) (getWindowManager().getDefaultDisplay().getWidth() / 2.2));
+            tableRowTitles.addView(textView);
+        }
+
+        tableRowTitles.setBackgroundColor(Color.parseColor("#FF6200EE"));
+        tableLayoutShifts.addView(tableRowTitles);
+
+
+        for(int i = 0; i < shifts.length(); i++){
+            JSONObject json = shifts.getJSONObject(i);
+            String id = json.getString("id");
+            String name = json.getString("name");
+            String shift = json.getString("shift_date");
+
+            TableRow tableRow = new TableRow(this);
+
+            TextView textViewName = new TextView(this);
+            textViewName.setText(name);
+            textViewName.setHeight(100);
+            textViewName.setTextSize(16);
+            textViewName.setTextColor(Color.WHITE);
+            textViewName.setGravity(Gravity.CENTER);
+
+            TextView textViewShiftDate = new TextView(this);
+            textViewName.setHeight(100);
+            textViewShiftDate.setTextSize(16);
+            textViewShiftDate.setText(shift);
+            textViewShiftDate.setTextColor(Color.WHITE);
+            textViewShiftDate.setGravity(Gravity.CENTER);
+
+            TextView textViewId = new TextView(this);
+            textViewId.setVisibility(View.INVISIBLE);
+            textViewId.setText(id);
+
+            tableRow.addView(textViewName);
+            tableRow.addView(textViewShiftDate);
+            tableRow.addView(textViewId);
+
+            tableRow.setBackgroundColor(Color.parseColor("#FF6200EE"));
+
+            tableRow.setOnClickListener(v -> {
+
+                selectedRow = tableRow;
+
+                for (int j = 0; j < tableLayoutShifts.getChildCount(); j++) {
+                    View view = tableLayoutShifts.getChildAt(j);
+                    if (view instanceof TableRow) {
+                        view.setBackgroundColor(Color.parseColor("#FF6200EE"));
+                    }
+                }
+
+                tableRow.setBackgroundColor(Color.parseColor("#FFBB86FC"));
+            });
+
+            tableLayoutShifts.addView(tableRow);
+        }
+    }
+
 }

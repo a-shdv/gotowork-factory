@@ -19,7 +19,7 @@ public class ShiftLogic {
     final String COLUMN_ID = "id";
     final String COLUMN_NAME = "name";
     final String COLUMN_SHIFT_DATE = "shift_date";
-    final String COLUMN_USERID = "user_id";
+    final String COLUMN_BOSS_ID = "boss_id";
 
     public ShiftLogic(Context context) {
         this.context = context;
@@ -48,7 +48,7 @@ public class ShiftLogic {
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
             obj.setType(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
             obj.setDate(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
-            obj.setUserid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_USERID)));
+            obj.setBossid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_BOSS_ID)));
 
             list.add(obj);
             cursor.moveToNext();
@@ -56,9 +56,9 @@ public class ShiftLogic {
         return list;
     }
 
-    public List<ShiftModel> getFilteredList(int userId) {
+    public List<ShiftModel> getFilteredList(int bossId) {
         Cursor cursor = db.rawQuery("select * from " + TABLE + " where "
-                + COLUMN_USERID + " = " + userId, null);
+                + COLUMN_BOSS_ID + " = " + bossId, null);
         List<ShiftModel> list = new ArrayList<>();
         if (!cursor.moveToFirst()) {
             return list;
@@ -69,7 +69,7 @@ public class ShiftLogic {
             obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
             obj.setType(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
             obj.setDate(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
-            obj.setUserid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_USERID)));
+            obj.setBossid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_BOSS_ID)));
 
             list.add(obj);
             cursor.moveToNext();
@@ -87,36 +87,37 @@ public class ShiftLogic {
         obj.setId(cursor.getInt((int) cursor.getColumnIndex(COLUMN_ID)));
         obj.setType(cursor.getString((int) cursor.getColumnIndex(COLUMN_NAME)));
         obj.setDate(cursor.getLong((int) cursor.getColumnIndex(COLUMN_SHIFT_DATE)));
-        obj.setUserid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_USERID)));
+        obj.setBossid(cursor.getInt((int) cursor.getColumnIndex(COLUMN_BOSS_ID)));
         return obj;
     }
 
     public void insert(ShiftModel model) {
         ContentValues content = new ContentValues();
-        content.put(COLUMN_NAME,model.getType());
-        content.put(COLUMN_SHIFT_DATE,model.getDate());
-        content.put(COLUMN_USERID,model.getUserid());
-        db.insert(TABLE,null,content);
+        content.put(COLUMN_NAME, model.getType());
+        content.put(COLUMN_SHIFT_DATE, model.getDate());
+        content.put(COLUMN_BOSS_ID, model.getBossid());
+        db.insert(TABLE, null, content);
     }
 
     public void update(ShiftModel model) {
-        ContentValues content=new ContentValues();
-        content.put(COLUMN_NAME,model.getType());
-        content.put(COLUMN_SHIFT_DATE,model.getDate());
-        content.put(COLUMN_USERID,model.getUserid());
+        ContentValues content = new ContentValues();
+        content.put(COLUMN_NAME, model.getType());
+        content.put(COLUMN_SHIFT_DATE, model.getDate());
+        content.put(COLUMN_BOSS_ID, model.getBossid());
         String where = COLUMN_ID + " = " + model.getId();
-        db.update(TABLE,content,where,null);
+        db.update(TABLE, content, where, null);
     }
 
     public void delete(int id) {
-        String where = COLUMN_ID+" = "+id;
-        db.delete(TABLE,where,null);
+        String where = COLUMN_ID + " = " + id;
+        db.delete(TABLE, where, null);
         MachineLogic machineLogic = new MachineLogic(context);
         machineLogic.deleteByShiftId(id);
     }
-    public void deleteByUserId(int userId) {
-        String where = COLUMN_USERID+" = "+userId;
-        db.delete(TABLE,where,null);
+
+    public void deleteByBossId(int bossId) {
+        String where = COLUMN_BOSS_ID + " = " + bossId;
+        db.delete(TABLE, where, null);
     }
 
 }

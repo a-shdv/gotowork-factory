@@ -1,16 +1,16 @@
 package com.example.coursework.database.models;
 
-public class UserModel {
+public class BossModel {
     private int id;
     private String login;
     private String password;
 
-    public UserModel(String login,  String password){
+    public BossModel(String login, String password){
         this.login = login;
         this.password = password;
     }
 
-    public UserModel(){
+    public BossModel(){
 
     }
 
