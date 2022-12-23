@@ -12,7 +12,14 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.coursework.R;
 import com.example.coursework.database.logics.WorkerLogic;
 import com.example.coursework.database.models.WorkerModel;
@@ -28,9 +35,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WorkersActivity extends AppCompatActivity {
     URL url;
@@ -45,6 +53,7 @@ public class WorkersActivity extends AppCompatActivity {
     Button button_delete;
     Button button_back;
     WorkerLogic logic;
+    String workerId;
 
     @Override
     public void onResume() {
@@ -122,12 +131,47 @@ public class WorkersActivity extends AppCompatActivity {
         button_delete.setOnClickListener(
                 v -> {
                     if (selectedRow != null) {
-                        logic.open();
-                        TextView textView = (TextView) selectedRow.getChildAt(2);
-                        logic.delete(Integer.valueOf(textView.getText().toString()));
-                        fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
-                        logic.close();
-                        selectedRow = null;
+                        if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+                            logic.open();
+                            TextView textView = (TextView) selectedRow.getChildAt(2);
+                            logic.delete(Integer.valueOf(textView.getText().toString()));
+                            fillTable(Arrays.asList("Имя", "Зарплата"), logic.getFullList());
+                            logic.close();
+                            selectedRow = null;
+                        } else { // ONLINE
+                            TextView textView = (TextView) selectedRow.getChildAt(2);
+
+                            int parsedWorkerId = Integer.parseInt(textView.getText().toString());
+                            workerId = Integer.toString(parsedWorkerId);
+
+                            if (!workerId.equals("")) {
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlDelete, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        if (response.equals("success")) {
+                                            Toast.makeText(WorkersActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
+                                            finish();
+                                        } else if (response.equals("failure")) {
+                                            Toast.makeText(WorkersActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> data = new HashMap<>();
+                                        data.put("id", workerId);
+                                        return data;
+                                    }
+                                };
+                                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                requestQueue.add(stringRequest);
+
+                                Intent intent = getIntent();
+                                finish();
+                                startActivity(intent);
+                            }
+
+                        }
                     }
                 }
         );
