@@ -82,7 +82,6 @@ public class WorkerActivity extends AppCompatActivity {
                                 public void onResponse(String response) {
                                     if (response.equals("success")) {
                                         Toast.makeText(WorkerActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
-
                                         finish();
                                     } else if (response.equals("failure")) {
                                         Toast.makeText(WorkerActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
@@ -99,6 +98,7 @@ public class WorkerActivity extends AppCompatActivity {
                             };
                             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                             requestQueue.add(stringRequest);
+                            this.finish();
                         }
                     }
                 }
