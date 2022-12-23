@@ -18,6 +18,7 @@ import com.example.coursework.R;
 import com.example.coursework.database.logics.ShiftLogic;
 import com.example.coursework.database.models.ShiftModel;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -85,9 +86,11 @@ public class ShiftActivity extends AppCompatActivity {
                         Calendar calendar = new GregorianCalendar();
                         calendar.set(date_picker_shift_date.getYear(), date_picker_shift_date.getMonth(), date_picker_shift_date.getDayOfMonth());
 
-                        bossId = getIntent().getExtras().getString("bossId");
+                        bossId = getIntent().getExtras().getString("bossStrId");
                         type = edit_text_type.getText().toString().trim();
-                        date = calendar.getTime().toString().trim();
+                        Date shiftTimeDate = new Date(calendar.getTime().getTime());
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+                        date = simpleDateFormat.format(shiftTimeDate);
 
                         if (!bossId.equals("") && !type.equals("") || !date.equals("")) {
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
@@ -104,9 +107,9 @@ public class ShiftActivity extends AppCompatActivity {
                                 @Override
                                 protected Map<String, String> getParams() throws AuthFailureError {
                                     Map<String, String> data = new HashMap<>();
-                                    data.put("bossId", bossId);
-                                    data.put("name", type);
+                                    data.put("type", type);
                                     data.put("shift_date", date);
+                                    data.put("boss_id", bossId);
                                     return data;
                                 }
                             };

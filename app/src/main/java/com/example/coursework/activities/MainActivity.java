@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         intent.putExtra("bossIntId", bossIntId);
                     } else {
                         String bossStrId = getIntent().getExtras().getString("bossStrId");
-                        intent.putExtra("bossIdId", bossStrId);
+                        intent.putExtra("bossStrId", bossStrId);
                     }
                     startActivity(intent);
                 }

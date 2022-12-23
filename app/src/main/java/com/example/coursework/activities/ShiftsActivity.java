@@ -38,6 +38,7 @@ public class ShiftsActivity extends AppCompatActivity {
     InputStream inputStream;
     String line = "";
     String result = "";
+    String bossStrId;
 
     TableRow selectedRow;
     Button button_create;
@@ -45,14 +46,14 @@ public class ShiftsActivity extends AppCompatActivity {
     Button button_delete;
     Button button_back;
     ShiftLogic logic;
-    int bossId;
+    int bossIntId;
 
     @Override
     public void onResume() {
         super.onResume();
         if (LoginActivity.checkBoxOfflineMode.isChecked()) {
             logic.open();
-            fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossId));
+            fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossIntId));
             logic.close();
         } else {
             StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
@@ -100,18 +101,23 @@ public class ShiftsActivity extends AppCompatActivity {
         logic = new ShiftLogic(this);
 
         if (LoginActivity.checkBoxOfflineMode.isChecked()) {
-            bossId = getIntent().getExtras().getInt("bossId");
+            bossIntId = getIntent().getExtras().getInt("bossIntId");
             logic.open();
-            fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossId));
+            fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossIntId));
             logic.close();
         } else {
             StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
             try {
+                bossStrId = getIntent().getExtras().getString("bossStrId");
                 url = new URL("http://192.168.31.7:8000/gotowork/shift/get.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 inputStream = new BufferedInputStream(connection.getInputStream());
+                fillTableFromJSON(Arrays.asList("Тип смены", "Дата смены"), new JSONArray(result));
+
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
@@ -138,7 +144,11 @@ public class ShiftsActivity extends AppCompatActivity {
 
         button_create.setOnClickListener(v -> {
             Intent intent = new Intent(ShiftsActivity.this, ShiftActivity.class);
-            intent.putExtra("bossId", bossId);
+
+            if (bossIntId != 0)
+                intent.putExtra("bossIntId", bossIntId);
+            if (bossStrId != "")
+                intent.putExtra("bossStrId", bossStrId);
             intent.putExtra("id", 0);
             startActivity(intent);
         });
@@ -146,7 +156,7 @@ public class ShiftsActivity extends AppCompatActivity {
         button_update.setOnClickListener(v -> {
             if (selectedRow != null) {
                 Intent intent = new Intent(ShiftsActivity.this, ShiftActivity.class);
-                intent.putExtra("bossId", bossId);
+                intent.putExtra("bossId", bossIntId);
                 TextView textView = (TextView) selectedRow.getChildAt(2);
                 intent.putExtra("id", Integer.valueOf(textView.getText().toString()));
                 startActivity(intent);
@@ -159,7 +169,7 @@ public class ShiftsActivity extends AppCompatActivity {
                 logic.open();
                 TextView textView = (TextView) selectedRow.getChildAt(2);
                 logic.delete(Integer.parseInt(textView.getText().toString()));
-                fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossId));
+                fillTable(Arrays.asList("Тип смены", "Дата смены"), logic.getFilteredList(bossIntId));
                 logic.close();
                 selectedRow = null;
             }
@@ -269,7 +279,7 @@ public class ShiftsActivity extends AppCompatActivity {
         for(int i = 0; i < shifts.length(); i++){
             JSONObject json = shifts.getJSONObject(i);
             String id = json.getString("id");
-            String name = json.getString("name");
+            String name = json.getString("type");
             String shift = json.getString("shift_date");
 
             TableRow tableRow = new TableRow(this);
@@ -282,7 +292,7 @@ public class ShiftsActivity extends AppCompatActivity {
             textViewName.setGravity(Gravity.CENTER);
 
             TextView textViewShiftDate = new TextView(this);
-            textViewName.setHeight(100);
+            textViewShiftDate.setHeight(100);
             textViewShiftDate.setTextSize(16);
             textViewShiftDate.setText(shift);
             textViewShiftDate.setTextColor(Color.WHITE);

@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     String line = "";
     String result = "";
 
-    String bossId, login, password;
+    String bossStrId, login, password;
     static CheckBox checkBoxOfflineMode;
 
     BossLogic logic;
@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        bossId = login = password = "";
+        bossStrId = login = password = "";
 
         button_to_register_activity = findViewById(R.id.button_to_register_activity);
         button_enter = findViewById(R.id.button_enter);
@@ -93,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                 this.finish();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("bossId", boss.getId());
+                                intent.putExtra("bossIntId", boss.getId());
                                 startActivity(intent);
 
                                 return;
@@ -114,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                         alert.show();
                     } else { // ONLINE
                         try {
-                            bossId = getBossStrId();
+                            bossStrId = getBossStrId();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, address, response -> {
                                 if (response.equals("success")) {
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                    intent.putExtra("bossId", bossId);
+                                    intent.putExtra("bossStrId", bossStrId);
                                     startActivity(intent);
                                     finish();
                                 } else if (response.equals("failure")) {
@@ -144,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 protected Map<String, String> getParams() throws AuthFailureError {
                                     Map<String, String> data = new HashMap<>();
-                                    data.put("bossId", bossId);
+                                    data.put("bossStrId", bossStrId);
                                     data.put("login", login);
                                     data.put("password", password);
                                     return data;
