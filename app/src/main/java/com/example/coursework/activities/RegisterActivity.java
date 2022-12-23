@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     UserLogic logic;
     UserFirebaseLogic firebaseLogic;
 
-    String URL = "http://192.168.31.7:8000/authorization/register.php";
+    String URL = "http://192.168.31.7:8000/gotowork/authorization/register.php";
     String login, password;
 
     @Override
@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onResponse(String response) {
                                     if (response.equals("success")) {
                                         Toast.makeText(RegisterActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
-                                        buttonRegister.setClickable(false);
+                                        finish();
                                     } else if (response.equals("failure")) {
                                         Toast.makeText(RegisterActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
                                     } else{

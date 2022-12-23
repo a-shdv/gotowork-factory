@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText editTextLogin;
     EditText editTextPassword;
 
-    String URL = "http://192.168.31.7:8000/authorization/login.php";
+    String URL = "http://192.168.31.7:8000/gotowork/authorization/login.php";
 
     String login, password;
     static CheckBox checkBoxOfflineMode;
