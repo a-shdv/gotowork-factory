@@ -58,6 +58,7 @@ import java.util.Map;
 public class MachineActivity extends AppCompatActivity {
 
     URL url;
+
     String urlCreate = "http://192.168.31.7:8000/gotowork/machine/create.php";
     String urlUpdate = "http://192.168.31.7:8000/gotowork/machine/update.php";
     String type, shiftBeginTime, shiftEndTime, shiftId, shiftName;
@@ -117,7 +118,10 @@ public class MachineActivity extends AppCompatActivity {
         shift_end_time.set(Calendar.MINUTE, 0);
 
         edit_text_machine_type = findViewById(R.id.edit_text_machine_type);
-        String machineType = getIntent().getExtras().getString("machine_type");
+        String machineType = "";
+        if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+            machineType = getIntent().getExtras().getString("machine_type");
+        }
         if (machineType != "") {
             edit_text_machine_type.setText(machineType);
         }
@@ -125,6 +129,7 @@ public class MachineActivity extends AppCompatActivity {
         edit_text_hours = findViewById(R.id.edit_text_hours);
         edit_text_hours.setText(Integer.toString(0));
         edit_text_hours.setEnabled(false);
+
 
         ShiftLogic shiftLogic = new ShiftLogic(this);
         shiftLogic.open();
@@ -137,9 +142,21 @@ public class MachineActivity extends AppCompatActivity {
         }
 
         spinnerShifts = findViewById(R.id.spinner_shifts);
-        ArrayAdapter<String> adapterShifts = new ArrayAdapter(this, android.R.layout.simple_spinner_item, shiftsNames);
-        adapterShifts.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerShifts.setAdapter(adapterShifts);
+        if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+            ArrayAdapter<String> adapterShifts = new ArrayAdapter(this, android.R.layout.simple_spinner_item, shiftsNames);
+            adapterShifts.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerShifts.setAdapter(adapterShifts);
+        } else {
+            ArrayList<String> shiftsNamesOnline = new ArrayList<>();
+            try {
+                shiftsNamesOnline = getShiftNames();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            ArrayAdapter<String> adapterShifts = new ArrayAdapter(this, android.R.layout.simple_spinner_item, shiftsNamesOnline);
+            adapterShifts.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerShifts.setAdapter(adapterShifts);
+        }
 
         WorkerLogic workerLogic = new WorkerLogic(this);
         workerLogic.open();
@@ -152,12 +169,26 @@ public class MachineActivity extends AppCompatActivity {
         }
 
         Spinner spinnerWorkers = findViewById(R.id.spinner_workers);
-        ArrayAdapter<String> adapterWorkers = new ArrayAdapter(this, android.R.layout.simple_spinner_item, workersNames);
-        adapterWorkers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerWorkers.setAdapter(adapterWorkers);
+        if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+            ArrayAdapter<String> adapterWorkers = new ArrayAdapter(this, android.R.layout.simple_spinner_item, workersNames);
+            adapterWorkers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerWorkers.setAdapter(adapterWorkers);
+        } else {
+            ArrayList<String> workerNamesOnline = new ArrayList<>();
+            try {
+                workerNamesOnline = getWorkerNames();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            ArrayAdapter<String> adapterWorkers = new ArrayAdapter(this, android.R.layout.simple_spinner_item, workerNamesOnline);
+            adapterWorkers.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerWorkers.setAdapter(adapterWorkers);
+        }
 
         button_shift_begin_time.setOnClickListener(
-                v -> {
+                v ->
+
+                {
                     TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
@@ -201,7 +232,9 @@ public class MachineActivity extends AppCompatActivity {
         );
 
         button_shift_end_time.setOnClickListener(
-                v -> {
+                v ->
+
+                {
                     TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
@@ -245,106 +278,184 @@ public class MachineActivity extends AppCompatActivity {
                 }
         );
 
-        button_create.setOnClickListener(
-                v -> {
-                    if (LoginActivity.checkBoxOfflineMode.isChecked()) { // OFFLINE
+        button_create.setOnClickListener(v ->
+        {
+            if (LoginActivity.checkBoxOfflineMode.isChecked()) { // OFFLINE
 
-                        String machine = edit_text_machine_type.getText().toString();
+                String machine = edit_text_machine_type.getText().toString();
 
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-                        String dateTimeBegin = dateFormat.format(shift_begin_time.getTime());
-                        String dateTimeEnd = dateFormat.format(shift_end_time.getTime());
+                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                String dateTimeBegin = dateFormat.format(shift_begin_time.getTime());
+                String dateTimeEnd = dateFormat.format(shift_end_time.getTime());
 
-                        int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
-                        String shiftName = shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
-                        long shiftDate = shifts.get(spinnerShifts.getSelectedItemPosition()).getDate();
-
-
-                        MachineModel model = new MachineModel(machine, dateTimeBegin, dateTimeEnd, shiftId, shiftName, machineWorkers);
-                        logic.open();
+                int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
+                String shiftName = shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
+                long shiftDate = shifts.get(spinnerShifts.getSelectedItemPosition()).getDate();
 
 
-                        if (id != 0) {
-                            model.setId(id);
-                            logic.update(model);
+                MachineModel model = new MachineModel(machine, dateTimeBegin, dateTimeEnd, shiftId, shiftName, machineWorkers);
+                logic.open();
 
-                        } else {
-                            logic.insert(model);
+
+                if (id != 0) {
+                    model.setId(id);
+                    logic.update(model);
+
+                } else {
+                    logic.insert(model);
+                }
+
+                logic.close();
+                this.finish();
+            } else { // ONLINE
+
+                String shiftId = "";
+                String shift_name = spinnerShifts.getSelectedItem().toString();
+                try {
+/*
+                    HashMap<String, String> workersOnline = getWorkers();
+*/
+                    HashMap<String, String> shiftsOnline = getShifts();
+
+                    for (Map.Entry<String, String> entry : shiftsOnline.entrySet()) {
+                        if (entry.getValue().equals(shift_name)) {
+                            shiftId = entry.getKey();
                         }
-
-                        logic.close();
-                        this.finish();
-                    } else { // ONLINE
-                        type = edit_text_machine_type.getText().toString().trim();
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-                        shiftBeginTime = dateFormat.format(shift_begin_time.getTime());
-                        shiftEndTime = dateFormat.format(shift_end_time.getTime());
-                        try {
-                            String result = getBossStrId();
-                            System.out.println(result);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-  /*                      shiftId =;
-                        shiftName = spinnerShifts.getSelectedItemPosition();
-
-                        name = edit_text_worker_name.getText().toString().trim();
-                        salary = edit_text_salary.getText().toString().trim();*/
-/*                        if (id == 0) {
-                            if (!name.equals("") || !salary.equals("")) {
-                                StringRequest stringRequest = new StringRequest(Request.Method.POST, urlCreate, new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        if (response.equals("success")) {
-                                            Toast.makeText(WorkerActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
-                                            finish();
-                                        } else if (response.equals("failure")) {
-                                            Toast.makeText(WorkerActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
-                                    @Override
-                                    protected Map<String, String> getParams() throws AuthFailureError {
-                                        Map<String, String> data = new HashMap<>();
-                                        data.put("name", name);
-                                        data.put("salary", salary);
-                                        return data;
-                                    }
-                                };
-                                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                                requestQueue.add(stringRequest);
-                            }
-                            this.finish();
-                        }*/
                     }
-                });
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (!edit_text_machine_type.getText().toString().equals("") || !button_shift_begin_time.getText().toString().equals("")
+                        || !button_shift_end_time.getText().toString().equals("") || !shiftId.equals("")
+                        || !shift_name.equals("")) {
+                    String finalShiftId = shiftId;
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlCreate, new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response.equals("success")) {
+                                Toast.makeText(MachineActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else if (response.equals("failure")) {
+                                Toast.makeText(MachineActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            Map<String, String> data = new HashMap<>();
+                            data.put("machine_type", edit_text_machine_type.getText().toString());
+                            data.put("shift_begin_time", button_shift_begin_time.getText().toString());
+                            data.put("shift_end_time", button_shift_end_time.getText().toString());
+                            data.put("shift_id", finalShiftId);
+                            data.put("shift_name", shift_name);
+                            return data;
+                        }
+                    };
+                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    requestQueue.add(stringRequest);
+                    this.finish();
+                }
+            }
+        });
 
         button_cancel.setOnClickListener(
-                v -> {
+                v ->
+
+                {
                     this.finish();
                 }
         );
 
         button_add_worker.setOnClickListener(
-                v -> {
-                    int workerId = workers.get(spinnerWorkers.getSelectedItemPosition()).getId();
-                    String workerName = workers.get(spinnerWorkers.getSelectedItemPosition()).getName();
-                    int hours = Integer.valueOf(edit_text_hours.getText().toString());
-                    for (MachineWorkersModel machineWorker : machineWorkers) {
-                        if (machineWorker.getWorkerId() == workerId) {
-                            return;
+                v ->
+                {
+                    if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+                        int workerId = workers.get(spinnerWorkers.getSelectedItemPosition()).getId();
+                        String workerName = workers.get(spinnerWorkers.getSelectedItemPosition()).getName();
+                        int hours = Integer.valueOf(edit_text_hours.getText().toString());
+                        for (MachineWorkersModel machineWorker : machineWorkers) {
+                            if (machineWorker.getWorkerId() == workerId) {
+                                return;
+                            }
                         }
+                        machineWorkers.add(new MachineWorkersModel(id, workerId, workerName,
+                                hours));
+                        edit_text_hours.setText(Integer.toString(differenceBetweenShiftHours));
+                        spinnerWorkers.setSelection(0);
+                        fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
+                    } else {
+                        String workerId = "";
+                        String worker_name = spinnerWorkers.getSelectedItem().toString();
+                        String shiftId = "";
+                        String shift_name = spinnerShifts.getSelectedItem().toString();
+                        String hours = edit_text_hours.getText().toString();
+                        try {
+                            HashMap<String, String> workersOnline = getWorkers();
+                            HashMap<String, String> shiftsOnline = getShifts();
+
+                            for (Map.Entry<String, String> entry : workersOnline.entrySet()) {
+                                if (entry.getValue().equals(worker_name)) {
+                                    workerId = entry.getKey();
+                                }
+                            }
+                            for (Map.Entry<String, String> entry : shiftsOnline.entrySet()) {
+                                if (entry.getValue().equals(shift_name)) {
+                                    shiftId = entry.getKey();
+                                }
+                            }
+                            System.out.println(workerId);
+                            System.out.println(shiftId);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        int k = 100;
+                        if (!workerId.equals("") && !worker_name.equals("") || !shiftId.equals("")
+                                || !shift_name.equals("") || !hours.equals("")) {
+                            String finalWorkerId = workerId;
+                            int finalK = k;
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, urlCreate, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    if (response.equals("success")) {
+                                        Toast.makeText(MachineActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    } else if (response.equals("failure")) {
+                                        Toast.makeText(MachineActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> data = new HashMap<>();
+                                    data.put("machine_id", String.valueOf(finalK));
+                                    data.put("worker_id", finalWorkerId);
+                                    data.put("worker_name", worker_name);
+                                    data.put("boss_id", hours);
+                                    return data;
+                                }
+                            };
+                            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                            requestQueue.add(stringRequest);
+                            spinnerWorkers.setSelection(0);
+                            HashMap<String, String> worker = new HashMap<>();
+                            worker.put(worker_name, hours);
+                            try {
+                                fillTableFromJSON(Arrays.asList("Имя работника", "Количество часов"), worker);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        k++;
                     }
-                    machineWorkers.add(new MachineWorkersModel(id, workerId, workerName,
-                            hours));
-                    edit_text_hours.setText(Integer.toString(differenceBetweenShiftHours));
-                    spinnerWorkers.setSelection(0);
-                    fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
                 }
         );
 
         button_delete_worker.setOnClickListener(
-                v -> {
+                v ->
+
+                {
                     TextView textView = (TextView) selectedRow.getChildAt(2);
                     int index = Integer.valueOf(textView.getText().toString());
                     machineWorkers.remove(index);
@@ -355,10 +466,72 @@ public class MachineActivity extends AppCompatActivity {
         fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
     }
 
-    public String getBossStrId() throws JSONException {
+    void fillTableFromJSON(List<String> titles, HashMap<String, String> worker) throws JSONException {
+        TableLayout tableLayoutMachineWorkers = findViewById(R.id.tableLayoutMachineWorkers);
+
+        tableLayoutMachineWorkers.removeAllViews();
+
+        TableRow tableRowTitles = new TableRow(this);
+
+        for (String title : titles) {
+            TextView textView = new TextView(this);
+
+            textView.setTextSize(16);
+            textView.setText(title);
+            textView.setTextColor(Color.WHITE);
+            textView.setGravity(Gravity.CENTER);
+            textView.setWidth((int) (getWindowManager().getDefaultDisplay().getWidth() / 2.2));
+            tableRowTitles.addView(textView);
+        }
+
+        tableRowTitles.setBackgroundColor(Color.parseColor("#0A2647"));
+        tableLayoutMachineWorkers.addView(tableRowTitles);
+
+        for (Map.Entry<String, String> entry : worker.entrySet()) {
+            TableRow tableRow = new TableRow(this);
+
+            TextView textViewWorkerName = new TextView(this);
+            textViewWorkerName.setHeight(100);
+            textViewWorkerName.setTextSize(16);
+            textViewWorkerName.setText(entry.getKey());
+            textViewWorkerName.setTextColor(Color.WHITE);
+            textViewWorkerName.setGravity(Gravity.CENTER);
+
+            TextView textViewHours = new TextView(this);
+            textViewHours.setHeight(100);
+            textViewHours.setTextSize(16);
+            textViewHours.setText(entry.getValue());
+            textViewHours.setTextColor(Color.WHITE);
+            textViewHours.setGravity(Gravity.CENTER);
+
+            tableRow.addView(textViewWorkerName);
+            tableRow.addView(textViewHours);
+
+            tableRow.setBackgroundColor(Color.parseColor("#0A2647"));
+
+            tableRow.setOnClickListener(v -> {
+
+                selectedRow = tableRow;
+
+                for (int j = 0; j < tableLayoutMachineWorkers.getChildCount(); j++) {
+                    View view = tableLayoutMachineWorkers.getChildAt(j);
+                    if (view instanceof TableRow) {
+                        view.setBackgroundColor(Color.parseColor("#0A2647"));
+                    }
+                }
+
+                tableRow.setBackgroundColor(Color.parseColor("#144272"));
+            });
+
+            tableLayoutMachineWorkers.addView(tableRow);
+        }
+
+    }
+
+    public HashMap<String, String> getShifts() throws JSONException {
         StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
         try {
-            url = new URL("http://192.168.31.7:8000/gotowork/machine/get.php");
+            url = new URL("http://192.168.31.7:8000/gotowork/shift/get.php");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             inputStream = new BufferedInputStream(connection.getInputStream());
@@ -383,16 +556,122 @@ public class MachineActivity extends AppCompatActivity {
         JSONArray jsonArray = new JSONArray(result);
         JSONObject jsonObject;
 
-        String result = "";
+        HashMap<String, String> result = new HashMap<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
             jsonObject = jsonArray.getJSONObject(i);
-            String test = jsonObject.getString("shift_name");
-            int test1 = spinnerShifts.getSelectedItemPosition();
+            result.put(jsonObject.getString("id"), jsonObject.getString("type"));
+        }
+        return result;
+    }
 
-            if (jsonObject.getString("id").equals(spinnerShifts.getSelectedItemPosition())) {
-                result = jsonObject.getString("id");
+    public HashMap<String, String> getWorkers() throws JSONException {
+        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+        try {
+            url = new URL("http://192.168.31.7:8000/gotowork/worker/get.php");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            inputStream = new BufferedInputStream(connection.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read inputStream content into a String
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line + "\n");
             }
+            inputStream.close();
+            result = stringBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray jsonArray = new JSONArray(result);
+        JSONObject jsonObject;
+
+        HashMap<String, String> result = new HashMap<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            jsonObject = jsonArray.getJSONObject(i);
+            result.put(jsonObject.getString("id"), jsonObject.getString("name"));
+        }
+        return result;
+    }
+
+    public ArrayList<String> getShiftNames() throws JSONException {
+        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+        try {
+            url = new URL("http://192.168.31.7:8000/gotowork/shift/get.php");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            inputStream = new BufferedInputStream(connection.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read inputStream content into a String
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line + "\n");
+            }
+            inputStream.close();
+            result = stringBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray jsonArray = new JSONArray(result);
+        JSONObject jsonObject;
+
+        ArrayList<String> result = new ArrayList<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            jsonObject = jsonArray.getJSONObject(i);
+            result.add(jsonObject.getString("type"));
+        }
+        return result;
+    }
+
+    public ArrayList<String> getWorkerNames() throws JSONException {
+        StrictMode.setThreadPolicy((new StrictMode.ThreadPolicy.Builder().permitNetwork().build()));
+        try {
+            url = new URL("http://192.168.31.7:8000/gotowork/worker/get.php");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            inputStream = new BufferedInputStream(connection.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read inputStream content into a String
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line + "\n");
+            }
+            inputStream.close();
+            result = stringBuilder.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray jsonArray = new JSONArray(result);
+        JSONObject jsonObject;
+
+        ArrayList<String> result = new ArrayList<>();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            jsonObject = jsonArray.getJSONObject(i);
+            result.add(jsonObject.getString("name"));
         }
         return result;
     }
