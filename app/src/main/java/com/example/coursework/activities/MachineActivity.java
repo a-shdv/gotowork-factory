@@ -54,17 +54,20 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class MachineActivity extends AppCompatActivity {
 
     URL url;
 
-    String urlCreate = "http://192.168.31.7:8000/gotowork/machine/create.php";
+    String urlMachineCreate = "http://192.168.31.7:8000/gotowork/machine/create.php";
+    String urlMachineWorkersCreate = "http://192.168.31.7:8000/gotowork/machine-workers/create.php";
     String urlUpdate = "http://192.168.31.7:8000/gotowork/machine/update.php";
-    String type, shiftBeginTime, shiftEndTime, shiftId, shiftName;
+    String type, shiftBeginTime, shiftEndTime, shiftId, shiftName, workerId;
     InputStream inputStream;
     String line = "";
     String result = "";
+    static String intId;
 
     TableRow selectedRow;
 
@@ -91,7 +94,7 @@ public class MachineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_machine);
 
-        type = shiftBeginTime = shiftEndTime = shiftId = shiftName = "";
+        workerId = shiftId = type = shiftBeginTime = shiftEndTime = shiftName = "";
 
         logic = new MachineLogic(this);
 
@@ -186,9 +189,7 @@ public class MachineActivity extends AppCompatActivity {
         }
 
         button_shift_begin_time.setOnClickListener(
-                v ->
-
-                {
+                v -> {
                     TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
@@ -232,9 +233,7 @@ public class MachineActivity extends AppCompatActivity {
         );
 
         button_shift_end_time.setOnClickListener(
-                v ->
-
-                {
+                v -> {
                     TimePickerDialog.OnTimeSetListener timeSetListener = new TimePickerDialog.OnTimeSetListener() {
                         @Override
                         public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
@@ -290,7 +289,6 @@ public class MachineActivity extends AppCompatActivity {
 
                 int shiftId = shifts.get(spinnerShifts.getSelectedItemPosition()).getId();
                 String shiftName = shifts.get(spinnerShifts.getSelectedItemPosition()).getType();
-                long shiftDate = shifts.get(spinnerShifts.getSelectedItemPosition()).getDate();
 
 
                 MachineModel model = new MachineModel(machine, dateTimeBegin, dateTimeEnd, shiftId, shiftName, machineWorkers);
@@ -308,13 +306,8 @@ public class MachineActivity extends AppCompatActivity {
                 logic.close();
                 this.finish();
             } else { // ONLINE
-
-                String shiftId = "";
                 String shift_name = spinnerShifts.getSelectedItem().toString();
                 try {
-/*
-                    HashMap<String, String> workersOnline = getWorkers();
-*/
                     HashMap<String, String> shiftsOnline = getShifts();
 
                     for (Map.Entry<String, String> entry : shiftsOnline.entrySet()) {
@@ -326,11 +319,16 @@ public class MachineActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                String worker_name = spinnerWorkers.getSelectedItem().toString();
+                String hours = edit_text_hours.getText().toString();
+
+
+                System.out.println(intId);
                 if (!edit_text_machine_type.getText().toString().equals("") || !button_shift_begin_time.getText().toString().equals("")
                         || !button_shift_end_time.getText().toString().equals("") || !shiftId.equals("")
                         || !shift_name.equals("")) {
-                    String finalShiftId = shiftId;
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlCreate, new Response.Listener<String>() {
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, urlMachineCreate, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             if (response.equals("success")) {
@@ -344,16 +342,25 @@ public class MachineActivity extends AppCompatActivity {
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map<String, String> data = new HashMap<>();
+                            data.put("id", MachineActivity.intId);
                             data.put("machine_type", edit_text_machine_type.getText().toString());
                             data.put("shift_begin_time", button_shift_begin_time.getText().toString());
                             data.put("shift_end_time", button_shift_end_time.getText().toString());
-                            data.put("shift_id", finalShiftId);
+                            data.put("shift_id", shiftId);
                             data.put("shift_name", shift_name);
                             return data;
                         }
                     };
                     RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                     requestQueue.add(stringRequest);
+
+                    HashMap<String, String> worker = new HashMap<>();
+                    worker.put(worker_name, hours);
+                    try {
+                        fillTableFromJSON(Arrays.asList("Имя работника", "Количество часов"), worker);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     this.finish();
                 }
             }
@@ -361,15 +368,13 @@ public class MachineActivity extends AppCompatActivity {
 
         button_cancel.setOnClickListener(
                 v ->
-
                 {
                     this.finish();
                 }
         );
 
         button_add_worker.setOnClickListener(
-                v ->
-                {
+                v -> {
                     if (LoginActivity.checkBoxOfflineMode.isChecked()) {
                         int workerId = workers.get(spinnerWorkers.getSelectedItemPosition()).getId();
                         String workerName = workers.get(spinnerWorkers.getSelectedItemPosition()).getName();
@@ -384,10 +389,9 @@ public class MachineActivity extends AppCompatActivity {
                         edit_text_hours.setText(Integer.toString(differenceBetweenShiftHours));
                         spinnerWorkers.setSelection(0);
                         fillTable(Arrays.asList("Имя работника", "Количество часов"), machineWorkers);
-                    } else {
-                        String workerId = "";
+                    } else { // Online
+
                         String worker_name = spinnerWorkers.getSelectedItem().toString();
-                        String shiftId = "";
                         String shift_name = spinnerShifts.getSelectedItem().toString();
                         String hours = edit_text_hours.getText().toString();
                         try {
@@ -404,57 +408,44 @@ public class MachineActivity extends AppCompatActivity {
                                     shiftId = entry.getKey();
                                 }
                             }
-                            System.out.println(workerId);
-                            System.out.println(shiftId);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        int k = 100;
-                        if (!workerId.equals("") && !worker_name.equals("") || !shiftId.equals("")
-                                || !shift_name.equals("") || !hours.equals("")) {
-                            String finalWorkerId = workerId;
-                            int finalK = k;
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST, urlCreate, new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    if (response.equals("success")) {
-                                        Toast.makeText(MachineActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    } else if (response.equals("failure")) {
-                                        Toast.makeText(MachineActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
-                                    }
+                        Random machineId = new Random();
+                        int machineIncrement = Math.abs(machineId.nextInt());
+                        MachineActivity.intId = Integer.toString(machineIncrement);
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlMachineWorkersCreate, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                if (response.equals("success")) {
+                                    Toast.makeText(MachineActivity.this, "Успех!", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                } else if (response.equals("failure")) {
+                                    Toast.makeText(MachineActivity.this, "Что-то пошло не так...", Toast.LENGTH_SHORT).show();
                                 }
-                            }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
-                                @Override
-                                protected Map<String, String> getParams() throws AuthFailureError {
-                                    Map<String, String> data = new HashMap<>();
-                                    data.put("machine_id", String.valueOf(finalK));
-                                    data.put("worker_id", finalWorkerId);
-                                    data.put("worker_name", worker_name);
-                                    data.put("boss_id", hours);
-                                    return data;
-                                }
-                            };
-                            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                            requestQueue.add(stringRequest);
-                            spinnerWorkers.setSelection(0);
-                            HashMap<String, String> worker = new HashMap<>();
-                            worker.put(worker_name, hours);
-                            try {
-                                fillTableFromJSON(Arrays.asList("Имя работника", "Количество часов"), worker);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
-                        }
-                        k++;
+                        }, error -> Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show()) {
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> data = new HashMap<>();
+                                data.put("machine_id", MachineActivity.intId);
+                                data.put("worker_id", workerId);
+                                data.put("worker_name", worker_name);
+                                data.put("hours", hours);
+                                return data;
+                            }
+                        };
+                        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                        requestQueue.add(stringRequest);
+                        spinnerWorkers.setSelection(0);
                     }
                 }
         );
 
         button_delete_worker.setOnClickListener(
                 v ->
-
                 {
                     TextView textView = (TextView) selectedRow.getChildAt(2);
                     int index = Integer.valueOf(textView.getText().toString());
