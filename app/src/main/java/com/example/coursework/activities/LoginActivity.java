@@ -208,8 +208,6 @@ public class LoginActivity extends AppCompatActivity {
 
         for (int i = 0; i < jsonArray.length(); i++) {
             jsonObject = jsonArray.getJSONObject(i);
-            String test = jsonObject.getString("login");
-            String test1 = editTextLogin.getText().toString();
 
             if (jsonObject.getString("login").equals(editTextLogin.getText().toString())) {
                 result = jsonObject.getString("id");

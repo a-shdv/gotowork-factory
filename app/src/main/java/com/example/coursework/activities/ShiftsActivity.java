@@ -232,7 +232,6 @@ public class ShiftsActivity extends AppCompatActivity {
         });
     }
 
-
     void fillTable(List<String> titles, List<ShiftModel> shifts) {
 
         TableLayout tableLayoutShifts = findViewById(R.id.tableLayoutShifts);
