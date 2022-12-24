@@ -26,10 +26,10 @@ if (isset($_POST['type']) && isset($_POST['shift_date']) && isset($_POST['boss_i
     $result = $connection->query($sql);
     // If number of rows returned is greater than 0 (that is, if the record is found), we'll print "success", otherwise "failure"
     if ($result->num_rows > 0) {
-        echo "success";
+        echo "Successfully created";
     } else {
     // If no record is found, print "failure"
-        echo "failure";
+        echo "Try again Later...";
     }
 }
 
