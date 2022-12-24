@@ -18,6 +18,8 @@ import com.example.coursework.database.firebase.BossFirebaseLogic;
 import com.example.coursework.database.logics.MachineLogic;
 import com.example.coursework.database.logics.BossLogic;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -82,9 +84,15 @@ public class MainActivity extends AppCompatActivity {
                     MachineLogic shiftLogic = new MachineLogic(this);
 
                     try {
-                        report.createPdf(shiftLogic.getFullList());
+                        if (LoginActivity.checkBoxOfflineMode.isChecked()) {
+                            report.createPdf(shiftLogic.getFullList());
+                        } else {
+                            report.createPdf();
+                        }
                         Toast.makeText(MainActivity.this, "Отчет успешно сформирован!", Toast.LENGTH_LONG).show();
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }

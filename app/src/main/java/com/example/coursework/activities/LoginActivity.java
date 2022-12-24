@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     String result = "";
 
     String bossStrId, login, password;
-    static CheckBox checkBoxOfflineMode;
+    public static CheckBox checkBoxOfflineMode;
 
     BossLogic logic;
 
