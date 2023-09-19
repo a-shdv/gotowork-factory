@@ -2,57 +2,57 @@
 Ведение учета изготовления изделий. Начальники указывают работников, какие станки они используют в
 работе, их смены. Программа предоставляет возможность получения отчетов по сменам.
 
-![21](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/5f4174de-3453-496a-bf4a-3e5c13439569)
+<img width="136" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/bf30f7ab-594b-41fb-8ba9-11691696d01c">
 
 Первое, с чем сталкивается пользователь - пользователь играет в мини-игру, а после её завершения переходит к главному меню
 
-![22](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/32cdbff1-a26b-44e5-bbfb-fe5490db84f8) 
+<img width="143" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/be96ee06-0ec3-4cb0-9779-2b1d925f9d54">
  
 
-![23](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/69167714-08ee-426d-8ba9-7e854027cfa1)
+<img width="135" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/bed6f158-5df5-4a13-84fc-ebf475b5002d">
 
 Откроется окно авторизации, которое нужно заполнить, после чего можно попасть в главное меню. Либо можно зарегистрироваться, нажав на кнопку «Зарегистрироваться». 
 
  
-![24](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/39a6c8d7-3b72-4703-8aa4-561294d1a801)
+<img width="148" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/c1d211e1-133d-4158-bd50-9532f352df9f">
 
 Заполнив поля, будет создан пользователь в базе данных с соответствующими полями – логин и пароль.
 
 
-![25](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/8ed7a7e4-fd72-432d-ba7c-a200023fdbfd)
+<img width="191" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/ead2e9f2-22b3-4493-8e5a-5001d07c08ca">
 
 Попав в главное меню, мы можем выбрать, какое из действий хотим осуществить. Отсюда мы можем формировать записи о работниках, сменах, станках, сформировать отчет, выйти из личного кабинета.
 
  
-![26](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/203cd851-6c47-4fe8-8fe0-d2530119889f)
+<img width="193" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/b09692a1-58a5-4e03-9aa1-e4eddd8b9179">
 
 Попав на форму списка работников, можем создать, изменить или удалить работника.
 
  
-![27](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/94782184-4657-4911-b388-944babdb51ce)
+<img width="134" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/0daa4f4c-b2aa-414c-b9bb-3143647bd4a7">
 
 Заполняем поля: имя работника, зарплата работника.
 
 
-![28](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/5c291101-ef19-4daf-9aa6-61e4e0b4f930)
+<img width="164" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/b4de58e1-84c7-43cc-8301-e2c794be55a6">
 
 Попав на форму списка смен, можем создать, изменить или удалить смену.
 
  
-![29](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/442f0c5f-4552-4cd6-8c5c-3ead6692beca)
+<img width="142" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/cd0dcb49-4b86-4f10-af1c-0eb69fe26ee5">
 
 Заполняем поля, называем тип смены, выбираем дату смены.
 
  
-![30](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/2401a3a7-3f1e-49ea-a4c8-131aa0a833b8)
+<img width="137" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/45f3659d-39f2-460f-ac5d-ef696f2edbbd">
 
 Попав на форму списка станков, можем создать, изменить или удалить станок.
 
  
-![31](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/2fe1aef7-e74e-4e9f-a87d-0c985bf4ac1a)
+<img width="130" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/1e538849-a38f-4932-afe1-2346fd1de315">
 
 Заполняем поле тип станка. Выбираем работника(-ов), который(-ые) будут работать на станках такого типа. Выбираем смену, в которую будет использоваться станок. Назначаем начало и окончание смены. Наконец, добавляем или удаляем из списка работников работника.
 
-![32](https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/468d2749-729b-42fa-898c-1916cc62c07f)
+<img width="412" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/21bcc77c-53cc-4f57-8be1-0e1587f58fa9">
 
  
