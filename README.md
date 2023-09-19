@@ -73,7 +73,7 @@
 
 
 
- **Регистрация.**
+ **Формирование акта приёмки.**
 
 <img width="130" alt="image" src="https://github.com/a-shdv/gotowork-factory-mobile/assets/54847558/1e538849-a38f-4932-afe1-2346fd1de315">
 
